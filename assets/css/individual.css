@@ -1,0 +1,250 @@
+/* ============================================
+   GeoNexus - Painel Individual
+   Estilos específicos do Profissional Autónomo
+   ============================================ */
+
+:root {
+    /* Cores do Perfil Individual */
+    --individual-primary: #2ECC71;
+    --individual-primary-dark: #27AE60;
+    --individual-primary-light: #58D68D;
+    --individual-primary-bg: rgba(46, 204, 113, 0.08);
+    --individual-primary-gradient: linear-gradient(135deg, #2ECC71 0%, #58D68D 100%);
+    
+    /* Cores de Status */
+    --individual-success: #2ECC71;
+    --individual-warning: #F39C12;
+    --individual-danger: #E74C3C;
+    --individual-info: #3498DB;
+}
+
+/* ===== Sidebar Individual ===== */
+.sidebar {
+    background: linear-gradient(180deg, #0A1628 0%, #1A2D4A 100%);
+}
+
+.sidebar .logo i {
+    color: var(--individual-primary);
+}
+
+.sidebar-user img {
+    border-color: var(--individual-primary);
+}
+
+.sidebar-nav ul li a:hover {
+    background: rgba(46, 204, 113, 0.08);
+    color: white;
+}
+
+.sidebar-nav ul li.active a {
+    background: rgba(46, 204, 113, 0.12);
+    color: var(--individual-primary);
+    border-left-color: var(--individual-primary);
+}
+
+.sidebar-nav ul li.active a::before {
+    background: var(--individual-primary-gradient);
+}
+
+/* ===== Cards Individual ===== */
+.card-stat.individual-card {
+    border-left: 4px solid var(--individual-primary);
+}
+
+.card-stat.individual-card .card-icon {
+    background: var(--individual-primary-bg);
+    color: var(--individual-primary);
+}
+
+.card-stat.individual-card:hover {
+    border-color: var(--individual-primary);
+    box-shadow: 0 8px 25px rgba(46, 204, 113, 0.15);
+}
+
+/* ===== Botões Individual ===== */
+.btn-individual-primary {
+    background: var(--individual-primary-gradient);
+    color: white;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-individual-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(46, 204, 113, 0.35);
+    color: white;
+}
+
+.btn-individual-outline {
+    background: transparent;
+    border: 2px solid var(--individual-primary);
+    color: var(--individual-primary);
+    transition: all 0.3s ease;
+}
+
+.btn-individual-outline:hover {
+    background: var(--individual-primary);
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* ===== Tabelas Individual ===== */
+.table-individual thead {
+    background: var(--individual-primary-bg);
+}
+
+.table-individual thead th {
+    color: var(--individual-primary);
+    border-bottom: 2px solid rgba(46, 204, 113, 0.1);
+}
+
+.table-individual tbody tr:hover {
+    background: var(--individual-primary-bg);
+}
+
+/* ===== Status Badges Individual ===== */
+.badge-individual-success {
+    background: rgba(46, 204, 113, 0.12);
+    color: var(--individual-success);
+}
+
+.badge-individual-warning {
+    background: rgba(243, 156, 18, 0.12);
+    color: var(--individual-warning);
+}
+
+.badge-individual-danger {
+    background: rgba(231, 76, 60, 0.12);
+    color: var(--individual-danger);
+}
+
+.badge-individual-info {
+    background: rgba(52, 152, 219, 0.12);
+    color: var(--individual-info);
+}
+
+/* ===== Stats Cards Individual ===== */
+.stat-card-individual {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card-individual::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 120px;
+    height: 120px;
+    background: var(--individual-primary-bg);
+    border-radius: 50%;
+    transform: translate(30px, -60px);
+    opacity: 0.3;
+}
+
+.stat-card-individual:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(46, 204, 113, 0.12);
+}
+
+.stat-card-individual .stat-icon.green {
+    background: var(--individual-primary-bg);
+    color: var(--individual-primary);
+}
+
+/* ===== Formulários Individual ===== */
+.form-individual .form-control:focus {
+    border-color: var(--individual-primary);
+    box-shadow: 0 0 0 4px rgba(46, 204, 113, 0.1);
+}
+
+/* ===== Filtros Individual ===== */
+.filter-bar-individual {
+    background: var(--individual-primary-bg);
+}
+
+.filter-bar-individual select:focus,
+.filter-bar-individual input:focus {
+    border-color: var(--individual-primary);
+}
+
+/* ===== Ações Rápidas Individual ===== */
+.quick-action-btn:hover {
+    border-color: var(--individual-primary);
+    background: var(--individual-primary-bg);
+    box-shadow: 0 8px 25px rgba(46, 204, 113, 0.1);
+}
+
+.quick-action-btn i {
+    color: var(--individual-primary);
+}
+
+/* ===== Notificações Individual ===== */
+.notification-item-individual:hover {
+    background: var(--individual-primary-bg);
+}
+
+.notification-item-individual.unread {
+    border-left-color: var(--individual-primary);
+    background: rgba(46, 204, 113, 0.04);
+}
+
+.notification-item-individual .notif-icon.green {
+    background: var(--individual-primary-bg);
+    color: var(--individual-primary);
+}
+
+/* ===== Progress Bar Individual ===== */
+.progress-individual .progress-bar {
+    background: var(--individual-primary-gradient);
+}
+
+/* ===== Spinner Individual ===== */
+.spinner-individual {
+    border: 4px solid rgba(46, 204, 113, 0.1);
+    border-top: 4px solid var(--individual-primary);
+}
+
+/* ===== Setores Individual ===== */
+.setor-item-individual {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.setor-item-individual:hover {
+    background: var(--individual-primary-bg);
+    border-color: rgba(46, 204, 113, 0.2);
+}
+
+.setor-item-individual .setor-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+}
+
+.setor-item-individual .setor-info h5 {
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin: 0;
+    color: #1A2D4A;
+}
+
+.setor-item-individual .setor-info span {
+    font-size: 0.75rem;
+    color: #6B7280;
+}

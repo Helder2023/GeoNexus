@@ -1,0 +1,209 @@
+/* ============================================
+   GeoNexus - Painel Institucional
+   Estilos específicos da Instituição
+   ============================================ */
+
+:root {
+    /* Cores do Perfil Institucional */
+    --institucional-primary: #F9A825;
+    --institucional-primary-dark: #F57F17;
+    --institucional-primary-light: #FBC02D;
+    --institucional-primary-bg: rgba(249, 168, 37, 0.08);
+    --institucional-primary-gradient: linear-gradient(135deg, #F9A825 0%, #FBC02D 100%);
+    
+    /* Cores de Status */
+    --institucional-success: #2ECC71;
+    --institucional-warning: #F9A825;
+    --institucional-danger: #E63946;
+    --institucional-info: #3498DB;
+}
+
+/* ===== Sidebar Institucional ===== */
+.sidebar {
+    background: linear-gradient(180deg, #1A1200 0%, #2D2000 100%);
+}
+
+.sidebar .logo i {
+    color: var(--institucional-primary);
+}
+
+.sidebar-user img {
+    border-color: var(--institucional-primary);
+}
+
+.sidebar-nav ul li a:hover {
+    background: rgba(249, 168, 37, 0.08);
+}
+
+.sidebar-nav ul li.active a {
+    background: rgba(249, 168, 37, 0.12);
+    color: var(--institucional-primary-light);
+    border-left-color: var(--institucional-primary);
+}
+
+.sidebar-nav ul li.active a::before {
+    background: var(--institucional-primary-gradient);
+}
+
+/* ===== Cards Institucional ===== */
+.card-stat.institucional-card {
+    border-left: 4px solid var(--institucional-primary);
+}
+
+.card-stat.institucional-card .card-icon {
+    background: var(--institucional-primary-bg);
+    color: var(--institucional-primary);
+}
+
+.card-stat.institucional-card:hover {
+    border-color: var(--institucional-primary);
+    box-shadow: 0 8px 25px rgba(249, 168, 37, 0.15);
+}
+
+/* ===== Botões Institucional ===== */
+.btn-institucional-primary {
+    background: var(--institucional-primary-gradient);
+    color: white;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-institucional-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(249, 168, 37, 0.35);
+    color: white;
+}
+
+/* ===== Tabelas Institucional ===== */
+.table-institucional thead {
+    background: var(--institucional-primary-bg);
+}
+
+.table-institucional thead th {
+    color: var(--institucional-primary-dark);
+    border-bottom: 2px solid rgba(249, 168, 37, 0.1);
+}
+
+.table-institucional tbody tr:hover {
+    background: var(--institucional-primary-bg);
+}
+
+/* ===== Cursos e Turmas ===== */
+.curso-card-institucional {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    border: 2px solid #E5E7EB;
+    transition: all 0.3s ease;
+}
+
+.curso-card-institucional:hover {
+    border-color: var(--institucional-primary);
+    box-shadow: 0 4px 12px rgba(249, 168, 37, 0.08);
+}
+
+.curso-card-institucional .curso-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: var(--institucional-primary-bg);
+    color: var(--institucional-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+}
+
+.turma-item-institucional {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: white;
+    border-radius: 10px;
+    border: 2px solid #E5E7EB;
+    transition: all 0.3s ease;
+}
+
+.turma-item-institucional:hover {
+    border-color: var(--institucional-primary);
+}
+
+/* ===== Setores por Turma ===== */
+.setor-turma-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 12px;
+    background: var(--institucional-primary-bg);
+    border-radius: 8px;
+    border: 1px solid rgba(249, 168, 37, 0.2);
+}
+
+.setor-turma-item .setor-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+/* ===== Alunos ===== */
+.aluno-card-institucional {
+    background: white;
+    border-radius: 12px;
+    padding: 16px;
+    border: 2px solid #E5E7EB;
+    transition: all 0.3s ease;
+}
+
+.aluno-card-institucional:hover {
+    border-color: var(--institucional-primary);
+}
+
+.aluno-card-institucional .aluno-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--institucional-primary-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: var(--institucional-primary);
+}
+
+.aluno-progresso {
+    height: 6px;
+    background: #E5E7EB;
+    border-radius: 50px;
+    overflow: hidden;
+    margin-top: 8px;
+}
+
+.aluno-progresso .progresso-bar {
+    height: 100%;
+    background: var(--institucional-primary-gradient);
+    border-radius: 50px;
+    transition: width 0.6s ease;
+}
+
+/* ===== Certificados ===== */
+.certificado-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    border: 2px solid #E5E7EB;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.certificado-card:hover {
+    border-color: var(--institucional-primary);
+    transform: translateY(-4px);
+}
+
+.certificado-card i {
+    font-size: 2.5rem;
+    color: var(--institucional-primary);
+    margin-bottom: 12px;
+}

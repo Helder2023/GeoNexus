@@ -1,0 +1,211 @@
+/* ============================================
+   GeoNexus - Portal do Cliente
+   Estilos específicos do Cliente
+   ============================================ */
+
+:root {
+    /* Cores do Perfil Cliente */
+    --cliente-primary: #00BCD4;
+    --cliente-primary-dark: #0097A7;
+    --cliente-primary-light: #26C6DA;
+    --cliente-primary-bg: rgba(0, 188, 212, 0.08);
+    --cliente-primary-gradient: linear-gradient(135deg, #00BCD4 0%, #26C6DA 100%);
+    
+    /* Cores de Status */
+    --cliente-success: #2ECC71;
+    --cliente-warning: #F9A825;
+    --cliente-danger: #E63946;
+    --cliente-info: #00BCD4;
+}
+
+/* ===== Sidebar Cliente ===== */
+.sidebar {
+    background: linear-gradient(180deg, #001F24 0%, #00363D 100%);
+}
+
+.sidebar .logo i {
+    color: var(--cliente-primary);
+}
+
+.sidebar-user img {
+    border-color: var(--cliente-primary);
+}
+
+.sidebar-nav ul li a:hover {
+    background: rgba(0, 188, 212, 0.08);
+}
+
+.sidebar-nav ul li.active a {
+    background: rgba(0, 188, 212, 0.12);
+    color: var(--cliente-primary-light);
+    border-left-color: var(--cliente-primary);
+}
+
+.sidebar-nav ul li.active a::before {
+    background: var(--cliente-primary-gradient);
+}
+
+/* ===== Cards Cliente ===== */
+.card-stat.cliente-card {
+    border-left: 4px solid var(--cliente-primary);
+}
+
+.card-stat.cliente-card .card-icon {
+    background: var(--cliente-primary-bg);
+    color: var(--cliente-primary);
+}
+
+.card-stat.cliente-card:hover {
+    border-color: var(--cliente-primary);
+    box-shadow: 0 8px 25px rgba(0, 188, 212, 0.15);
+}
+
+/* ===== Botões Cliente ===== */
+.btn-cliente-primary {
+    background: var(--cliente-primary-gradient);
+    color: white;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-cliente-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 188, 212, 0.35);
+    color: white;
+}
+
+/* ===== Tabelas Cliente ===== */
+.table-cliente thead {
+    background: var(--cliente-primary-bg);
+}
+
+.table-cliente thead th {
+    color: var(--cliente-primary-dark);
+    border-bottom: 2px solid rgba(0, 188, 212, 0.1);
+}
+
+.table-cliente tbody tr:hover {
+    background: var(--cliente-primary-bg);
+}
+
+/* ===== Projetos Cliente ===== */
+.projeto-cliente-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    border: 2px solid #E5E7EB;
+    transition: all 0.3s ease;
+}
+
+.projeto-cliente-card:hover {
+    border-color: var(--cliente-primary);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 188, 212, 0.08);
+}
+
+.projeto-cliente-card .projeto-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.projeto-cliente-card .projeto-status.em-andamento {
+    background: rgba(0, 188, 212, 0.12);
+    color: var(--cliente-primary);
+}
+
+.projeto-cliente-card .projeto-status.concluido {
+    background: rgba(46, 204, 113, 0.12);
+    color: var(--cliente-success);
+}
+
+.projeto-cliente-card .projeto-status.pendente {
+    background: rgba(249, 168, 37, 0.12);
+    color: var(--cliente-warning);
+}
+
+/* ===== Chat Cliente ===== */
+.chat-cliente-container {
+    display: flex;
+    flex-direction: column;
+    height: 400px;
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+}
+
+.chat-cliente-messages {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.chat-cliente-input {
+    padding: 16px 20px;
+    border-top: 1px solid #E5E7EB;
+    display: flex;
+    gap: 12px;
+}
+
+.chat-cliente-input input {
+    flex: 1;
+    border: 2px solid #E5E7EB;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.chat-cliente-input input:focus {
+    border-color: var(--cliente-primary);
+    outline: none;
+}
+
+/* ===== Documentos Cliente ===== */
+.documento-cliente-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: white;
+    border-radius: 10px;
+    border: 2px solid #E5E7EB;
+    transition: all 0.3s ease;
+}
+
+.documento-cliente-item:hover {
+    border-color: var(--cliente-primary);
+}
+
+.documento-cliente-item .doc-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background: var(--cliente-primary-bg);
+    color: var(--cliente-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+}
+
+.documento-cliente-item .doc-info {
+    flex: 1;
+}
+
+.documento-cliente-item .doc-info h5 {
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin: 0;
+    color: #1A2D4A;
+}
+
+.documento-cliente-item .doc-info span {
+    font-size: 0.75rem;
+    color: #6B7280;
+}

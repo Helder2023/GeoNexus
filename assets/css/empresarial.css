@@ -1,0 +1,221 @@
+/* ============================================
+   GeoNexus - Painel Empresarial
+   Estilos específicos da Empresa
+   ============================================ */
+
+:root {
+    /* Cores do Perfil Empresarial */
+    --empresarial-primary: #E63946;
+    --empresarial-primary-dark: #C62828;
+    --empresarial-primary-light: #EF5350;
+    --empresarial-primary-bg: rgba(230, 57, 70, 0.08);
+    --empresarial-primary-gradient: linear-gradient(135deg, #E63946 0%, #EF5350 100%);
+    
+    /* Cores de Status */
+    --empresarial-success: #2ECC71;
+    --empresarial-warning: #F39C12;
+    --empresarial-danger: #E63946;
+    --empresarial-info: #3498DB;
+}
+
+/* ===== Sidebar Empresarial ===== */
+.sidebar {
+    background: linear-gradient(180deg, #1A0B0E 0%, #2D1A1E 100%);
+}
+
+.sidebar .logo i {
+    color: var(--empresarial-primary);
+}
+
+.sidebar-user img {
+    border-color: var(--empresarial-primary);
+}
+
+.sidebar-nav ul li a:hover {
+    background: rgba(230, 57, 70, 0.08);
+}
+
+.sidebar-nav ul li.active a {
+    background: rgba(230, 57, 70, 0.12);
+    color: var(--empresarial-primary-light);
+    border-left-color: var(--empresarial-primary);
+}
+
+.sidebar-nav ul li.active a::before {
+    background: var(--empresarial-primary-gradient);
+}
+
+/* ===== Cards Empresarial ===== */
+.card-stat.empresarial-card {
+    border-left: 4px solid var(--empresarial-primary);
+}
+
+.card-stat.empresarial-card .card-icon {
+    background: var(--empresarial-primary-bg);
+    color: var(--empresarial-primary);
+}
+
+.card-stat.empresarial-card:hover {
+    border-color: var(--empresarial-primary);
+    box-shadow: 0 8px 25px rgba(230, 57, 70, 0.15);
+}
+
+/* ===== Botões Empresarial ===== */
+.btn-empresarial-primary {
+    background: var(--empresarial-primary-gradient);
+    color: white;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-empresarial-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(230, 57, 70, 0.35);
+    color: white;
+}
+
+.btn-empresarial-outline {
+    background: transparent;
+    border: 2px solid var(--empresarial-primary);
+    color: var(--empresarial-primary);
+    transition: all 0.3s ease;
+}
+
+.btn-empresarial-outline:hover {
+    background: var(--empresarial-primary);
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* ===== Tabelas Empresarial ===== */
+.table-empresarial thead {
+    background: var(--empresarial-primary-bg);
+}
+
+.table-empresarial thead th {
+    color: var(--empresarial-primary);
+    border-bottom: 2px solid rgba(230, 57, 70, 0.1);
+}
+
+.table-empresarial tbody tr:hover {
+    background: var(--empresarial-primary-bg);
+}
+
+/* ===== Badges Empresarial ===== */
+.badge-empresarial-success {
+    background: rgba(46, 204, 113, 0.12);
+    color: var(--empresarial-success);
+}
+
+.badge-empresarial-danger {
+    background: rgba(230, 57, 70, 0.12);
+    color: var(--empresarial-danger);
+}
+
+/* ===== Stats Cards Empresarial ===== */
+.stat-card-empresarial .stat-icon.red {
+    background: var(--empresarial-primary-bg);
+    color: var(--empresarial-primary);
+}
+
+/* ===== Chat Empresarial ===== */
+.chat-container-empresarial {
+    display: flex;
+    height: 500px;
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+}
+
+.chat-sidebar-empresarial {
+    width: 300px;
+    border-right: 1px solid #E5E7EB;
+    overflow-y: auto;
+}
+
+.chat-main-empresarial {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-messages-empresarial {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.chat-input-empresarial {
+    padding: 16px 20px;
+    border-top: 1px solid #E5E7EB;
+    display: flex;
+    gap: 12px;
+}
+
+.chat-input-empresarial input {
+    flex: 1;
+    border: 2px solid #E5E7EB;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.chat-input-empresarial input:focus {
+    border-color: var(--empresarial-primary);
+    outline: none;
+}
+
+.chat-message-item {
+    margin-bottom: 16px;
+    display: flex;
+    gap: 12px;
+}
+
+.chat-message-item.sent {
+    flex-direction: row-reverse;
+}
+
+.chat-message-item .message-bubble {
+    max-width: 70%;
+    padding: 10px 16px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+}
+
+.chat-message-item.received .message-bubble {
+    background: #F3F4F6;
+    color: #1A2D4A;
+}
+
+.chat-message-item.sent .message-bubble {
+    background: var(--empresarial-primary-gradient);
+    color: white;
+}
+
+/* ===== RH Empresarial ===== */
+.rh-card-empresarial {
+    background: white;
+    border-radius: 12px;
+    padding: 16px;
+    border: 2px solid #E5E7EB;
+    transition: all 0.3s ease;
+}
+
+.rh-card-empresarial:hover {
+    border-color: var(--empresarial-primary);
+    box-shadow: 0 4px 12px rgba(230, 57, 70, 0.08);
+}
+
+.rh-card-empresarial .rh-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--empresarial-primary-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: var(--empresarial-primary);
+}

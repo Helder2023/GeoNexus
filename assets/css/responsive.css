@@ -1,0 +1,1699 @@
+/* ============================================
+   🌍 GEONEXUS - RESPONSIVIDADE GLOBAL
+   Design Responsivo para Todos os Painéis
+   Versão: 2.0.0
+   ============================================ */
+
+/* ========================================== */
+/* BREAKPOINTS                                */
+/* ========================================== */
+/* 
+   📱 Mobile:        < 480px   (Smartphones)
+   📱 Mobile Grande: 481-768px (Tablets pequenos)
+   📱 Tablet:        769-1024px (Tablets)
+   💻 Desktop:       1025-1440px (Desktop)
+   🖥️ Desktop HD:    > 1440px   (Desktop Grande)
+*/
+
+/* ========================================== */
+/* 1. MOBILE - < 480px                        */
+/* ========================================== */
+
+@media (max-width: 480px) {
+    /* ===== CONTAINER ===== */
+    .app-container {
+        flex-direction: column;
+    }
+
+    /* ===== MAIN CONTENT ===== */
+    .main-content {
+        padding: 10px !important;
+        margin-left: 0 !important;
+        padding-bottom: 80px !important;
+    }
+
+    /* ===== PAGE HEADER ===== */
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        margin-bottom: 12px;
+    }
+
+    .header-left h1 {
+        font-size: 1.2rem !important;
+    }
+
+    .header-left h1 .icon {
+        font-size: 1.2rem !important;
+    }
+
+    .header-left .breadcrumb {
+        font-size: 0.7rem !important;
+    }
+
+    .header-left .breadcrumb .separator {
+        margin: 0 4px !important;
+    }
+
+    .header-right {
+        width: 100%;
+        flex-wrap: wrap;
+        gap: 6px;
+        justify-content: flex-start;
+    }
+
+    .header-right .btn {
+        font-size: 0.7rem !important;
+        padding: 4px 10px !important;
+    }
+
+    .header-right .btn .fa-sync-alt {
+        font-size: 0.7rem !important;
+    }
+
+    /* ===== BOTÕES ===== */
+    .btn {
+        font-size: 0.75rem !important;
+        padding: 5px 10px !important;
+        border-radius: 6px !important;
+    }
+
+    .btn-sm {
+        font-size: 0.65rem !important;
+        padding: 3px 6px !important;
+    }
+
+    .btn-primary {
+        font-size: 0.75rem !important;
+        padding: 5px 12px !important;
+    }
+
+    .btn .btn-text {
+        display: none;
+    }
+
+    .btn i {
+        font-size: 0.9rem !important;
+    }
+
+    /* ===== BADGES ===== */
+    .badge {
+        font-size: 0.55rem !important;
+        padding: 1px 6px !important;
+    }
+
+    /* ===== STATS CARDS ===== */
+    .stats-grid {
+        grid-template-columns: 1fr !important;
+        gap: 8px !important;
+        margin-bottom: 12px !important;
+    }
+
+    .stat-card {
+        padding: 12px 14px !important;
+        border-radius: 12px !important;
+    }
+
+    .stat-card .icon {
+        width: 32px !important;
+        height: 32px !important;
+        font-size: 0.9rem !important;
+        margin-bottom: 4px !important;
+    }
+
+    .stat-card .value {
+        font-size: 1.1rem !important;
+    }
+
+    .stat-card .label {
+        font-size: 0.7rem !important;
+    }
+
+    .stat-card .trend {
+        font-size: 0.6rem !important;
+        padding: 1px 6px !important;
+        margin-top: 4px !important;
+    }
+
+    /* ===== CHARTS ===== */
+    .charts-grid {
+        grid-template-columns: 1fr !important;
+        gap: 10px !important;
+        margin-bottom: 12px !important;
+    }
+
+    .chart-card {
+        padding: 12px !important;
+        border-radius: 12px !important;
+    }
+
+    .chart-card .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+        margin-bottom: 10px;
+    }
+
+    .chart-card .header h3 {
+        font-size: 0.85rem !important;
+    }
+
+    .chart-card .header select {
+        font-size: 0.65rem !important;
+        padding: 2px 8px !important;
+        width: 100%;
+    }
+
+    .chart-container {
+        height: 160px !important;
+    }
+
+    /* ===== TWO COLUMNS ===== */
+    .two-columns {
+        grid-template-columns: 1fr !important;
+        gap: 10px !important;
+        margin-bottom: 12px !important;
+    }
+
+    .card {
+        padding: 12px !important;
+        border-radius: 12px !important;
+    }
+
+    .card h3 {
+        font-size: 0.85rem !important;
+        margin-bottom: 8px !important;
+    }
+
+    /* ===== QUICK ACTIONS ===== */
+    .quick-actions {
+        padding: 12px !important;
+        border-radius: 12px !important;
+    }
+
+    .quick-actions h3 {
+        font-size: 0.85rem !important;
+        margin-bottom: 8px !important;
+    }
+
+    .actions-grid {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 6px !important;
+    }
+
+    .action-item {
+        padding: 10px !important;
+        border-radius: 8px !important;
+    }
+
+    .action-item .icon {
+        font-size: 1rem !important;
+    }
+
+    .action-item .label {
+        font-size: 0.65rem !important;
+    }
+
+    .action-item .badge {
+        font-size: 0.5rem !important;
+        padding: 1px 5px !important;
+        top: -4px !important;
+        right: -4px !important;
+    }
+
+    /* ===== FILTER BAR ===== */
+    .filter-bar-admin {
+        flex-direction: column !important;
+        padding: 10px 12px !important;
+        gap: 6px !important;
+        border-radius: 12px !important;
+        margin-bottom: 10px !important;
+    }
+
+    .filter-bar-admin .filter-group {
+        width: 100% !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 4px !important;
+    }
+
+    .filter-bar-admin .filter-group label {
+        font-size: 0.65rem !important;
+    }
+
+    .filter-bar-admin select,
+    .filter-bar-admin input {
+        font-size: 0.7rem !important;
+        padding: 4px 8px !important;
+        min-width: auto !important;
+        width: 100% !important;
+    }
+
+    .filter-bar-admin .filter-actions {
+        flex-direction: column !important;
+        margin-left: 0 !important;
+        gap: 4px !important;
+        width: 100% !important;
+    }
+
+    .filter-bar-admin .filter-actions .btn {
+        width: 100% !important;
+        justify-content: center !important;
+        font-size: 0.7rem !important;
+        padding: 4px 10px !important;
+    }
+
+    /* ===== QUICK ACTIONS BAR ===== */
+    .quick-actions-bar {
+        flex-direction: column !important;
+        padding: 10px !important;
+        gap: 6px !important;
+        border-radius: 12px !important;
+        margin-bottom: 10px !important;
+    }
+
+    .quick-actions-bar .btn {
+        width: 100% !important;
+        justify-content: center !important;
+        font-size: 0.7rem !important;
+        padding: 4px 10px !important;
+    }
+
+    .quick-actions-bar .mass-actions {
+        margin-left: 0 !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        padding: 6px 8px !important;
+        gap: 4px !important;
+    }
+
+    .quick-actions-bar .mass-actions .mass-count {
+        font-size: 0.7rem !important;
+        text-align: center;
+    }
+
+    .quick-actions-bar .mass-actions .btn {
+        width: 100% !important;
+        justify-content: center !important;
+        font-size: 0.65rem !important;
+        padding: 3px 8px !important;
+    }
+
+    /* ===== PANEL ADMIN ===== */
+    .panel-admin {
+        padding: 10px !important;
+        border-radius: 12px !important;
+    }
+
+    .panel-admin .panel-header {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 4px !important;
+        margin-bottom: 8px !important;
+    }
+
+    .panel-admin .panel-title {
+        font-size: 0.85rem !important;
+    }
+
+    .panel-admin .panel-actions .text-muted {
+        font-size: 0.6rem !important;
+    }
+
+    /* ===== TABELA ===== */
+    .table-responsive {
+        margin: 0 -4px !important;
+    }
+
+    .table-admin {
+        font-size: 0.7rem !important;
+        min-width: 550px !important;
+    }
+
+    .table-admin thead th {
+        font-size: 0.55rem !important;
+        padding: 6px 8px !important;
+        letter-spacing: 0.3px !important;
+    }
+
+    .table-admin tbody td {
+        padding: 6px 8px !important;
+    }
+
+    .user-info img {
+        width: 24px !important;
+        height: 24px !important;
+    }
+
+    .user-info strong {
+        font-size: 0.7rem !important;
+    }
+
+    .user-info .user-empresa {
+        font-size: 0.55rem !important;
+    }
+
+    .user-email {
+        font-size: 0.65rem !important;
+    }
+
+    .user-telefone {
+        font-size: 0.55rem !important;
+    }
+
+    .data-info .data-registo,
+    .data-info .ultimo-acesso {
+        font-size: 0.55rem !important;
+    }
+
+    .status-badge {
+        font-size: 0.55rem !important;
+        padding: 2px 8px !important;
+        gap: 4px !important;
+    }
+
+    .status-badge .status-dot {
+        width: 4px !important;
+        height: 4px !important;
+    }
+
+    .action-buttons .btn {
+        font-size: 0.55rem !important;
+        padding: 2px 5px !important;
+        min-width: 20px !important;
+        height: 20px !important;
+    }
+
+    /* ===== PAGINATION ===== */
+    .table-pagination {
+        gap: 3px !important;
+        padding: 8px 0 4px !important;
+    }
+
+    .table-pagination .page-btn {
+        min-width: 24px !important;
+        height: 24px !important;
+        font-size: 0.6rem !important;
+        border-radius: 4px !important;
+    }
+
+    /* ===== MODAL ===== */
+    .modal-content {
+        width: 95% !important;
+        max-width: 95% !important;
+        margin: 5px !important;
+        border-radius: 12px !important;
+    }
+
+    .modal-header {
+        padding: 10px 14px !important;
+    }
+
+    .modal-header .modal-title {
+        font-size: 0.85rem !important;
+    }
+
+    .modal-body {
+        padding: 12px 14px !important;
+    }
+
+    .modal-footer {
+        padding: 10px 14px !important;
+        flex-direction: column !important;
+        gap: 6px !important;
+    }
+
+    .modal-footer .btn {
+        width: 100% !important;
+        justify-content: center !important;
+    }
+
+    /* ===== FORMULÁRIO ===== */
+    .form-row {
+        grid-template-columns: 1fr !important;
+        gap: 8px !important;
+    }
+
+    .form-group {
+        margin-bottom: 8px !important;
+    }
+
+    .form-label {
+        font-size: 0.7rem !important;
+    }
+
+    .form-control {
+        font-size: 0.75rem !important;
+        padding: 6px 10px !important;
+        border-radius: 6px !important;
+    }
+
+    /* ===== NOTIFICAÇÕES DROPDOWN ===== */
+    .notifications-dropdown {
+        width: calc(100% - 20px) !important;
+        right: 10px !important;
+        left: 10px !important;
+        top: calc(100% + 4px) !important;
+        max-height: 380px !important;
+    }
+
+    .notifications-dropdown .dropdown-header h3 {
+        font-size: 0.75rem !important;
+    }
+
+    .notificacao-item {
+        padding: 8px 12px !important;
+        gap: 8px !important;
+    }
+
+    .notificacao-item .notif-icon {
+        width: 28px !important;
+        height: 28px !important;
+        font-size: 0.7rem !important;
+    }
+
+    .notificacao-item .notif-conteudo p {
+        font-size: 0.7rem !important;
+    }
+
+    .notificacao-item .notif-tempo {
+        font-size: 0.55rem !important;
+    }
+
+    .notificacao-item .notif-dot {
+        width: 4px !important;
+        height: 4px !important;
+    }
+
+    .notifications-dropdown .dropdown-footer {
+        flex-direction: column !important;
+        gap: 4px !important;
+        padding: 8px 12px !important;
+    }
+
+    .notifications-dropdown .dropdown-footer .btn {
+        width: 100% !important;
+        justify-content: center !important;
+    }
+
+    /* ===== PERFIL DROPDOWN ===== */
+    .perfil-dropdown {
+        right: 10px !important;
+        left: 10px !important;
+        min-width: auto !important;
+    }
+
+    .perfil-dropdown .perfil-info {
+        padding: 10px 12px !important;
+        gap: 8px !important;
+    }
+
+    .perfil-dropdown .perfil-info img {
+        width: 32px !important;
+        height: 32px !important;
+    }
+
+    .perfil-dropdown .perfil-info strong {
+        font-size: 0.75rem !important;
+    }
+
+    .perfil-dropdown .perfil-info span {
+        font-size: 0.6rem !important;
+    }
+
+    .perfil-dropdown a {
+        font-size: 0.7rem !important;
+        padding: 6px 12px !important;
+        gap: 6px !important;
+    }
+
+    .perfil-dropdown a i {
+        font-size: 0.75rem !important;
+        width: 16px !important;
+    }
+
+    /* ===== TOAST ===== */
+    .toast {
+        min-width: 180px !important;
+        max-width: calc(100% - 20px) !important;
+        padding: 8px 12px !important;
+        font-size: 0.7rem !important;
+        border-radius: 8px !important;
+    }
+
+    .toast .toast-content i {
+        font-size: 0.8rem !important;
+    }
+
+    .toast .toast-close {
+        font-size: 0.9rem !important;
+    }
+
+    /* ===== BOTTOM NAV ===== */
+    .bottom-nav {
+        display: block !important;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 999;
+        background: var(--bg-secondary);
+        border-top: 1px solid var(--border-color);
+        padding: 4px 0 env(safe-area-inset-bottom, 4px) 0;
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        background: rgba(var(--bg-secondary-rgb, 10, 22, 40), 0.95);
+        box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .bottom-nav .nav-item {
+        min-width: 40px !important;
+        padding: 2px 4px !important;
+    }
+
+    .bottom-nav .nav-item i {
+        font-size: 1rem !important;
+    }
+
+    .bottom-nav .nav-item span {
+        font-size: 0.4rem !important;
+    }
+
+    .bottom-nav .nav-item .badge {
+        min-width: 12px !important;
+        height: 12px !important;
+        font-size: 0.35rem !important;
+        top: 0 !important;
+        right: 0 !important;
+        padding: 0 3px !important;
+    }
+
+    .bottom-nav .nav-item.menu-toggle {
+        display: flex !important;
+    }
+
+    /* ===== SIDEBAR MOBILE ===== */
+    .sidebar {
+        display: none !important;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 280px;
+        height: 100%;
+        z-index: 1000;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+    }
+
+    .sidebar.open {
+        display: flex !important;
+        transform: translateX(0);
+        animation: slideUp 0.3s ease;
+    }
+
+    @keyframes slideUp {
+        from {
+            transform: translateY(100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    .sidebar-overlay {
+        display: none !important;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+    }
+
+    .sidebar-overlay.active {
+        display: block !important;
+    }
+
+    /* ===== ACTIVITY LIST ===== */
+    .activity-item {
+        gap: 8px !important;
+        padding-bottom: 8px !important;
+    }
+
+    .activity-item .icon {
+        width: 26px !important;
+        height: 26px !important;
+        font-size: 0.65rem !important;
+    }
+
+    .activity-item .info p {
+        font-size: 0.7rem !important;
+    }
+
+    .activity-item .info .time {
+        font-size: 0.55rem !important;
+    }
+
+    /* ===== BREADCRUMB ===== */
+    .breadcrumb {
+        font-size: 0.65rem !important;
+    }
+
+    /* ===== CHART PERIOD SELECT ===== */
+    .chart-card .header select {
+        font-size: 0.6rem !important;
+        padding: 2px 6px !important;
+    }
+
+    /* ===== EMPTY STATE ===== */
+    .empty-state-admin i {
+        font-size: 2.5rem !important;
+    }
+
+    .empty-state-admin h4 {
+        font-size: 0.9rem !important;
+    }
+
+    .empty-state-admin p {
+        font-size: 0.75rem !important;
+    }
+}
+
+/* ========================================== */
+/* 2. MOBILE GRANDE - 481px a 768px           */
+/* ========================================== */
+
+@media (min-width: 481px) and (max-width: 768px) {
+    /* ===== MAIN CONTENT ===== */
+    .main-content {
+        padding: 14px !important;
+        margin-left: 0 !important;
+        padding-bottom: 80px !important;
+    }
+
+    /* ===== PAGE HEADER ===== */
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        margin-bottom: 14px;
+    }
+
+    .header-left h1 {
+        font-size: 1.4rem !important;
+    }
+
+    .header-right {
+        width: 100%;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    /* ===== STATS CARDS ===== */
+    .stats-grid {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 10px !important;
+        margin-bottom: 14px !important;
+    }
+
+    .stat-card {
+        padding: 14px !important;
+    }
+
+    .stat-card .value {
+        font-size: 1.2rem !important;
+    }
+
+    /* ===== CHARTS ===== */
+    .charts-grid {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+        margin-bottom: 14px !important;
+    }
+
+    .chart-container {
+        height: 200px !important;
+    }
+
+    /* ===== TWO COLUMNS ===== */
+    .two-columns {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+        margin-bottom: 14px !important;
+    }
+
+    /* ===== FILTER BAR ===== */
+    .filter-bar-admin {
+        flex-direction: column !important;
+        padding: 12px 14px !important;
+        gap: 8px !important;
+    }
+
+    .filter-bar-admin .filter-group {
+        width: 100% !important;
+    }
+
+    .filter-bar-admin select,
+    .filter-bar-admin input {
+        width: 100% !important;
+        min-width: auto !important;
+    }
+
+    .filter-bar-admin .filter-actions {
+        margin-left: 0 !important;
+        justify-content: flex-end;
+    }
+
+    /* ===== QUICK ACTIONS BAR ===== */
+    .quick-actions-bar {
+        flex-direction: column !important;
+        padding: 12px !important;
+        gap: 8px !important;
+    }
+
+    .quick-actions-bar .btn {
+        width: 100% !important;
+        justify-content: center !important;
+    }
+
+    .quick-actions-bar .mass-actions {
+        margin-left: 0 !important;
+        justify-content: center !important;
+        flex-wrap: wrap;
+    }
+
+    /* ===== PANEL ADMIN ===== */
+    .panel-admin {
+        padding: 14px !important;
+    }
+
+    .panel-admin .panel-header {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 4px !important;
+    }
+
+    /* ===== TABELA ===== */
+    .table-admin {
+        font-size: 0.75rem !important;
+        min-width: 600px !important;
+    }
+
+    .table-admin thead th {
+        font-size: 0.6rem !important;
+        padding: 8px 10px !important;
+    }
+
+    .table-admin tbody td {
+        padding: 8px 10px !important;
+    }
+
+    .user-info img {
+        width: 28px !important;
+        height: 28px !important;
+    }
+
+    /* ===== FORMULÁRIO ===== */
+    .form-row {
+        grid-template-columns: 1fr !important;
+        gap: 10px !important;
+    }
+
+    /* ===== MODAL ===== */
+    .modal-content {
+        width: 92% !important;
+        margin: 10px !important;
+    }
+
+    /* ===== NOTIFICAÇÕES DROPDOWN ===== */
+    .notifications-dropdown {
+        width: calc(100% - 20px) !important;
+        right: 10px !important;
+        left: 10px !important;
+    }
+
+    .perfil-dropdown {
+        right: 10px !important;
+        left: 10px !important;
+        min-width: auto !important;
+    }
+
+    /* ===== QUICK ACTIONS ===== */
+    .actions-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+
+    /* ===== BOTTOM NAV ===== */
+    .bottom-nav {
+        display: block !important;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 999;
+        background: var(--bg-secondary);
+        border-top: 1px solid var(--border-color);
+        padding: 4px 0 env(safe-area-inset-bottom, 4px) 0;
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        background: rgba(var(--bg-secondary-rgb, 10, 22, 40), 0.95);
+        box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .bottom-nav .nav-item.menu-toggle {
+        display: flex !important;
+    }
+
+    /* ===== SIDEBAR MOBILE ===== */
+    .sidebar {
+        display: none !important;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 280px;
+        height: 100%;
+        z-index: 1000;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+    }
+
+    .sidebar.open {
+        display: flex !important;
+        transform: translateX(0);
+    }
+
+    .sidebar-overlay {
+        display: none !important;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+    }
+
+    .sidebar-overlay.active {
+        display: block !important;
+    }
+}
+
+/* ========================================== */
+/* 3. TABLET - 769px a 1024px                */
+/* ========================================== */
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    /* ===== MAIN CONTENT ===== */
+    .main-content {
+        padding: 18px !important;
+        margin-left: 0 !important;
+    }
+
+    /* ===== STATS CARDS ===== */
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 14px !important;
+    }
+
+    /* ===== CHARTS ===== */
+    .charts-grid {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+    }
+
+    .chart-container {
+        height: 240px !important;
+    }
+
+    /* ===== TWO COLUMNS ===== */
+    .two-columns {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+    }
+
+    /* ===== FILTER BAR ===== */
+    .filter-bar-admin {
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 14px 16px;
+    }
+
+    .filter-bar-admin .filter-group {
+        flex: 1;
+        min-width: 150px;
+    }
+
+    .filter-bar-admin select,
+    .filter-bar-admin input {
+        min-width: 120px;
+        width: 100%;
+    }
+
+    /* ===== QUICK ACTIONS BAR ===== */
+    .quick-actions-bar {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .quick-actions-bar .btn {
+        flex: 1;
+        min-width: 120px;
+        justify-content: center;
+    }
+
+    .quick-actions-bar .mass-actions {
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-left: 0;
+        width: 100%;
+    }
+
+    /* ===== TABELA ===== */
+    .table-admin {
+        font-size: 0.8rem !important;
+    }
+
+    .table-admin thead th {
+        font-size: 0.65rem !important;
+        padding: 10px 12px !important;
+    }
+
+    .table-admin tbody td {
+        padding: 10px 12px !important;
+    }
+
+    /* ===== FORMULÁRIO ===== */
+    .form-row {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 14px !important;
+    }
+
+    /* ===== QUICK ACTIONS ===== */
+    .actions-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+    }
+
+    /* ===== MODAL ===== */
+    .modal-content {
+        max-width: 90% !important;
+    }
+
+    /* ===== NOTIFICAÇÕES DROPDOWN ===== */
+    .notifications-dropdown {
+        width: 340px !important;
+    }
+
+    /* ===== BOTTOM NAV ===== */
+    .bottom-nav {
+        display: none !important;
+    }
+
+    .bottom-nav .nav-item.menu-toggle {
+        display: none !important;
+    }
+
+    /* ===== SIDEBAR ===== */
+    .sidebar {
+        display: flex !important;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 260px;
+        height: 100%;
+        z-index: 1000;
+        transform: none !important;
+    }
+
+    .sidebar-overlay {
+        display: none !important;
+    }
+
+    .btn-toggle-sidebar {
+        display: block !important;
+    }
+}
+
+/* ========================================== */
+/* 4. DESKTOP - 1025px a 1440px              */
+/* ========================================== */
+
+@media (min-width: 1025px) and (max-width: 1440px) {
+    /* ===== MAIN CONTENT ===== */
+    .main-content {
+        padding: 20px !important;
+        margin-left: 280px !important;
+    }
+
+    /* ===== STATS CARDS ===== */
+    .stats-grid {
+        grid-template-columns: repeat(4, 1fr) !important;
+        gap: 18px !important;
+    }
+
+    /* ===== CHARTS ===== */
+    .charts-grid {
+        grid-template-columns: 2fr 1fr !important;
+        gap: 20px !important;
+    }
+
+    .chart-container {
+        height: 280px !important;
+    }
+
+    /* ===== TWO COLUMNS ===== */
+    .two-columns {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 20px !important;
+    }
+
+    /* ===== QUICK ACTIONS ===== */
+    .actions-grid {
+        grid-template-columns: repeat(4, 1fr) !important;
+    }
+
+    /* ===== FILTER BAR ===== */
+    .filter-bar-admin {
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    /* ===== QUICK ACTIONS BAR ===== */
+    .quick-actions-bar {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    /* ===== BOTTOM NAV ===== */
+    .bottom-nav {
+        display: none !important;
+    }
+
+    .bottom-nav .nav-item.menu-toggle {
+        display: none !important;
+    }
+
+    /* ===== SIDEBAR ===== */
+    .sidebar {
+        display: flex !important;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 280px;
+        height: 100%;
+        z-index: 1000;
+        transform: none !important;
+    }
+
+    .sidebar-overlay {
+        display: none !important;
+    }
+
+    .btn-toggle-sidebar {
+        display: none !important;
+    }
+}
+
+/* ========================================== */
+/* 5. DESKTOP HD - > 1440px                  */
+/* ========================================== */
+
+@media (min-width: 1441px) {
+    /* ===== MAIN CONTENT ===== */
+    .main-content {
+        max-width: 1400px;
+        margin: 0 auto !important;
+        padding: 28px !important;
+        padding-bottom: 28px !important;
+        margin-left: 280px !important;
+    }
+
+    /* ===== STATS CARDS ===== */
+    .stats-grid {
+        grid-template-columns: repeat(4, 1fr) !important;
+        gap: 24px !important;
+    }
+
+    /* ===== CHARTS ===== */
+    .charts-grid {
+        grid-template-columns: 2fr 1fr !important;
+        gap: 24px !important;
+    }
+
+    .chart-container {
+        height: 320px !important;
+    }
+
+    /* ===== TWO COLUMNS ===== */
+    .two-columns {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 24px !important;
+    }
+
+    /* ===== QUICK ACTIONS ===== */
+    .actions-grid {
+        grid-template-columns: repeat(4, 1fr) !important;
+        gap: 16px !important;
+    }
+
+    /* ===== FILTER BAR ===== */
+    .filter-bar-admin {
+        padding: 18px 24px !important;
+        gap: 16px !important;
+    }
+
+    /* ===== QUICK ACTIONS BAR ===== */
+    .quick-actions-bar {
+        padding: 16px 20px !important;
+        gap: 12px !important;
+    }
+
+    /* ===== PANEL ADMIN ===== */
+    .panel-admin {
+        padding: 24px !important;
+    }
+
+    /* ===== MODAL ===== */
+    .modal-content {
+        max-width: 580px !important;
+    }
+
+    /* ===== BOTTOM NAV ===== */
+    .bottom-nav {
+        display: none !important;
+    }
+
+    .bottom-nav .nav-item.menu-toggle {
+        display: none !important;
+    }
+
+    /* ===== SIDEBAR ===== */
+    .sidebar {
+        display: flex !important;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 280px;
+        height: 100%;
+        z-index: 1000;
+        transform: none !important;
+    }
+
+    .sidebar-overlay {
+        display: none !important;
+    }
+
+    .btn-toggle-sidebar {
+        display: none !important;
+    }
+}
+
+/* ========================================== */
+/* 6. IMPRESSÃO                              */
+/* ========================================== */
+
+@media print {
+    /* ===== OCULTAR ELEMENTOS ===== */
+    .sidebar,
+    .bottom-nav,
+    .btn-toggle-sidebar,
+    .btn-notificacoes,
+    .btn-perfil,
+    .btn-theme,
+    .btn-primary,
+    .filter-bar-admin,
+    .quick-actions-bar,
+    .quick-actions,
+    .action-buttons,
+    .table-pagination,
+    .notifications-wrapper,
+    .perfil-wrapper,
+    .header-right .btn,
+    .mass-actions,
+    #btnTheme,
+    #btnNotificacoes,
+    #btnPerfil,
+    .sidebar-overlay {
+        display: none !important;
+    }
+
+    /* ===== MAIN CONTENT ===== */
+    .main-content {
+        margin: 0 !important;
+        padding: 20px !important;
+        max-width: 100% !important;
+    }
+
+    /* ===== CARDS ===== */
+    .stat-card,
+    .card,
+    .chart-card,
+    .panel-admin {
+        break-inside: avoid;
+        page-break-inside: avoid;
+        box-shadow: none !important;
+        border: 1px solid #ddd !important;
+        background: white !important;
+    }
+
+    /* ===== STATS CARDS ===== */
+    .stats-grid {
+        grid-template-columns: repeat(4, 1fr) !important;
+        gap: 12px !important;
+    }
+
+    .stat-card .value {
+        color: #000 !important;
+    }
+
+    .stat-card .label {
+        color: #666 !important;
+    }
+
+    /* ===== CHARTS ===== */
+    .charts-grid {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 16px !important;
+    }
+
+    .chart-container {
+        height: 200px !important;
+    }
+
+    /* ===== TWO COLUMNS ===== */
+    .two-columns {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 16px !important;
+    }
+
+    /* ===== TABELA ===== */
+    .table-admin {
+        font-size: 10px !important;
+    }
+
+    .table-admin thead th {
+        background: #f5f5f5 !important;
+        color: #333 !important;
+        border-bottom: 2px solid #ddd !important;
+    }
+
+    .table-admin tbody td {
+        border-bottom: 1px solid #eee !important;
+    }
+
+    .table-admin tbody tr:hover {
+        background: none !important;
+    }
+
+    /* ===== BADGES ===== */
+    .badge {
+        border: 1px solid #ddd !important;
+        background: #f5f5f5 !important;
+        color: #333 !important;
+    }
+
+    .status-badge {
+        border: 1px solid #ddd !important;
+        background: #f5f5f5 !important;
+        color: #333 !important;
+    }
+
+    .status-badge .status-dot {
+        display: none !important;
+    }
+
+    /* ===== CORES EM PRETO E BRANCO ===== */
+    .stat-card .icon,
+    .activity-item .icon,
+    .action-item .icon {
+        background: #f5f5f5 !important;
+        color: #333 !important;
+    }
+
+    .page-header h1 .icon {
+        background: none !important;
+        -webkit-text-fill-color: #333 !important;
+        color: #333 !important;
+    }
+
+    .logo-text {
+        background: none !important;
+        -webkit-text-fill-color: #333 !important;
+        color: #333 !important;
+    }
+}
+
+/* ========================================== */
+/* 7. UTILITÁRIOS DE RESPONSIVIDADE          */
+/* ========================================== */
+
+/* ===== OCULTAR EM MOBILE ===== */
+.hide-mobile {
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .hide-mobile {
+        display: none !important;
+    }
+}
+
+/* ===== OCULTAR EM DESKTOP ===== */
+.hide-desktop {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .hide-desktop {
+        display: block !important;
+    }
+}
+
+/* ===== OCULTAR EM TABLET ===== */
+.hide-tablet {
+    display: block;
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .hide-tablet {
+        display: none !important;
+    }
+}
+
+/* ===== TEXT ALIGN RESPONSIVO ===== */
+@media (max-width: 768px) {
+    .text-center-mobile {
+        text-align: center !important;
+    }
+    .text-left-mobile {
+        text-align: left !important;
+    }
+    .text-right-mobile {
+        text-align: right !important;
+    }
+}
+
+/* ===== FLEX RESPONSIVO ===== */
+@media (max-width: 768px) {
+    .flex-column-mobile {
+        flex-direction: column !important;
+    }
+    .flex-wrap-mobile {
+        flex-wrap: wrap !important;
+    }
+    .gap-mobile {
+        gap: 8px !important;
+    }
+}
+
+/* ===== GRID RESPONSIVO ===== */
+@media (max-width: 480px) {
+    .grid-1-mobile {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+    .grid-2-mobile {
+        grid-template-columns: 1fr 1fr !important;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .grid-2-tablet {
+        grid-template-columns: 1fr 1fr !important;
+    }
+    .grid-3-tablet {
+        grid-template-columns: 1fr 1fr 1fr !important;
+    }
+}
+
+/* ========================================== */
+/* 8. SAFE AREA PARA NOTCH / BOTTOM NAV      */
+/* ========================================== */
+
+@supports (padding: max(0px)) {
+    .bottom-nav {
+        padding-bottom: max(4px, env(safe-area-inset-bottom, 4px)) !important;
+    }
+
+    .main-content {
+        padding-bottom: max(16px, env(safe-area-inset-bottom, 16px)) !important;
+    }
+}
+
+/* ========================================== */
+/* 9. DARK MODE RESPONSIVO                   */
+/* ========================================== */
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="light"] .bottom-nav {
+        background: rgba(255, 255, 255, 0.95) !important;
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    [data-theme="dark"] .bottom-nav {
+        background: rgba(10, 22, 40, 0.95) !important;
+    }
+}
+
+/* ========================================== */
+/* 10. FIX PARA SIDEBAR TOGGLE               */
+/* ========================================== */
+
+.btn-toggle-sidebar {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 4px;
+}
+
+@media (max-width: 1024px) {
+    .btn-toggle-sidebar {
+        display: block !important;
+    }
+}
+
+/* ========================================== */
+/* 11. FIX PARA TABELA EM MOBILE             */
+/* ========================================== */
+
+@media (max-width: 768px) {
+    .table-responsive {
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        margin: 0 -8px !important;
+        padding: 0 8px !important;
+    }
+
+    .table-responsive table {
+        min-width: 600px !important;
+        width: 100% !important;
+    }
+}
+
+/* ========================================== */
+/* 12. FIX PARA MODAL EM MOBILE              */
+/* ========================================== */
+
+@media (max-width: 768px) {
+    .modal {
+        align-items: flex-end !important;
+        justify-content: center !important;
+    }
+
+    .modal-content {
+        max-height: 95vh !important;
+        margin: 10px !important;
+        border-radius: 16px 16px 12px 12px !important;
+        animation: slideUpModal 0.3s ease !important;
+    }
+
+    @keyframes slideUpModal {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+}
+
+/* ========================================== */
+/* 13. FIX PARA DROPDOWNS EM MOBILE          */
+/* ========================================== */
+
+@media (max-width: 768px) {
+    .notifications-dropdown,
+    .perfil-dropdown {
+        position: fixed !important;
+        top: auto !important;
+        bottom: 80px !important;
+        left: 10px !important;
+        right: 10px !important;
+        width: auto !important;
+        max-height: 60vh !important;
+        border-radius: 16px !important;
+    }
+
+    .notifications-dropdown .dropdown-body {
+        max-height: 40vh !important;
+    }
+}
+
+/* ========================================== */
+/* 14. FIX PARA GRÁFICOS EM MOBILE           */
+/* ========================================== */
+
+@media (max-width: 480px) {
+    .chart-container canvas {
+        width: 100% !important;
+        height: 100% !important;
+    }
+}
+
+/* ========================================== */
+/* 15. FIX PARA FORMULÁRIOS EM MOBILE        */
+/* ========================================== */
+
+@media (max-width: 768px) {
+    .form-row {
+        grid-template-columns: 1fr !important;
+        gap: 10px !important;
+    }
+
+    .form-group {
+        margin-bottom: 10px !important;
+    }
+
+    .form-control {
+        font-size: 0.85rem !important;
+        padding: 8px 12px !important;
+    }
+
+    select.form-control {
+        font-size: 0.85rem !important;
+        padding: 8px 12px !important;
+    }
+}
+
+/* ========================================== */
+/* 16. FIX PARA BOTÕES DE AÇÃO EM MOBILE     */
+/* ========================================== */
+
+@media (max-width: 480px) {
+    .action-buttons {
+        flex-wrap: wrap !important;
+        gap: 3px !important;
+    }
+
+    .action-buttons .btn {
+        min-width: 24px !important;
+        height: 24px !important;
+        padding: 2px 4px !important;
+        font-size: 0.5rem !important;
+    }
+
+    .action-buttons .btn i {
+        font-size: 0.6rem !important;
+    }
+}
+
+/* ========================================== */
+/* 17. FIX PARA PAGINAÇÃO EM MOBILE          */
+/* ========================================== */
+
+@media (max-width: 480px) {
+    .table-pagination .page-btn {
+        min-width: 28px !important;
+        height: 28px !important;
+        font-size: 0.6rem !important;
+    }
+
+    .table-pagination .page-btn.prev,
+    .table-pagination .page-btn.next {
+        min-width: 28px !important;
+        height: 28px !important;
+        font-size: 0.6rem !important;
+    }
+}
+
+/* ========================================== */
+/* 18. FIX PARA VALIDAÇÃO CARDS              */
+/* ========================================== */
+
+@media (max-width: 768px) {
+    .validacao-grid {
+        grid-template-columns: 1fr !important;
+        gap: 10px !important;
+    }
+
+    .validacao-card {
+        padding: 14px !important;
+    }
+
+    .validacao-header {
+        flex-wrap: wrap !important;
+    }
+
+    .validacao-footer {
+        flex-direction: column !important;
+        gap: 6px !important;
+    }
+
+    .validacao-footer .btn {
+        width: 100% !important;
+        justify-content: center !important;
+    }
+}
+
+/* ========================================== */
+/* 19. FIX PARA QUICK ACTIONS EM MOBILE      */
+/* ========================================== */
+
+@media (max-width: 480px) {
+    .quick-actions {
+        padding: 10px !important;
+    }
+
+    .quick-actions h3 {
+        font-size: 0.8rem !important;
+    }
+
+    .actions-grid {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 6px !important;
+    }
+
+    .action-item {
+        padding: 8px !important;
+    }
+
+    .action-item .icon {
+        font-size: 0.9rem !important;
+    }
+
+    .action-item .label {
+        font-size: 0.6rem !important;
+    }
+}
+
+/* ========================================== */
+/* 20. FIX PARA STATS CARDS EM MOBILE        */
+/* ========================================== */
+
+@media (max-width: 480px) {
+    .stat-card .trend {
+        font-size: 0.55rem !important;
+        padding: 1px 4px !important;
+    }
+}
