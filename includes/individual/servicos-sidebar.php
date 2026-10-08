@@ -31,23 +31,6 @@ $sidebar_profissional = [
     'nivel' => $profissional_atual['nivel'] ?? 'Profissional Certificado'
 ];
 
-// ============================================
-// CATEGORIAS DE SERVIÇOS
-// ============================================
-$sidebar_categorias = [
-    ['icon' => 'fa-mountain', 'label' => 'Topografia', 'link' => 'index.php?categoria=topografia', 'page' => 'topografia', 'color' => '#6C2BD9'],
-    ['icon' => 'fa-ruler-combined', 'label' => 'Engenharia', 'link' => 'index.php?categoria=engenharia', 'page' => 'engenharia', 'color' => '#00D2FF'],
-    ['icon' => 'fa-home', 'label' => 'Cadastro', 'link' => 'index.php?categoria=cadastro', 'page' => 'cadastro', 'color' => '#FFD93D'],
-    ['icon' => 'fa-globe', 'label' => 'GIS', 'link' => 'index.php?categoria=gis', 'page' => 'gis', 'color' => '#00FFA3'],
-    ['icon' => 'fa-tractor', 'label' => 'Agricultura', 'link' => 'index.php?categoria=agricultura', 'page' => 'agricultura', 'color' => '#6BCB77'],
-    ['icon' => 'fa-gem', 'label' => 'Mineração', 'link' => 'index.php?categoria=mineracao', 'page' => 'mineracao', 'color' => '#FF9F43'],
-    ['icon' => 'fa-oil-can', 'label' => 'Petróleo & Gás', 'link' => 'index.php?categoria=petroleo', 'page' => 'petroleo', 'color' => '#FD79A8'],
-    ['icon' => 'fa-bolt', 'label' => 'Energia', 'link' => 'index.php?categoria=energia', 'page' => 'energia', 'color' => '#FFD93D'],
-    ['icon' => 'fa-city', 'label' => 'Urbanismo', 'link' => 'index.php?categoria=urbanismo', 'page' => 'urbanismo', 'color' => '#A29BFE'],
-    ['icon' => 'fa-truck', 'label' => 'Transportes', 'link' => 'index.php?categoria=transportes', 'page' => 'transportes', 'color' => '#00CEC9'],
-    ['icon' => 'fa-drone', 'label' => 'Drones', 'link' => 'index.php?categoria=drones', 'page' => 'drones', 'color' => '#FF6B6B'],
-    ['icon' => 'fa-graduation-cap', 'label' => 'Educação', 'link' => 'index.php?categoria=educacao', 'page' => 'educacao', 'color' => '#FDCB6E'],
-];
 
 // ============================================
 // MENU DA SIDEBAR
@@ -102,12 +85,7 @@ $sidebar_menu = [
                 'link' => 'portfolio-config.php',
                 'pages' => ['portfolio-config']
             ],
-            [
-                'icon' => 'fa-cog',
-                'label' => 'Configurar Preços',
-                'link' => 'precos-config.php',
-                'pages' => ['precos-config']
-            ],
+           
         ]
     ],
     [
@@ -227,26 +205,7 @@ if (!function_exists('servicosGetAvatarUrl')) {
             </div>
         <?php endforeach; ?>
 
-        <!-- ========================================== -->
-        <!-- CATEGORIAS DE SERVIÇOS - ACORDEÃO          -->
-        <!-- ========================================== -->
-        <div class="sidebar-group sidebar-group-setores">
-            <button class="sidebar-group-toggle" onclick="toggleSetores(event)" type="button">
-                <span class="sidebar-group-title">Categorias de Serviços</span>
-                <i class="fas fa-chevron-down toggle-icon"></i>
-            </button>
-            <div class="sidebar-setores-list" id="sidebarSetoresList">
-                <?php foreach ($sidebar_categorias as $categoria): ?>
-                    <a href="<?php echo $categoria['link']; ?>" 
-                       class="sidebar-item sidebar-item-setor <?php echo ($pagina_atual === $categoria['page']) ? 'active' : ''; ?>">
-                        <span class="setor-icon" style="background: <?php echo $categoria['color']; ?>20; color: <?php echo $categoria['color']; ?>;">
-                            <i class="fas <?php echo $categoria['icon']; ?>"></i>
-                        </span>
-                        <span><?php echo $categoria['label']; ?></span>
-                    </a>
-                <?php endforeach; ?>
-            </div>
-        </div>
+        
     </nav>
 
     <!-- ===== FOOTER DA SIDEBAR ===== -->
@@ -848,7 +807,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const categoriasAbertas = localStorage.getItem('geonnexus-categorias-servicos-open');
     
     const paginaAtual = '<?php echo $pagina_atual; ?>';
-    const categoriasPaginas = <?php echo json_encode(array_column($sidebar_categorias, 'page')); ?>;
     
     if (categoriasPaginas.includes(paginaAtual)) {
         if (grupoSetores) grupoSetores.classList.add('open');
@@ -858,4 +816,4 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
-<?php include "individual-botoesNavegacaoMobile.php" ?>
+<?php include "servicos-botoesNavegacaoMobile.php" ?>
