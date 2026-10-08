@@ -35,7 +35,6 @@ $fatura = [
     'tipo_label' => 'Receita',
     'referencia_externa' => 'FAT-2026-ABC-0156',
     
-    // Cliente
     'cliente' => [
         'id' => 1,
         'nome' => 'Construtora ABC',
@@ -47,7 +46,6 @@ $fatura = [
         'responsavel' => 'Eng. João Silva'
     ],
     
-    // Empresa (emitente)
     'empresa' => [
         'nome' => 'Carlos Mendes - Engenharia',
         'nif' => '5417896999',
@@ -58,7 +56,6 @@ $fatura = [
         'iban' => 'AO06 0040 0000 1234 5678 9012 3'
     ],
     
-    // Itens da fatura
     'itens' => [
         [
             'id' => 1,
@@ -80,18 +77,15 @@ $fatura = [
         ]
     ],
     
-    // Totais
     'subtotal' => 350000,
     'desconto' => 0,
     'iva_percentual' => 14,
     'iva_valor' => 49000,
     'total' => 399000,
     
-    // Notas
     'observacoes' => 'Pagamento referente à primeira fase do projeto de levantamento topográfico. Prazo de pagamento: 30 dias após emissão.',
     'termos' => 'O pagamento deve ser efetuado até a data de vencimento. Após esse prazo, serão aplicados juros de mora de 1% ao mês.',
     
-    // Transações vinculadas
     'transacao' => [
         'id' => 1,
         'referencia' => 'TRX-2026-0156',
@@ -100,7 +94,6 @@ $fatura = [
         'comprovativo' => true
     ],
     
-    // Histórico
     'historico' => [
         ['id' => 1, 'acao' => 'Fatura criada', 'usuario' => 'Carlos Mendes', 'data' => '2026-02-18 09:00:00', 'icon' => 'fa-plus-circle', 'color' => '#00D2FF'],
         ['id' => 2, 'acao' => 'Fatura enviada ao cliente', 'usuario' => 'Sistema', 'data' => '2026-02-18 09:15:00', 'icon' => 'fa-paper-plane', 'color' => '#6C2BD9'],
@@ -194,7 +187,6 @@ if (!function_exists('getStatusIcon')) {
 
 if (!function_exists('numeroPorExtenso')) {
     function numeroPorExtenso($numero) {
-        // Simplificado - para demonstração
         return 'trezentos e noventa e nove mil kwanzas';
     }
 }
@@ -299,15 +291,12 @@ $vencida = $vencimento < $hoje && $fatura['status'] !== 'paga';
 
             <!-- ===== DETALHE GRID ===== -->
             <div class="detalhe-grid">
-                <!-- ========================================== -->
-                <!-- COLUNA PRINCIPAL                           -->
-                <!-- ========================================== -->
+                <!-- Coluna Principal -->
                 <div class="detalhe-coluna-principal">
 
-                    <!-- ===== CABEÇALHO DA FATURA (Emitente + Cliente) ===== -->
+                    <!-- ===== CABEÇALHO DA FATURA ===== -->
                     <div class="fatura-header animate-fade-up" style="animation-delay: 0.1s;">
                         <div class="fatura-header-row">
-                            <!-- Emitente -->
                             <div class="fatura-emitente">
                                 <div class="emitente-avatar">
                                     <i class="fas fa-user-tie"></i>
@@ -322,7 +311,6 @@ $vencida = $vencimento < $hoje && $fatura['status'] !== 'paga';
                                 </div>
                             </div>
 
-                            <!-- Cliente -->
                             <div class="fatura-cliente">
                                 <div class="cliente-avatar">
                                     <i class="fas <?php echo $fatura['cliente']['tipo'] === 'Instituição' ? 'fa-university' : ($fatura['cliente']['tipo'] === 'Empresa' ? 'fa-building' : 'fa-user'); ?>"></i>
@@ -338,7 +326,6 @@ $vencida = $vencimento < $hoje && $fatura['status'] !== 'paga';
                             </div>
                         </div>
 
-                        <!-- Meta da Fatura -->
                         <div class="fatura-meta-header">
                             <div class="fatura-meta-item">
                                 <span class="fatura-meta-label">Número da Fatura</span>
@@ -444,7 +431,6 @@ $vencida = $vencimento < $hoje && $fatura['status'] !== 'paga';
                                 </table>
                             </div>
 
-                            <!-- Valor por extenso -->
                             <div class="valor-extenso">
                                 <i class="fas fa-info-circle"></i>
                                 <span>Valor por extenso: <strong><?php echo ucfirst(numeroPorExtenso($fatura['total'])); ?></strong></span>
@@ -452,7 +438,7 @@ $vencida = $vencimento < $hoje && $fatura['status'] !== 'paga';
                         </div>
                     </div>
 
-                    <!-- ===== OBSERVAÇÕES E TERMOS ===== -->
+                    <!-- ===== OBSERVAÇÕES ===== -->
                     <div class="detalhe-card animate-fade-up" style="animation-delay: 0.3s;">
                         <div class="detalhe-card-header">
                             <h3><i class="fas fa-sticky-note"></i> Observações e Termos</h3>
@@ -496,9 +482,7 @@ $vencida = $vencimento < $hoje && $fatura['status'] !== 'paga';
 
                 </div>
 
-                <!-- ========================================== -->
-                <!-- COLUNA LATERAL                             -->
-                <!-- ========================================== -->
+                <!-- Coluna Lateral -->
                 <div class="detalhe-coluna-lateral">
 
                     <!-- ===== ESTADO DA FATURA ===== -->
@@ -959,10 +943,127 @@ $vencida = $vencimento < $hoje && $fatura['status'] !== 'paga';
     <!-- ========================================== -->
     <!-- CSS ESPECÍFICO                             -->
     <!-- ========================================== -->
-   <style>
+    <style>
     /* ========================================== */
-    /* FATURA DETALHE - CSS ESPECÍFICO            */
+    /* BOTÃO DE TEMA (DARK / LIGHT)               */
     /* ========================================== */
+    .btn-theme {
+        width: 40px;
+        height: 40px;
+        border-radius: var(--radius-md);
+        border: 1px solid var(--border-color);
+        background: var(--bg-input);
+        color: var(--text-secondary);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        transition: var(--transition-smooth);
+        position: relative;
+        flex-shrink: 0;
+        padding: 0;
+    }
+
+    .btn-theme:hover {
+        border-color: #00D2FF;
+        color: #00D2FF;
+        background: rgba(0, 210, 255, 0.05);
+        transform: scale(1.05);
+    }
+
+    .btn-theme:active {
+        transform: scale(0.95);
+    }
+
+    .btn-theme .theme-icon {
+        position: absolute;
+        transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        pointer-events: none;
+    }
+
+    /* Sol visível no tema escuro */
+    .btn-theme .theme-icon.sun {
+        opacity: 1;
+        transform: rotate(0deg) scale(1);
+        color: #FFD93D;
+    }
+
+    .btn-theme .theme-icon.moon {
+        opacity: 0;
+        transform: rotate(180deg) scale(0.5);
+        color: #00D2FF;
+    }
+
+    /* Lua visível no tema claro */
+    [data-theme="light"] .btn-theme .theme-icon.sun {
+        opacity: 0;
+        transform: rotate(180deg) scale(0.5);
+    }
+
+    [data-theme="light"] .btn-theme .theme-icon.moon {
+        opacity: 1;
+        transform: rotate(0deg) scale(1);
+    }
+
+    /* ========================================== */
+    /* GARANTIR QUE NADA ESCAPA DA TELA           */
+    /* ========================================== */
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+        max-width: 100%;
+    }
+
+    html, body {
+        overflow-x: hidden;
+        width: 100%;
+        max-width: 100vw;
+    }
+
+    .app-container {
+        display: flex;
+        width: 100%;
+        max-width: 100vw;
+        overflow-x: hidden;
+        min-height: 100vh;
+    }
+
+    .main-content {
+        flex: 1;
+        min-width: 0;
+        max-width: 100%;
+        overflow-x: hidden;
+        padding: var(--space-lg);
+        margin-left: 280px;
+        position: relative;
+        z-index: 1;
+        transition: var(--transition-smooth);
+        min-height: 100vh;
+        background: var(--bg-primary);
+    }
+
+    @media (max-width: 1024px) {
+        .main-content {
+            margin-left: 0;
+            padding: var(--space-md);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .main-content {
+            padding: var(--space-sm);
+            padding-bottom: 80px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .main-content {
+            padding: var(--space-sm);
+            padding-bottom: 70px;
+        }
+    }
 
     /* ========================================== */
     /* PAGE HEADER                                */
@@ -980,6 +1081,9 @@ $vencida = $vencimento < $hoje && $fatura['status'] !== 'paga';
         flex-wrap: wrap;
         position: relative;
         overflow: visible;
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
     }
 
     .page-header::before {
@@ -995,7 +1099,7 @@ $vencida = $vencimento < $hoje && $fatura['status'] !== 'paga';
 
     .header-left {
         flex: 1;
-        min-width: 250px;
+        min-width: 0;
         display: flex;
         flex-direction: column;
         gap: 6px;
@@ -1011,6 +1115,9 @@ $vencida = $vencimento < $hoje && $fatura['status'] !== 'paga';
         align-items: center;
         gap: var(--space-sm);
         flex-wrap: wrap;
+        min-width: 0;
+        overflow-wrap: anywhere;
+        word-break: break-word;
     }
 
     .header-left h1 .icon { color: #00D2FF; font-size: 0.85em; }
@@ -1023,6 +1130,8 @@ $vencida = $vencimento < $hoje && $fatura['status'] !== 'paga';
         align-items: center;
         gap: var(--space-sm);
         flex-wrap: wrap;
+        min-width: 0;
+        overflow-wrap: anywhere;
     }
 
     .header-left .breadcrumb a {
@@ -1039,6 +1148,7 @@ $vencida = $vencimento < $hoje && $fatura['status'] !== 'paga';
         gap: var(--space-sm);
         flex-shrink: 0;
         flex-wrap: wrap;
+        max-width: 100%;
     }
 
     /* ========================================== */
@@ -1071,6 +1181,9 @@ $vencida = $vencimento < $hoje && $fatura['status'] !== 'paga';
     /* ========================================== */
     .resumo-fatura {
         margin-bottom: var(--space-lg);
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
     }
 
     .resumo-fatura-valor {
@@ -1082,6 +1195,10 @@ $vencida = $vencimento < $hoje && $fatura['status'] !== 'paga';
         background: linear-gradient(135deg, rgba(0, 210, 255, 0.1) 0%, rgba(108, 43, 217, 0.05) 100%);
         border: 2px solid rgba(0, 210, 255, 0.25);
         flex-wrap: wrap;
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        overflow: hidden;
     }
 
     .resumo-fatura-icon {
@@ -1102,7 +1219,8 @@ $vencida = $vencimento < $hoje && $fatura['status'] !== 'paga';
         display: flex;
         flex-direction: column;
         gap: 4px;
-        min-width: 200px;
+        min-width: 0;
+        overflow-wrap: anywhere;
     }
 
     .resumo-fatura-label {
@@ -1119,12 +1237,14 @@ $vencida = $vencimento < $hoje && $fatura['status'] !== 'paga';
         font-weight: 700;
         color: #00D2FF;
         line-height: 1;
+        overflow-wrap: anywhere;
     }
 
     .resumo-fatura-meta {
         display: flex;
         gap: var(--space-lg);
         flex-wrap: wrap;
+        min-width: 0;
     }
 
     .resumo-fatura-meta .meta-item {
@@ -1152,8 +1272,18 @@ $vencida = $vencimento < $hoje && $fatura['status'] !== 'paga';
     /* ========================================== */
     .detalhe-grid {
         display: grid;
-        grid-template-columns: 1fr 380px;
+        grid-template-columns: minmax(0, 1fr) 380px;
         gap: var(--space-lg);
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+    }
+
+    .detalhe-coluna-principal,
+    .detalhe-coluna-lateral {
+        min-width: 0;
+        max-width: 100%;
+        overflow-x: hidden;
     }
 
     /* ========================================== */
@@ -1165,14 +1295,18 @@ $vencida = $vencimento < $hoje && $fatura['status'] !== 'paga';
         border: 1px solid var(--border-color);
         margin-bottom: var(--space-lg);
         overflow: hidden;
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
     }
 
     .fatura-header-row {
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
         gap: var(--space-lg);
         padding: var(--space-lg);
         border-bottom: 1px solid var(--border-color);
+        min-width: 0;
     }
 
     .fatura-emitente,
@@ -1180,6 +1314,9 @@ $vencida = $vencimento < $hoje && $fatura['status'] !== 'paga';
         display: flex;
         gap: var(--space-md);
         align-items: flex-start;
+        min-width: 0;
+        overflow-wrap: anywhere;
+        word-break: break-word;
     }
 
     .emitente-avatar,
@@ -1211,6 +1348,7 @@ $vencida = $vencimento < $hoje && $fatura['status'] !== 'paga';
         display: flex;
         flex-direction: column;
         gap: 2px;
+        overflow-wrap: anywhere;
     }
 
     .emitente-label,
@@ -1230,6 +1368,7 @@ $vencida = $vencimento < $hoje && $fatura['status'] !== 'paga';
         font-weight: 700;
         color: var(--text-primary);
         margin: 0 0 6px 0;
+        overflow-wrap: anywhere;
     }
 
     .emitente-info p,
@@ -1238,8 +1377,10 @@ $vencida = $vencimento < $hoje && $fatura['status'] !== 'paga';
         color: var(--text-secondary);
         margin: 0;
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         gap: 6px;
+        overflow-wrap: anywhere;
+        word-break: break-word;
     }
 
     .emitente-info p i,
@@ -1247,20 +1388,24 @@ $vencida = $vencimento < $hoje && $fatura['status'] !== 'paga';
         color: #00D2FF;
         width: 12px;
         font-size: 11px;
+        flex-shrink: 0;
+        margin-top: 2px;
     }
 
     .fatura-meta-header {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(4, minmax(0, 1fr));
         gap: var(--space-md);
         padding: var(--space-lg);
         background: var(--bg-input);
+        min-width: 0;
     }
 
     .fatura-meta-item {
         display: flex;
         flex-direction: column;
         gap: 4px;
+        min-width: 0;
     }
 
     .fatura-meta-label {
@@ -1275,6 +1420,8 @@ $vencida = $vencimento < $hoje && $fatura['status'] !== 'paga';
         font-size: var(--text-sm);
         font-weight: 600;
         color: var(--text-primary);
+        overflow-wrap: anywhere;
+        word-break: break-word;
     }
 
     /* ========================================== */
@@ -1287,6 +1434,9 @@ $vencida = $vencimento < $hoje && $fatura['status'] !== 'paga';
         margin-bottom: var(--space-lg);
         transition: var(--transition-smooth);
         overflow: hidden;
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
     }
 
     .detalhe-card:hover {
@@ -1302,6 +1452,7 @@ $vencida = $vencimento < $hoje && $fatura['status'] !== 'paga';
         border-bottom: 1px solid var(--border-color);
         flex-wrap: wrap;
         gap: var(--space-sm);
+        min-width: 0;
     }
 
     .detalhe-card-header h3 {
@@ -1312,18 +1463,23 @@ $vencida = $vencimento < $hoje && $fatura['status'] !== 'paga';
         display: flex;
         align-items: center;
         gap: var(--space-sm);
+        flex-wrap: wrap;
+        min-width: 0;
     }
 
     .detalhe-card-header h3 i { color: #00D2FF; }
 
     .detalhe-card-body {
         padding: var(--space-lg);
+        min-width: 0;
     }
 
     /* ========================================== */
     /* ITENS TABLE                                */
     /* ========================================== */
     .itens-table-responsive {
+        width: 100%;
+        max-width: 100%;
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
     }
@@ -1332,7 +1488,7 @@ $vencida = $vencimento < $hoje && $fatura['status'] !== 'paga';
         width: 100%;
         border-collapse: collapse;
         font-size: var(--text-sm);
-        min-width: 700px;
+        min-width: 650px;
     }
 
     .itens-table thead {
@@ -1362,6 +1518,8 @@ $vencida = $vencimento < $hoje && $fatura['status'] !== 'paga';
         display: flex;
         flex-direction: column;
         gap: 4px;
+        min-width: 0;
+        overflow-wrap: anywhere;
     }
 
     .item-descricao strong {
@@ -1386,7 +1544,7 @@ $vencida = $vencimento < $hoje && $fatura['status'] !== 'paga';
 
     .valor-extenso {
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         gap: var(--space-sm);
         padding: var(--space-md);
         background: var(--bg-input);
@@ -1394,9 +1552,11 @@ $vencida = $vencimento < $hoje && $fatura['status'] !== 'paga';
         margin: var(--space-md) var(--space-lg) var(--space-lg);
         font-size: var(--text-sm);
         color: var(--text-secondary);
+        overflow-wrap: anywhere;
+        word-break: break-word;
     }
 
-    .valor-extenso i { color: #00D2FF; flex-shrink: 0; }
+    .valor-extenso i { color: #00D2FF; flex-shrink: 0; margin-top: 2px; }
     .valor-extenso strong { color: var(--text-primary); }
 
     /* ========================================== */
@@ -1406,6 +1566,7 @@ $vencida = $vencimento < $hoje && $fatura['status'] !== 'paga';
         display: flex;
         flex-direction: column;
         gap: 6px;
+        min-width: 0;
     }
 
     .info-label {
@@ -1425,6 +1586,8 @@ $vencida = $vencimento < $hoje && $fatura['status'] !== 'paga';
         background: var(--bg-input);
         border-radius: var(--radius-md);
         border: 1px solid var(--border-color);
+        overflow-wrap: anywhere;
+        word-break: break-word;
     }
 
     /* ========================================== */
@@ -1441,6 +1604,7 @@ $vencida = $vencimento < $hoje && $fatura['status'] !== 'paga';
         gap: var(--space-md);
         padding-bottom: var(--space-md);
         border-bottom: 1px solid var(--border-color);
+        min-width: 0;
     }
 
     .historico-item:last-child {
@@ -1471,6 +1635,7 @@ $vencida = $vencimento < $hoje && $fatura['status'] !== 'paga';
         font-size: var(--text-sm);
         font-weight: 500;
         color: var(--text-primary);
+        overflow-wrap: anywhere;
     }
 
     .historico-meta {
@@ -1499,6 +1664,7 @@ $vencida = $vencimento < $hoje && $fatura['status'] !== 'paga';
         border-radius: var(--radius-md);
         border: 1px solid var(--border-color);
         margin-bottom: var(--space-md);
+        min-width: 0;
     }
 
     .estado-icon {
@@ -1512,31 +1678,17 @@ $vencida = $vencimento < $hoje && $fatura['status'] !== 'paga';
         flex-shrink: 0;
     }
 
-    .estado-icon.status-paga {
-        background: rgba(0, 255, 163, 0.15);
-        color: #00FFA3;
-    }
-
-    .estado-icon.status-pendente {
-        background: rgba(255, 217, 61, 0.15);
-        color: #FFD93D;
-    }
-
-    .estado-icon.status-vencida {
-        background: rgba(255, 107, 107, 0.15);
-        color: #FF6B6B;
-    }
-
-    .estado-icon.status-cancelada {
-        background: rgba(107, 122, 143, 0.15);
-        color: #6B7A8F;
-    }
+    .estado-icon.status-paga { background: rgba(0, 255, 163, 0.15); color: #00FFA3; }
+    .estado-icon.status-pendente { background: rgba(255, 217, 61, 0.15); color: #FFD93D; }
+    .estado-icon.status-vencida { background: rgba(255, 107, 107, 0.15); color: #FF6B6B; }
+    .estado-icon.status-cancelada { background: rgba(107, 122, 143, 0.15); color: #6B7A8F; }
 
     .estado-info {
         flex: 1;
         display: flex;
         flex-direction: column;
         gap: 2px;
+        min-width: 0;
     }
 
     .estado-label {
@@ -1563,6 +1715,7 @@ $vencida = $vencimento < $hoje && $fatura['status'] !== 'paga';
         border-radius: var(--radius-sm);
         font-size: var(--text-sm);
         color: var(--text-secondary);
+        overflow-wrap: anywhere;
     }
 
     .estado-detalhe strong { color: var(--text-primary); }
@@ -1574,6 +1727,7 @@ $vencida = $vencimento < $hoje && $fatura['status'] !== 'paga';
         display: flex;
         flex-direction: column;
         gap: 2px;
+        min-width: 0;
     }
 
     .resumo-valor-item {
@@ -1582,6 +1736,8 @@ $vencida = $vencimento < $hoje && $fatura['status'] !== 'paga';
         align-items: center;
         padding: 10px 0;
         border-bottom: 1px solid var(--border-color);
+        gap: var(--space-sm);
+        min-width: 0;
     }
 
     .resumo-valor-item:last-child { border-bottom: none; }
@@ -1589,12 +1745,15 @@ $vencida = $vencimento < $hoje && $fatura['status'] !== 'paga';
     .resumo-valor-label {
         font-size: var(--text-sm);
         color: var(--text-muted);
+        flex-shrink: 0;
     }
 
     .resumo-valor-value {
         font-size: var(--text-sm);
         font-weight: 600;
         color: var(--text-primary);
+        text-align: right;
+        overflow-wrap: anywhere;
     }
 
     .resumo-valor-total {
@@ -1627,6 +1786,7 @@ $vencida = $vencimento < $hoje && $fatura['status'] !== 'paga';
         border: 1px solid var(--border-color);
         text-decoration: none;
         transition: var(--transition-smooth);
+        min-width: 0;
     }
 
     .transacao-vinculada:hover {
@@ -1639,6 +1799,8 @@ $vencida = $vencimento < $hoje && $fatura['status'] !== 'paga';
         justify-content: space-between;
         align-items: center;
         margin-bottom: 8px;
+        flex-wrap: wrap;
+        gap: 6px;
     }
 
     .transacao-vinculada-ref {
@@ -1646,6 +1808,7 @@ $vencida = $vencimento < $hoje && $fatura['status'] !== 'paga';
         font-size: var(--text-sm);
         font-weight: 700;
         color: #00D2FF;
+        overflow-wrap: anywhere;
     }
 
     .comprovativo-badge {
@@ -1678,12 +1841,14 @@ $vencida = $vencimento < $hoje && $fatura['status'] !== 'paga';
         display: flex;
         flex-direction: column;
         gap: var(--space-sm);
+        min-width: 0;
     }
 
     .dados-bancarios-item {
         display: flex;
         flex-direction: column;
         gap: 2px;
+        min-width: 0;
     }
 
     .dados-bancarios-label {
@@ -1699,6 +1864,7 @@ $vencida = $vencimento < $hoje && $fatura['status'] !== 'paga';
         font-weight: 600;
         color: var(--text-primary);
         word-break: break-all;
+        overflow-wrap: anywhere;
     }
 
     /* ========================================== */
@@ -1720,6 +1886,7 @@ $vencida = $vencimento < $hoje && $fatura['status'] !== 'paga';
         border: 1px solid var(--border-color);
         text-decoration: none;
         transition: var(--transition-smooth);
+        min-width: 0;
     }
 
     .fatura-relacionada:hover {
@@ -1746,6 +1913,7 @@ $vencida = $vencimento < $hoje && $fatura['status'] !== 'paga';
         display: flex;
         flex-direction: column;
         gap: 2px;
+        overflow-wrap: anywhere;
     }
 
     .fatura-relacionada-numero {
@@ -1801,6 +1969,7 @@ $vencida = $vencimento < $hoje && $fatura['status'] !== 'paga';
         transition: var(--transition-smooth);
         text-align: left;
         width: 100%;
+        min-width: 0;
     }
 
     .acao-item:hover {
@@ -1828,9 +1997,9 @@ $vencida = $vencimento < $hoje && $fatura['status'] !== 'paga';
     }
 
     /* ========================================== */
-    /* MODAL DE CANCELAMENTO (específico fatura) */
+    /* MODAL GENÉRICO                             */
     /* ========================================== */
-    .modal-fatura {
+    .modal {
         display: none;
         position: fixed;
         top: 0;
@@ -1840,22 +2009,26 @@ $vencida = $vencimento < $hoje && $fatura['status'] !== 'paga';
         z-index: 999999;
         align-items: center;
         justify-content: center;
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
     }
 
-    .modal-fatura.active { display: flex; }
+    .modal.active {
+        display: flex !important;
+    }
 
-    .modal-fatura .modal-overlay {
+    .modal-overlay {
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        background: rgba(0, 0, 0, 0.6);
-        backdrop-filter: blur(4px);
+        z-index: 1;
         cursor: pointer;
     }
 
-    .modal-fatura .modal-content {
+    .modal-content {
         position: relative;
         background: var(--bg-card);
         border-radius: var(--radius-lg);
@@ -1863,27 +2036,97 @@ $vencida = $vencimento < $hoje && $fatura['status'] !== 'paga';
         max-width: 500px;
         max-height: 90vh;
         overflow-y: auto;
-        animation: slideUp 0.3s ease;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-        border: 2px solid rgba(255, 107, 107, 0.3);
+        animation: modalSlideUp 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+        box-shadow: 0 25px 80px rgba(0, 0, 0, 0.6);
+        border: 1px solid var(--border-color);
         z-index: 10;
     }
 
-    .modal-header-danger {
-        background: linear-gradient(135deg, rgba(255, 107, 107, 0.15) 0%, rgba(255, 107, 107, 0.05) 100%);
-        border-bottom: 1px solid rgba(255, 107, 107, 0.3);
+    @keyframes modalSlideUp {
+        from { opacity: 0; transform: translateY(30px) scale(0.95); }
+        to { opacity: 1; transform: translateY(0) scale(1); }
     }
 
-    .modal-title-danger {
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 24px 16px;
+        border-bottom: 1px solid var(--border-color);
+        position: sticky;
+        top: 0;
+        background: var(--bg-card);
+        z-index: 2;
+        border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    }
+
+    .modal-header .modal-title {
         font-family: var(--font-title);
         font-weight: 700;
         font-size: var(--text-h4);
-        color: #FF6B6B;
+        color: var(--text-primary);
         display: flex;
         align-items: center;
         gap: var(--space-sm);
         margin: 0;
     }
+
+    .modal-close {
+        background: none;
+        border: none;
+        font-size: 1.6rem;
+        cursor: pointer;
+        color: var(--text-muted);
+        transition: var(--transition-smooth);
+        padding: 4px 10px;
+        line-height: 1;
+        border-radius: var(--radius-sm);
+    }
+
+    .modal-close:hover {
+        color: var(--text-primary);
+        background: var(--bg-card-hover);
+        transform: rotate(90deg);
+    }
+
+    .modal-body {
+        padding: 24px;
+        overflow-y: auto;
+    }
+
+    .modal-body p {
+        font-size: var(--text-sm);
+        color: var(--text-secondary);
+        line-height: 1.6;
+        margin: 0 0 var(--space-md) 0;
+    }
+
+    .modal-footer {
+        padding: 16px 24px 20px;
+        border-top: 1px solid var(--border-color);
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+        position: sticky;
+        bottom: 0;
+        background: var(--bg-card);
+        border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+    }
+
+    .modal-footer .btn {
+        min-width: 120px;
+        justify-content: center;
+        padding: 10px 20px;
+        font-weight: 600;
+    }
+
+    .modal-content-danger { border: 2px solid rgba(255, 107, 107, 0.4); }
+    .modal-header-danger {
+        background: linear-gradient(135deg, rgba(255, 107, 107, 0.15) 0%, rgba(255, 107, 107, 0.05) 100%);
+        border-bottom: 1px solid rgba(255, 107, 107, 0.3);
+    }
+    .modal-title-danger { color: #FF6B6B !important; }
+    .modal-title-danger i { color: #FF6B6B; font-size: 22px; }
 
     .modal-alerta-danger {
         display: flex;
@@ -1895,19 +2138,20 @@ $vencida = $vencimento < $hoje && $fatura['status'] !== 'paga';
         margin-bottom: var(--space-lg);
     }
 
-    .modal-alerta-danger i { font-size: 24px; color: #FF6B6B; flex-shrink: 0; }
+    .modal-alerta-danger i { font-size: 24px; color: #FF6B6B; flex-shrink: 0; margin-top: 2px; }
     .modal-alerta-danger div { display: flex; flex-direction: column; gap: 4px; }
-    .modal-alerta-danger strong { font-size: var(--text-sm); color: #FF6B6B; }
-    .modal-alerta-danger span { font-size: var(--text-xs); color: var(--text-secondary); }
+    .modal-alerta-danger strong { font-size: var(--text-sm); color: #FF6B6B; font-weight: 700; }
+    .modal-alerta-danger span { font-size: var(--text-xs); color: var(--text-secondary); line-height: 1.4; }
 
     .modal-texto {
         font-size: var(--text-sm);
         color: var(--text-secondary);
         margin: 0 0 var(--space-sm) 0;
         text-align: center;
+        line-height: 1.5;
     }
 
-    .modal-fatura-numero {
+    .modal-projeto-nome {
         font-family: var(--font-display);
         font-size: var(--text-h4);
         font-weight: 700;
@@ -1918,17 +2162,92 @@ $vencida = $vencimento < $hoje && $fatura['status'] !== 'paga';
         background: rgba(255, 107, 107, 0.08);
         border-radius: var(--radius-md);
         border: 2px dashed rgba(255, 107, 107, 0.4);
+        line-height: 1.4;
     }
 
-    .modal-footer-danger {
-        padding: 16px 24px;
-        border-top: 1px solid var(--border-color);
+    .btn-danger {
+        background: linear-gradient(135deg, #FF6B6B 0%, #E55555 100%);
+        color: #FFFFFF;
+        border: none;
+        box-shadow: 0 4px 16px rgba(255, 107, 107, 0.3);
+    }
+
+    .btn-danger:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(255, 107, 107, 0.4);
+    }
+
+    /* ========================================== */
+    /* TOAST                                      */
+    /* ========================================== */
+    .toast-container {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 999999;
         display: flex;
-        justify-content: flex-end;
-        gap: 12px;
+        flex-direction: column;
+        gap: 10px;
+        max-width: 400px;
+        width: calc(100% - 40px);
+        pointer-events: none;
     }
 
-    .modal-footer-danger .btn { min-width: 120px; justify-content: center; }
+    .toast {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 14px 18px;
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-md);
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+        backdrop-filter: blur(10px);
+        transform: translateX(120%);
+        opacity: 0;
+        transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        pointer-events: auto;
+        position: relative;
+        overflow: hidden;
+        min-width: 280px;
+    }
+
+    .toast::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 4px;
+        height: 100%;
+    }
+
+    .toast.toast-success::before { background: #00FFA3; }
+    .toast.toast-error::before { background: #FF6B6B; }
+    .toast.toast-warning::before { background: #FFD93D; }
+    .toast.toast-info::before { background: #00D2FF; }
+
+    .toast .toast-content {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex: 1;
+    }
+
+    .toast .toast-content i { font-size: 1.3rem; flex-shrink: 0; }
+    .toast .toast-content span { font-size: var(--text-sm); color: var(--text-primary); font-weight: 500; }
+    .toast .toast-close {
+        background: none;
+        border: none;
+        color: var(--text-muted);
+        font-size: 1.4rem;
+        cursor: pointer;
+        padding: 0 4px;
+        line-height: 1;
+        flex-shrink: 0;
+    }
+    .toast .toast-close:hover { color: var(--text-primary); }
+    .toast.show { transform: translateX(0); opacity: 1; }
 
     /* ========================================== */
     /* RESPONSIVIDADE                             */
@@ -1952,7 +2271,7 @@ $vencida = $vencimento < $hoje && $fatura['status'] !== 'paga';
             grid-template-columns: 1fr;
         }
         .fatura-meta-header {
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(2, minmax(0, 1fr));
         }
     }
 
@@ -1980,16 +2299,29 @@ $vencida = $vencimento < $hoje && $fatura['status'] !== 'paga';
             grid-template-columns: 1fr;
         }
 
-        .modal-fatura .modal-content {
+        .modal-content {
             width: 95%;
+            margin: 10px;
+            max-height: 85vh;
         }
 
-        .modal-footer-danger {
-            flex-direction: column-reverse;
+        .modal-header {
+            padding: 16px 18px 12px;
         }
 
-        .modal-footer-danger .btn {
+        .modal-body {
+            padding: 18px;
+        }
+
+        .modal-footer {
+            flex-direction: column;
+            padding: 12px 18px 16px;
+        }
+
+        .modal-footer .btn {
             width: 100%;
+            min-width: auto;
+            padding: 12px;
         }
     }
 
@@ -2005,6 +2337,53 @@ $vencida = $vencimento < $hoje && $fatura['status'] !== 'paga';
             flex-direction: column;
             text-align: center;
         }
+
+        .modal-content {
+            width: 98%;
+            max-width: 380px;
+        }
+
+        .modal-header {
+            padding: 14px 16px 10px;
+        }
+
+        .modal-header .modal-title {
+            font-size: var(--text-h4);
+            gap: 8px;
+        }
+
+        .modal-header .modal-title i {
+            font-size: 18px;
+        }
+
+        .modal-close {
+            font-size: 1.3rem;
+            padding: 4px 8px;
+        }
+
+        .modal-body {
+            padding: 14px 16px;
+        }
+
+        .modal-footer {
+            padding: 10px 16px 14px;
+        }
+
+        .modal-footer .btn {
+            padding: 10px;
+            font-size: var(--text-sm);
+        }
+
+        .modal-projeto-nome {
+            font-size: var(--text-h4);
+            padding: var(--space-sm) var(--space-md);
+        }
+
+        .btn-theme {
+            width: 36px;
+            height: 36px;
+            font-size: 14px;
+        }
     }
 
     /* ========================================== */
@@ -2017,7 +2396,7 @@ $vencida = $vencimento < $hoje && $fatura['status'] !== 'paga';
         .detalhe-coluna-lateral,
         .form-actions,
         .toast-container,
-        .modal-fatura {
+        .modal {
             display: none !important;
         }
 
@@ -2042,7 +2421,7 @@ $vencida = $vencimento < $hoje && $fatura['status'] !== 'paga';
             page-break-inside: avoid;
         }
     }
-</style>
+    </style>
 </body>
 
 </html>
