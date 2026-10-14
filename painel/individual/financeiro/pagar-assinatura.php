@@ -1,125 +1,104 @@
 <?php
-// painel/individual/assinatura.php - Minha Assinatura
-include "../../includes/individual/notificacoes-individual-count.php";
+// painel/individual/financeiro/pagar-assinatura.php - Pagar Assinatura
+include "../../../includes/individual/notificacoes-financeiro-count.php";
 
 // ============================================
 // DEFINIÇÃO DA PÁGINA
 // ============================================
-$titulo_pagina = 'Minha Assinatura';
+$titulo_pagina = 'Pagar Assinatura';
 $pagina_atual = 'assinatura';
 
 // ============================================
 // FALLBACK DE VARIÁVEIS
 // ============================================
-if (!isset($notificacoes_count)) $notificacoes_count = 8;
+if (!isset($valor_receber)) $valor_receber = 850000;
+if (!isset($total_faturas_pendentes)) $total_faturas_pendentes = 12;
 
 // ============================================
-// DADOS DO PROFISSIONAL
-// ============================================
-$profissional = [
-    'id' => 1,
-    'nome' => 'Carlos Mendes',
-    'email' => 'carlos.mendes@email.com',
-    'avatar' => 'avatar-1.png',
-    'profissao' => 'Engenheiro Topógrafo',
-    'plano' => 'Pro',
-    'plano_status' => 'ativo'
-];
-
-// ============================================
-// DADOS DA ASSINATURA ATUAL
+// DADOS MOCKADOS - ASSINATURA ATUAL
 // ============================================
 $assinatura = [
     'id' => 1,
     'plano' => 'Pro',
     'plano_icon' => 'fa-crown',
     'plano_color' => '#FFD93D',
-    'categoria' => 'Individual',
-    'valor_mensal' => 25000,
-    'valor_anual' => 250000,
+    'valor' => 25000,
     'periodo' => 'Mensal',
-    'data_inicio' => '2025-06-15',
-    'data_renovacao' => '2026-03-15',
-    'dias_para_renovacao' => 35,
     'status' => 'ativo',
     'status_label' => 'Ativo',
-    'metodo_pagamento' => 'Multicaixa',
-    'metodo_icon' => 'fa-credit-card',
-    'ultimo_pagamento' => '2026-02-15 10:30:00',
-    'proximo_pagamento' => '2026-03-15',
+    'data_inicio' => '2025-06-15',
+    'data_proximo_pagamento' => '2026-02-28',
+    'dias_restantes' => 10,
+    'metodo_pagamento_atual' => 'Multicaixa',
+    'referencia_atual' => 'MCX-2026-0156',
     'renovacao_automatica' => true,
-    'desconto_aplicado' => 0
+    'features' => [
+        'Acesso a 20 projetos',
+        '3 utilizadores',
+        '20 GB de armazenamento',
+        'Suporte prioritário',
+        'Relatórios avançados'
+    ]
 ];
 
 // ============================================
-// PLANOS DISPONÍVEIS
+// MÉTODOS DE PAGAMENTO (APENAS 2)
 // ============================================
-$planos_disponiveis = [
+$metodos_pagamento = [
     [
-        'id' => 'basico',
-        'nome' => 'Básico',
-        'categoria' => 'Individual',
-        'icon' => 'fa-user',
+        'id' => 'multicaixa',
+        'nome' => 'Multicaixa Express',
+        'descricao' => 'Pagamento via aplicação Multicaixa Express',
+        'icon' => 'fa-credit-card',
         'color' => '#00D2FF',
-        'valor_mensal' => 15000,
-        'valor_anual' => 150000,
-        'descricao' => 'Ideal para profissionais que estão começando',
-        'recursos' => [
-            '1 utilizador',
-            '5 projetos ativos',
-            '5 GB de armazenamento',
-            'Suporte por email',
-            'Relatórios básicos',
-            'Acesso a 3 setores'
-        ],
-        'atual' => false,
-        'recomendado' => false
+        'tempo' => 'Confirmação em minutos',
+        'codigo_servico' => 'GEONEXUS-2026',
+        'instrucoes' => [
+            'Abra a aplicação Multicaixa Express no seu telemóvel',
+            'Selecione a opção "Pagar Serviços"',
+            'Introduza o código de serviço abaixo',
+            'Introduza a referência que será gerada',
+            'Confirme o valor e o pagamento',
+            'Guarde o comprovativo para upload'
+        ]
     ],
     [
-        'id' => 'pro',
-        'nome' => 'Pro',
-        'categoria' => 'Individual',
-        'icon' => 'fa-crown',
-        'color' => '#FFD93D',
-        'valor_mensal' => 25000,
-        'valor_anual' => 250000,
-        'descricao' => 'Plano avançado para profissionais experientes',
-        'recursos' => [
-            '3 utilizadores',
-            '20 projetos ativos',
-            '20 GB de armazenamento',
-            'Suporte prioritário',
-            'Relatórios avançados',
-            'Acesso a 6 setores',
-            'API completa',
-            'Integrações avançadas'
-        ],
-        'atual' => true,
-        'recomendado' => true
-    ],
-    [
-        'id' => 'premium',
-        'nome' => 'Premium',
-        'categoria' => 'Individual',
-        'icon' => 'fa-gem',
+        'id' => 'transferencia',
+        'nome' => 'Transferência Bancária',
+        'descricao' => 'Transferência para conta bancária GeoNexus',
+        'icon' => 'fa-university',
         'color' => '#6C2BD9',
-        'valor_mensal' => 45000,
-        'valor_anual' => 450000,
-        'descricao' => 'Solução completa para equipes pequenas',
-        'recursos' => [
-            '5 utilizadores',
-            '50 projetos ativos',
-            '50 GB de armazenamento',
-            'Suporte 24/7',
-            'Relatórios personalizados',
-            'Acesso a todos os 12 setores',
-            'API completa',
-            'Integrações avançadas',
-            'Modelação 3D',
-            'Dashboards personalizados'
+        'tempo' => 'Confirmação em 1-2 dias úteis',
+        'dados_bancarios' => [
+            'Banco' => 'Banco BAI',
+            'IBAN' => 'AO06 0040 0000 1234 5678 9012 3',
+            'Titular' => 'GeoNexus - Tecnologias Lda',
+            'NIF' => '5417896321',
+            'Referência' => 'ASSINATURA-' . strtoupper('PRO')
         ],
-        'atual' => false,
-        'recomendado' => false
+        'instrucoes' => [
+            'Aceda ao seu homebanking ou app do banco',
+            'Escolha a opção "Transferência"',
+            'Introduza os dados bancários abaixo',
+            'Use a referência indicada',
+            'Confirme o valor e efetue a transferência',
+            'Guarde o comprovativo para upload'
+        ]
+    ]
+];
+
+// ============================================
+// FATURAS PENDENTES DE ASSINATURA
+// ============================================
+$faturas_pendentes = [
+    [
+        'id' => 1,
+        'numero' => 'FT-2026-0156',
+        'periodo' => 'Fevereiro 2026',
+        'valor' => 25000,
+        'vencimento' => '2026-02-28',
+        'dias_restantes' => 10,
+        'status' => 'pendente'
     ]
 ];
 
@@ -129,110 +108,35 @@ $planos_disponiveis = [
 $historico_pagamentos = [
     [
         'id' => 1,
-        'referencia' => 'FT-2026-0042',
-        'data' => '2026-02-15 10:30:00',
+        'periodo' => 'Janeiro 2026',
         'valor' => 25000,
+        'data_pagamento' => '2026-01-28 10:30:00',
         'metodo' => 'Multicaixa',
-        'metodo_icon' => 'fa-credit-card',
-        'status' => 'pago',
-        'status_label' => 'Pago',
-        'periodo' => 'Fevereiro 2026'
+        'referencia' => 'MCX-2026-0125',
+        'comprovativo' => 'comprovativo-001.pdf',
+        'status' => 'confirmado'
     ],
     [
         'id' => 2,
-        'referencia' => 'FT-2026-0028',
-        'data' => '2026-01-15 09:15:00',
+        'periodo' => 'Dezembro 2025',
         'valor' => 25000,
-        'metodo' => 'Multicaixa',
-        'metodo_icon' => 'fa-credit-card',
-        'status' => 'pago',
-        'status_label' => 'Pago',
-        'periodo' => 'Janeiro 2026'
+        'data_pagamento' => '2025-12-28 14:20:00',
+        'metodo' => 'Transferência',
+        'referencia' => 'TRF-2025-0892',
+        'comprovativo' => 'comprovativo-002.pdf',
+        'status' => 'confirmado'
     ],
     [
         'id' => 3,
-        'referencia' => 'FT-2025-0985',
-        'data' => '2025-12-15 11:45:00',
+        'periodo' => 'Novembro 2025',
         'valor' => 25000,
-        'metodo' => 'Transferência',
-        'metodo_icon' => 'fa-university',
-        'status' => 'pago',
-        'status_label' => 'Pago',
-        'periodo' => 'Dezembro 2025'
-    ],
-    [
-        'id' => 4,
-        'referencia' => 'FT-2025-0871',
-        'data' => '2025-11-15 14:20:00',
-        'valor' => 25000,
+        'data_pagamento' => '2025-11-28 09:15:00',
         'metodo' => 'Multicaixa',
-        'metodo_icon' => 'fa-credit-card',
-        'status' => 'pago',
-        'status_label' => 'Pago',
-        'periodo' => 'Novembro 2025'
-    ],
-    [
-        'id' => 5,
-        'referencia' => 'FT-2025-0763',
-        'data' => '2025-10-15 10:00:00',
-        'valor' => 25000,
-        'metodo' => 'Transferência',
-        'metodo_icon' => 'fa-university',
-        'status' => 'pago',
-        'status_label' => 'Pago',
-        'periodo' => 'Outubro 2025'
+        'referencia' => 'MCX-2025-0745',
+        'comprovativo' => 'comprovativo-003.pdf',
+        'status' => 'confirmado'
     ]
 ];
-
-// ============================================
-// MÉTODOS DE PAGAMENTO DISPONÍVEIS
-// ============================================
-$metodos_pagamento = [
-    [
-        'id' => 'multicaixa',
-        'nome' => 'Multicaixa Express',
-        'icon' => 'fa-credit-card',
-        'color' => '#FF6B6B',
-        'descricao' => 'Pagamento via app Multicaixa Express',
-        'taxa' => 0,
-        'recomendado' => true
-    ],
-    [
-        'id' => 'transferencia',
-        'nome' => 'Transferência Bancária',
-        'icon' => 'fa-university',
-        'color' => '#00D2FF',
-        'descricao' => 'Transferência para conta bancária',
-        'taxa' => 0,
-        'recomendado' => false
-    ],
-    [
-        'id' => 'deposito',
-        'nome' => 'Depósito Bancário',
-        'icon' => 'fa-money-check-alt',
-        'color' => '#FFD93D',
-        'descricao' => 'Depósito em conta bancária',
-        'taxa' => 0,
-        'recomendado' => false
-    ],
-    [
-        'id' => 'cartao',
-        'nome' => 'Cartão de Crédito',
-        'icon' => 'fa-cc-visa',
-        'color' => '#6C2BD9',
-        'descricao' => 'Visa, Mastercard, American Express',
-        'taxa' => 2.5,
-        'recomendado' => false
-    ]
-];
-
-// ============================================
-// ESTATÍSTICAS DA ASSINATURA
-// ============================================
-$total_pago = array_sum(array_column($historico_pagamentos, 'valor'));
-$meses_ativo = 9;
-$valor_poupado = 0;
-$proxima_cobranca = $assinatura['proximo_pagamento'];
 
 // ============================================
 // FUNÇÕES AUXILIARES
@@ -257,46 +161,23 @@ if (!function_exists('formatDateTime')) {
     }
 }
 
-if (!function_exists('timeAgo')) {
-    function timeAgo($datetime) {
-        if (empty($datetime)) return 'N/A';
-        $diff = time() - strtotime($datetime);
-        if ($diff < 60) return 'há ' . $diff . 's';
-        if ($diff < 3600) return 'há ' . floor($diff / 60) . 'min';
-        if ($diff < 86400) return 'há ' . floor($diff / 3600) . 'h';
-        if ($diff < 604800) return 'há ' . floor($diff / 86400) . ' dias';
-        return date('d/m/Y', strtotime($datetime));
-    }
-}
-
 if (!function_exists('getAvatarUrl')) {
     function getAvatarUrl($name) {
         return 'https://ui-avatars.com/api/?name=' . urlencode($name) . '&background=00D2FF&color=fff&size=80';
-    }
-}
-
-if (!function_exists('getStatusClass')) {
-    function getStatusClass($status) {
-        $classes = [
-            'pago' => 'status-pago',
-            'pendente' => 'status-pendente',
-            'falhou' => 'status-falhou'
-        ];
-        return isset($classes[$status]) ? $classes[$status] : 'status-pendente';
     }
 }
 ?>
 <!DOCTYPE html>
 <html lang="pt">
 
-<?php include "../../includes/individual-head.php" ?>
+<?php include "../../../includes/individual/financeiro-head.php" ?>
 
 <body>
     <div class="app-container">
         <div id="toast-container" class="toast-container"></div>
         <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-        <?php include "../../includes/individual-sidebar.php" ?>
+        <?php include "../../../includes/individual/financeiro-sidebar.php" ?>
 
         <main class="main-content">
             <!-- ===== PAGE HEADER ===== -->
@@ -305,15 +186,13 @@ if (!function_exists('getStatusClass')) {
                     <h1>
                         <i class="fas fa-crown icon" style="color: #FFD93D;"></i>
                         <?php echo $titulo_pagina; ?>
-                        <span class="badge-status status-ativo">
-                            <span class="status-dot"></span>
-                            <?php echo $assinatura['status_label']; ?>
-                        </span>
                     </h1>
                     <p class="breadcrumb">
-                        <a href="index.php">Dashboard</a>
+                        <a href="../index.php">Dashboard</a>
                         <span class="separator">/</span>
-                        <span>Minha Assinatura</span>
+                        <a href="index.php">Financeiro</a>
+                        <span class="separator">/</span>
+                        <span>Pagar Assinatura</span>
                     </p>
                 </div>
                 <div class="header-right">
@@ -322,125 +201,52 @@ if (!function_exists('getStatusClass')) {
                         <i class="fas fa-moon theme-icon moon"></i>
                     </button>
 
-                    <?php include "../../includes/notificacoes-individual.php" ?>
+                    <?php include "../../../includes/individual/notificacoes-financeiro.php" ?>
 
-                    <a href="financeiro/faturas.php" class="btn btn-outline">
-                        <i class="fas fa-file-invoice"></i> Ver Faturas
+                    <a href="index.php" class="btn btn-outline">
+                        <i class="fas fa-arrow-left"></i> Voltar
                     </a>
                 </div>
             </header>
 
-            <!-- ========================================== -->
-            <!-- CARD DA ASSINATURA ATUAL                   -->
-            <!-- ========================================== -->
-            <section class="assinatura-atual animate-fade-up">
-                <div class="assinatura-card">
-                    <!-- Header -->
-                    <div class="assinatura-header" style="--plano-color: <?php echo $assinatura['plano_color']; ?>;">
-                        <div class="assinatura-plano-badge">
-                            <div class="plano-icon" style="background: <?php echo $assinatura['plano_color']; ?>20; color: <?php echo $assinatura['plano_color']; ?>;">
-                                <i class="fas <?php echo $assinatura['plano_icon']; ?>"></i>
-                            </div>
-                            <div class="plano-info">
-                                <span class="plano-categoria"><?php echo $assinatura['categoria']; ?></span>
-                                <h2 class="plano-nome">Plano <?php echo $assinatura['plano']; ?></h2>
-                            </div>
-                        </div>
-                        <div class="assinatura-status">
-                            <span class="badge-status status-ativo">
-                                <i class="fas fa-check-circle"></i>
-                                <?php echo $assinatura['status_label']; ?>
-                            </span>
-                        </div>
+            <!-- ===== AVISO DE PAGAMENTO PENDENTE ===== -->
+            <?php if (!empty($faturas_pendentes)): ?>
+                <section class="aviso-pendente animate-fade-up">
+                    <div class="aviso-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
                     </div>
+                    <div class="aviso-conteudo">
+                        <h3>Atenção! Tem uma fatura pendente</h3>
+                        <p>
+                            A sua assinatura <strong><?php echo $assinatura['plano']; ?></strong> tem uma fatura pendente no valor de 
+                            <strong>Kz <?php echo formatMoney($faturas_pendentes[0]['valor']); ?></strong> que vence em 
+                            <strong><?php echo $faturas_pendentes[0]['dias_restantes']; ?> dias</strong>.
+                        </p>
+                    </div>
+                </section>
+            <?php endif; ?>
 
-                    <!-- Body -->
-                    <div class="assinatura-body">
-                        <div class="assinatura-grid">
-                            <div class="assinatura-info-item">
-                                <span class="info-label">
-                                    <i class="fas fa-money-bill-wave" style="color: #00FFA3;"></i>
-                                    Valor Mensal
-                                </span>
-                                <span class="info-value" style="color: #00FFA3;">
-                                    Kz <?php echo formatMoney($assinatura['valor_mensal']); ?>
-                                </span>
-                            </div>
-                            <div class="assinatura-info-item">
-                                <span class="info-label">
-                                    <i class="fas fa-calendar-alt" style="color: #00D2FF;"></i>
-                                    Período
-                                </span>
-                                <span class="info-value"><?php echo $assinatura['periodo']; ?></span>
-                            </div>
-                            <div class="assinatura-info-item">
-                                <span class="info-label">
-                                    <i class="fas fa-play-circle" style="color: #6C2BD9;"></i>
-                                    Início
-                                </span>
-                                <span class="info-value"><?php echo formatDate($assinatura['data_inicio']); ?></span>
-                            </div>
-                            <div class="assinatura-info-item">
-                                <span class="info-label">
-                                    <i class="fas fa-sync" style="color: #FF9F43;"></i>
-                                    Próxima Renovação
-                                </span>
-                                <span class="info-value"><?php echo formatDate($assinatura['data_renovacao']); ?></span>
-                            </div>
-                            <div class="assinatura-info-item">
-                                <span class="info-label">
-                                    <i class="fas <?php echo $assinatura['metodo_icon']; ?>" style="color: #FF6B6B;"></i>
-                                    Método de Pagamento
-                                </span>
-                                <span class="info-value"><?php echo $assinatura['metodo_pagamento']; ?></span>
-                            </div>
-                            <div class="assinatura-info-item">
-                                <span class="info-label">
-                                    <i class="fas fa-credit-card" style="color: #FFD93D;"></i>
-                                    Último Pagamento
-                                </span>
-                                <span class="info-value"><?php echo formatDate($assinatura['ultimo_pagamento']); ?></span>
-                            </div>
-                        </div>
-
-                        <!-- Alerta de renovação -->
-                        <div class="assinatura-alerta">
-                            <i class="fas fa-info-circle"></i>
-                            <div>
-                                <strong>A sua assinatura renova automaticamente</strong>
-                                <span>A próxima cobrança será de <strong>Kz <?php echo formatMoney($assinatura['valor_mensal']); ?></strong> no dia <strong><?php echo formatDate($assinatura['proximo_pagamento']); ?></strong> (<?php echo $assinatura['dias_para_renovacao']; ?> dias restantes).</span>
-                            </div>
-                        </div>
-
-                        <!-- Ações rápidas -->
-                        <div class="assinatura-acoes-rapidas">
-                            <button class="btn btn-primary" onclick="pagarAgora()">
-                                <i class="fas fa-credit-card"></i> Pagar Agora
-                            </button>
-                            <button class="btn btn-outline" onclick="abrirModalRenovacao()">
-                                <i class="fas fa-sync"></i> Renovar Antecipadamente
-                            </button>
-                            <button class="btn btn-outline" onclick="toggleRenovacaoAutomatica()">
-                                <i class="fas fa-toggle-<?php echo $assinatura['renovacao_automatica'] ? 'on' : 'off'; ?>"></i>
-                                <?php echo $assinatura['renovacao_automatica'] ? 'Desativar Renovação Auto' : 'Ativar Renovação Auto'; ?>
-                            </button>
-                        </div>
+            <!-- ===== STATS CARDS ===== -->
+            <section class="stats-grid animate-fade-up" style="animation-delay: 0.1s;">
+                <div class="stat-card">
+                    <div class="icon yellow">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                    <div class="value"><?php echo $assinatura['plano']; ?></div>
+                    <div class="label">Plano Atual</div>
+                    <div class="trend up">
+                        <i class="fas fa-check-circle"></i> Ativo
                     </div>
                 </div>
-            </section>
 
-            <!-- ========================================== -->
-            <!-- STATS CARDS                                -->
-            <!-- ========================================== -->
-            <section class="stats-grid animate-fade-up" style="animation-delay: 0.1s;">
                 <div class="stat-card">
                     <div class="icon green">
                         <i class="fas fa-coins"></i>
                     </div>
-                    <div class="value">Kz <?php echo number_format($total_pago / 1000, 0); ?>k</div>
-                    <div class="label">Total Investido</div>
-                    <div class="trend up">
-                        <i class="fas fa-arrow-up"></i> <?php echo count($historico_pagamentos); ?> pagamentos
+                    <div class="value">Kz <?php echo formatMoney($assinatura['valor']); ?></div>
+                    <div class="label">Valor Mensal</div>
+                    <div class="trend neutral">
+                        <i class="fas fa-calendar"></i> <?php echo $assinatura['periodo']; ?>
                     </div>
                 </div>
 
@@ -448,343 +254,601 @@ if (!function_exists('getStatusClass')) {
                     <div class="icon blue">
                         <i class="fas fa-calendar-check"></i>
                     </div>
-                    <div class="value"><?php echo $meses_ativo; ?> meses</div>
-                    <div class="label">Cliente desde</div>
-                    <div class="trend neutral">
-                        <i class="fas fa-calendar"></i> <?php echo formatDate($assinatura['data_inicio']); ?>
-                    </div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="icon yellow">
-                        <i class="fas fa-hourglass-half"></i>
-                    </div>
-                    <div class="value"><?php echo $assinatura['dias_para_renovacao']; ?> dias</div>
-                    <div class="label">Para Renovação</div>
-                    <div class="trend neutral">
-                        <i class="fas fa-clock"></i> <?php echo formatDate($assinatura['data_renovacao']); ?>
+                    <div class="value"><?php echo $assinatura['dias_restantes']; ?> dias</div>
+                    <div class="label">Próximo Pagamento</div>
+                    <div class="trend up">
+                        <i class="fas fa-clock"></i> <?php echo formatDate($assinatura['data_proximo_pagamento']); ?>
                     </div>
                 </div>
 
                 <div class="stat-card">
                     <div class="icon aurora">
-                        <i class="fas fa-star"></i>
+                        <i class="fas fa-credit-card"></i>
                     </div>
-                    <div class="value">Pro</div>
-                    <div class="label">Plano Atual</div>
+                    <div class="value" style="font-size: var(--text-h4);"><?php echo $assinatura['metodo_pagamento_atual']; ?></div>
+                    <div class="label">Método Atual</div>
                     <div class="trend up">
-                        <i class="fas fa-crown"></i> Recomendado
+                        <i class="fas fa-check"></i> Verificado
                     </div>
                 </div>
             </section>
 
-            <!-- ========================================== -->
-            <!-- PLANOS DISPONÍVEIS                         -->
-            <!-- ========================================== -->
-            <section class="planos-section animate-fade-up" style="animation-delay: 0.2s;">
-                <div class="section-header-inline">
-                    <h3>
-                        <i class="fas fa-layer-group" style="color: #6C2BD9;"></i>
-                        Planos Disponíveis
-                    </h3>
-                    <span class="section-subtitle">Compare e escolha o plano ideal para você</span>
-                </div>
+            <!-- ===== CONTEÚDO PRINCIPAL ===== -->
+            <div class="pagamento-grid">
 
-                <div class="planos-grid">
-                    <?php foreach ($planos_disponiveis as $plano): ?>
-                        <div class="plano-card <?php echo $plano['atual'] ? 'plano-atual' : ''; ?> <?php echo $plano['recomendado'] ? 'plano-recomendado' : ''; ?>"
-                             style="--plano-color: <?php echo $plano['color']; ?>;">
-                            
-                            <?php if ($plano['atual']): ?>
-                                <div class="plano-badge plano-badge-atual">
-                                    <i class="fas fa-check-circle"></i> Plano Atual
-                                </div>
-                            <?php elseif ($plano['recomendado']): ?>
-                                <div class="plano-badge plano-badge-recomendado">
-                                    <i class="fas fa-star"></i> Recomendado
-                                </div>
-                            <?php endif; ?>
+                <!-- ===== COLUNA PRINCIPAL ===== -->
+                <div class="pagamento-coluna-principal">
 
+                    <!-- ===== CARD DO PLANO ATUAL ===== -->
+                    <div class="card animate-fade-up" style="animation-delay: 0.15s;">
+                        <div class="card-header">
+                            <h3>
+                                <i class="fas fa-crown" style="color: #FFD93D;"></i>
+                                Assinatura Atual
+                            </h3>
+                        </div>
+                        <div class="plano-detalhe">
                             <div class="plano-header">
-                                <div class="plano-icon-large" style="background: <?php echo $plano['color']; ?>20; color: <?php echo $plano['color']; ?>;">
-                                    <i class="fas <?php echo $plano['icon']; ?>"></i>
+                                <div class="plano-icon" style="background: <?php echo $assinatura['plano_color']; ?>20; color: <?php echo $assinatura['plano_color']; ?>;">
+                                    <i class="fas <?php echo $assinatura['plano_icon']; ?>"></i>
                                 </div>
-                                <h3 class="plano-nome"><?php echo $plano['nome']; ?></h3>
-                                <p class="plano-descricao"><?php echo $plano['descricao']; ?></p>
-                            </div>
-
-                            <div class="plano-preco">
-                                <div class="preco-mensal">
-                                    <span class="preco-valor">Kz <?php echo formatMoney($plano['valor_mensal']); ?></span>
-                                    <span class="preco-periodo">/mês</span>
+                                <div class="plano-info">
+                                    <h4 class="plano-nome">Plano <?php echo $assinatura['plano']; ?></h4>
+                                    <span class="plano-status">
+                                        <i class="fas fa-check-circle"></i> <?php echo $assinatura['status_label']; ?>
+                                    </span>
                                 </div>
-                                <div class="preco-anual">
-                                    <i class="fas fa-tag"></i>
-                                    Ou Kz <?php echo formatMoney($plano['valor_anual']); ?>/ano
-                                    <span class="preco-desconto">(economize 2 meses)</span>
+                                <div class="plano-valor">
+                                    <span class="plano-valor-numero">Kz <?php echo formatMoney($assinatura['valor']); ?></span>
+                                    <span class="plano-valor-periodo">/ <?php echo $assinatura['periodo']; ?></span>
                                 </div>
                             </div>
 
-                            <div class="plano-recursos">
-                                <span class="recursos-titulo">Recursos incluídos:</span>
-                                <ul>
-                                    <?php foreach ($plano['recursos'] as $recurso): ?>
+                            <div class="plano-features">
+                                <h5><i class="fas fa-list-check"></i> O que está incluído</h5>
+                                <ul class="features-list">
+                                    <?php foreach ($assinatura['features'] as $feature): ?>
                                         <li>
-                                            <i class="fas fa-check-circle" style="color: <?php echo $plano['color']; ?>;"></i>
-                                            <span><?php echo $recurso; ?></span>
+                                            <i class="fas fa-check-circle"></i>
+                                            <span><?php echo $feature; ?></span>
                                         </li>
                                     <?php endforeach; ?>
                                 </ul>
                             </div>
 
-                            <div class="plano-acoes">
-                                <?php if ($plano['atual']): ?>
-                                    <button class="btn btn-outline" disabled style="width: 100%; justify-content: center;">
-                                        <i class="fas fa-check"></i> Plano Atual
-                                    </button>
-                                <?php else: ?>
-                                    <button class="btn btn-primary" onclick="mudarPlano('<?php echo $plano['id']; ?>', '<?php echo $plano['nome']; ?>', <?php echo $plano['valor_mensal']; ?>)" style="width: 100%; justify-content: center;">
-                                        <i class="fas fa-arrow-up"></i> Mudar para <?php echo $plano['nome']; ?>
-                                    </button>
-                                <?php endif; ?>
+                            <div class="plano-datas">
+                                <div class="plano-data-item">
+                                    <span class="plano-data-label">
+                                        <i class="fas fa-calendar-plus"></i> Início
+                                    </span>
+                                    <span class="plano-data-value"><?php echo formatDate($assinatura['data_inicio']); ?></span>
+                                </div>
+                                <div class="plano-data-item">
+                                    <span class="plano-data-label">
+                                        <i class="fas fa-calendar-check"></i> Próximo Pagamento
+                                    </span>
+                                    <span class="plano-data-value" style="color: #FFD93D;">
+                                        <?php echo formatDate($assinatura['data_proximo_pagamento']); ?>
+                                    </span>
+                                </div>
                             </div>
                         </div>
-                    <?php endforeach; ?>
-                </div>
-            </section>
+                    </div>
 
-            <!-- ========================================== -->
-            <!-- MÉTODOS DE PAGAMENTO                       -->
-            <!-- ========================================== -->
-            <section class="metodos-section animate-fade-up" style="animation-delay: 0.3s;">
-                <div class="section-header-inline">
-                    <h3>
-                        <i class="fas fa-credit-card" style="color: #00D2FF;"></i>
-                        Métodos de Pagamento
-                    </h3>
-                    <span class="section-subtitle">Escolha o método mais conveniente</span>
-                </div>
-
-                <div class="metodos-grid">
-                    <?php foreach ($metodos_pagamento as $metodo): ?>
-                        <div class="metodo-card" onclick="selecionarMetodo('<?php echo $metodo['id']; ?>')">
-                            <div class="metodo-icon" style="background: <?php echo $metodo['color']; ?>20; color: <?php echo $metodo['color']; ?>;">
-                                <i class="fas <?php echo $metodo['icon']; ?>"></i>
-                            </div>
-                            <div class="metodo-info">
-                                <span class="metodo-nome"><?php echo $metodo['nome']; ?></span>
-                                <span class="metodo-descricao"><?php echo $metodo['descricao']; ?></span>
-                                <?php if ($metodo['taxa'] > 0): ?>
-                                    <span class="metodo-taxa">
-                                        <i class="fas fa-percent"></i> Taxa: <?php echo $metodo['taxa']; ?>%
-                                    </span>
-                                <?php else: ?>
-                                    <span class="metodo-taxa" style="color: #00FFA3;">
-                                        <i class="fas fa-check"></i> Sem taxas
-                                    </span>
-                                <?php endif; ?>
-                            </div>
-                            <?php if ($metodo['recomendado']): ?>
-                                <span class="metodo-badge">Recomendado</span>
-                            <?php endif; ?>
+                    <!-- ===== MÉTODOS DE PAGAMENTO ===== -->
+                    <div class="card animate-fade-up" style="animation-delay: 0.2s;">
+                        <div class="card-header">
+                            <h3>
+                                <i class="fas fa-credit-card" style="color: #00D2FF;"></i>
+                                Escolher Método de Pagamento
+                            </h3>
                         </div>
-                    <?php endforeach; ?>
-                </div>
-            </section>
-
-            <!-- ========================================== -->
-            <!-- HISTÓRICO DE PAGAMENTOS                    -->
-            <!-- ========================================== -->
-            <section class="historico-section animate-fade-up" style="animation-delay: 0.4s;">
-                <div class="section-header-inline">
-                    <h3>
-                        <i class="fas fa-history" style="color: #FFD93D;"></i>
-                        Histórico de Pagamentos
-                        <span class="badge-count"><?php echo count($historico_pagamentos); ?></span>
-                    </h3>
-                    <a href="financeiro/faturas.php" class="btn btn-sm btn-outline">Ver todas as faturas</a>
-                </div>
-
-                <div class="historico-table-container">
-                    <table class="historico-table">
-                        <thead>
-                            <tr>
-                                <th>Referência</th>
-                                <th>Período</th>
-                                <th>Data</th>
-                                <th>Método</th>
-                                <th>Valor</th>
-                                <th>Status</th>
-                                <th>Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($historico_pagamentos as $pagamento): ?>
-                                <tr>
-                                    <td class="historico-ref">
-                                        <i class="fas fa-file-invoice" style="color: #6C2BD9;"></i>
-                                        <?php echo $pagamento['referencia']; ?>
-                                    </td>
-                                    <td><?php echo $pagamento['periodo']; ?></td>
-                                    <td class="historico-data"><?php echo formatDate($pagamento['data']); ?></td>
-                                    <td>
-                                        <span class="metodo-tag">
-                                            <i class="fas <?php echo $pagamento['metodo_icon']; ?>"></i>
-                                            <?php echo $pagamento['metodo']; ?>
-                                        </span>
-                                    </td>
-                                    <td class="historico-valor">Kz <?php echo formatMoney($pagamento['valor']); ?></td>
-                                    <td>
-                                        <span class="badge-status <?php echo getStatusClass($pagamento['status']); ?>">
+                        <div class="metodos-container">
+                            <div class="metodos-grid" id="metodosGrid">
+                                <?php foreach ($metodos_pagamento as $metodo): ?>
+                                    <div class="metodo-card" 
+                                         data-metodo="<?php echo $metodo['id']; ?>"
+                                         onclick="selecionarMetodo('<?php echo $metodo['id']; ?>')"
+                                         style="--metodo-color: <?php echo $metodo['color']; ?>;">
+                                        <div class="metodo-radio">
+                                            <span class="radio-mark"></span>
+                                        </div>
+                                        <div class="metodo-icon" style="background: <?php echo $metodo['color']; ?>20; color: <?php echo $metodo['color']; ?>;">
+                                            <i class="fas <?php echo $metodo['icon']; ?>"></i>
+                                        </div>
+                                        <div class="metodo-info">
+                                            <span class="metodo-nome"><?php echo $metodo['nome']; ?></span>
+                                            <span class="metodo-descricao"><?php echo $metodo['descricao']; ?></span>
+                                            <div class="metodo-meta">
+                                                <span class="metodo-tempo">
+                                                    <i class="fas fa-clock"></i> <?php echo $metodo['tempo']; ?>
+                                                </span>
+                                                <span class="metodo-taxa" style="color: #00FFA3;">
+                                                    <i class="fas fa-check"></i> Sem taxa
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="metodo-check">
                                             <i class="fas fa-check-circle"></i>
-                                            <?php echo $pagamento['status_label']; ?>
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <div class="historico-acoes">
-                                            <button class="btn-action" onclick="verFatura(<?php echo $pagamento['id']; ?>)" title="Ver Fatura">
-                                                <i class="fas fa-eye"></i>
-                                            </button>
-                                            <button class="btn-action" onclick="baixarFatura(<?php echo $pagamento['id']; ?>)" title="Baixar PDF">
-                                                <i class="fas fa-download"></i>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ===== DADOS MULTICAIXA ===== -->
+                    <div class="card metodo-especifico animate-fade-up" id="dadosMulticaixa" style="display: none; animation-delay: 0.25s;">
+                        <div class="card-header">
+                            <h3>
+                                <i class="fas fa-credit-card" style="color: #00D2FF;"></i>
+                                Dados do Multicaixa Express
+                            </h3>
+                        </div>
+                        <div class="metodo-dados">
+                            <div class="metodo-dados-info">
+                                <i class="fas fa-info-circle"></i>
+                                <div>
+                                    <strong>Como pagar com Multicaixa Express:</strong>
+                                    <ol>
+                                        <?php foreach ($metodos_pagamento[0]['instrucoes'] as $passo): ?>
+                                            <li><?php echo $passo; ?></li>
+                                        <?php endforeach; ?>
+                                    </ol>
+                                </div>
+                            </div>
+
+                            <div class="dados-grid-2">
+                                <div class="dados-item">
+                                    <span class="dados-label">Código de Serviço</span>
+                                    <div class="codigo-box">
+                                        <span id="codigoServico"><?php echo $metodos_pagamento[0]['codigo_servico']; ?></span>
+                                        <button class="btn-copy" onclick="copiarCodigo('codigoServico')" title="Copiar">
+                                            <i class="fas fa-copy"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="dados-item">
+                                    <span class="dados-label">Referência de Pagamento</span>
+                                    <div class="codigo-box">
+                                        <span id="referenciaMulticaixa">MCX-<?php echo date('Ymd'); ?>-<?php echo rand(1000, 9999); ?></span>
+                                        <button class="btn-copy" onclick="copiarCodigo('referenciaMulticaixa')" title="Copiar">
+                                            <i class="fas fa-copy"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="metodo-valor-destaque">
+                                <span class="metodo-valor-label">Valor a Pagar</span>
+                                <span class="metodo-valor-numero">Kz <?php echo formatMoney($assinatura['valor']); ?></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ===== DADOS TRANSFERÊNCIA ===== -->
+                    <div class="card metodo-especifico animate-fade-up" id="dadosTransferencia" style="display: none; animation-delay: 0.25s;">
+                        <div class="card-header">
+                            <h3>
+                                <i class="fas fa-university" style="color: #6C2BD9;"></i>
+                                Dados da Transferência Bancária
+                            </h3>
+                        </div>
+                        <div class="metodo-dados">
+                            <div class="metodo-dados-info">
+                                <i class="fas fa-info-circle"></i>
+                                <div>
+                                    <strong>Como efetuar a transferência:</strong>
+                                    <ol>
+                                        <?php foreach ($metodos_pagamento[1]['instrucoes'] as $passo): ?>
+                                            <li><?php echo $passo; ?></li>
+                                        <?php endforeach; ?>
+                                    </ol>
+                                </div>
+                            </div>
+
+                            <div class="dados-bancarios-grid">
+                                <?php foreach ($metodos_pagamento[1]['dados_bancarios'] as $label => $valor): ?>
+                                    <div class="dados-bancarios-item">
+                                        <span class="dados-label"><?php echo $label; ?></span>
+                                        <div class="dados-value-wrapper">
+                                            <span class="dados-value" id="dados_<?php echo strtolower(str_replace(' ', '_', $label)); ?>">
+                                                <?php echo $valor; ?>
+                                            </span>
+                                            <button class="btn-copy" onclick="copiarCodigo('dados_<?php echo strtolower(str_replace(' ', '_', $label)); ?>')" title="Copiar">
+                                                <i class="fas fa-copy"></i>
                                             </button>
                                         </div>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+
+                            <div class="metodo-valor-destaque">
+                                <span class="metodo-valor-label">Valor a Transferir</span>
+                                <span class="metodo-valor-numero">Kz <?php echo formatMoney($assinatura['valor']); ?></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ===== UPLOAD DE COMPROVATIVO ===== -->
+                    <div class="card metodo-especifico animate-fade-up" id="dadosComprovativo" style="display: none; animation-delay: 0.3s;">
+                        <div class="card-header">
+                            <h3>
+                                <i class="fas fa-cloud-upload-alt" style="color: #00FFA3;"></i>
+                                Enviar Comprovativo
+                                <span class="badge-required">Obrigatório</span>
+                            </h3>
+                        </div>
+                        <div class="metodo-dados">
+                            <div class="comprovativo-info">
+                                <i class="fas fa-info-circle"></i>
+                                <div>
+                                    <strong>Após efetuar o pagamento, envie o comprovativo</strong>
+                                    <p>O seu pagamento será validado assim que recebermos o comprovativo. Formatos aceites: PDF, JPG, PNG (máx. 5MB).</p>
+                                </div>
+                            </div>
+
+                            <div class="upload-area" id="uploadArea" onclick="document.getElementById('comprovativoInput').click()">
+                                <div class="upload-icon">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                </div>
+                                <div class="upload-content">
+                                    <span class="upload-title">Clique para anexar o comprovativo</span>
+                                    <span class="upload-subtitle">PDF, JPG ou PNG até 5MB</span>
+                                </div>
+                                <input type="file" id="comprovativoInput" accept=".pdf,.jpg,.jpeg,.png" style="display: none;" onchange="previewComprovativo(event)">
+                            </div>
+
+                            <!-- Preview do Comprovativo -->
+                            <div class="comprovativo-preview" id="comprovativoPreview" style="display: none;">
+                                <div class="comprovativo-preview-header">
+                                    <span class="comprovativo-preview-titulo">
+                                        <i class="fas fa-check-circle" style="color: #00FFA3;"></i>
+                                        Comprovativo Anexado
+                                    </span>
+                                    <button class="btn-remover-comprovativo" onclick="removerComprovativo()" title="Remover">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                                <div class="comprovativo-preview-content">
+                                    <div class="comprovativo-file-icon" id="comprovativoFileIcon">
+                                        <i class="fas fa-file-pdf"></i>
+                                    </div>
+                                    <div class="comprovativo-file-info">
+                                        <span class="comprovativo-file-nome" id="comprovativoNome">-</span>
+                                        <span class="comprovativo-file-tamanho" id="comprovativoTamanho">-</span>
+                                    </div>
+                                    <div class="comprovativo-file-check">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="comprovativo-nota">
+                                <i class="fas fa-shield-alt"></i>
+                                <span>Os dados do comprovativo são processados de forma segura e apenas utilizados para validar o seu pagamento.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ===== RESUMO DO PAGAMENTO ===== -->
+                    <div class="card animate-fade-up" style="animation-delay: 0.35s;">
+                        <div class="card-header">
+                            <h3>
+                                <i class="fas fa-receipt" style="color: #00FFA3;"></i>
+                                Resumo do Pagamento
+                            </h3>
+                        </div>
+                        <div class="resumo-pagamento">
+                            <div class="resumo-item">
+                                <span class="resumo-label">
+                                    <i class="fas fa-crown"></i> Plano <?php echo $assinatura['plano']; ?>
+                                </span>
+                                <span class="resumo-value">Kz <?php echo formatMoney($assinatura['valor']); ?></span>
+                            </div>
+
+                            <div class="resumo-item">
+                                <span class="resumo-label">
+                                    <i class="fas fa-calendar"></i> Período
+                                </span>
+                                <span class="resumo-value"><?php echo $assinatura['periodo']; ?></span>
+                            </div>
+
+                            <div class="resumo-item">
+                                <span class="resumo-label">
+                                    <i class="fas fa-credit-card"></i> Método
+                                </span>
+                                <span class="resumo-value" id="resumoMetodo">Não selecionado</span>
+                            </div>
+
+                            <div class="resumo-item">
+                                <span class="resumo-label">
+                                    <i class="fas fa-paperclip"></i> Comprovativo
+                                </span>
+                                <span class="resumo-value" id="resumoComprovativo" style="color: #FF6B6B;">
+                                    <i class="fas fa-times-circle"></i> Não anexado
+                                </span>
+                            </div>
+
+                            <div class="resumo-divider"></div>
+
+                            <div class="resumo-item resumo-total">
+                                <span class="resumo-label">
+                                    <i class="fas fa-coins"></i> Total a Pagar
+                                </span>
+                                <span class="resumo-value">Kz <?php echo formatMoney($assinatura['valor']); ?></span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </section>
+
+                <!-- ===== COLUNA LATERAL ===== -->
+                <div class="pagamento-coluna-lateral">
+
+                    <!-- ===== CARD DE AÇÃO ===== -->
+                    <div class="card animate-fade-up" style="animation-delay: 0.4s;">
+                        <div class="card-header">
+                            <h3>
+                                <i class="fas fa-bolt" style="color: #FFD93D;"></i>
+                                Confirmar Pagamento
+                            </h3>
+                        </div>
+                        <div class="acao-pagamento">
+                            <div class="acao-valor">
+                                <span class="acao-valor-label">Total a Pagar</span>
+                                <span class="acao-valor-numero">Kz <?php echo formatMoney($assinatura['valor']); ?></span>
+                            </div>
+
+                            <div class="acao-checklist">
+                                <div class="checklist-item" id="checkMetodo">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Método de pagamento selecionado</span>
+                                </div>
+                                <div class="checklist-item" id="checkComprovativo">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Comprovativo anexado</span>
+                                </div>
+                            </div>
+
+                            <button class="btn btn-primary btn-lg btn-block" id="btnPagar" onclick="confirmarPagamento()" disabled>
+                                <i class="fas fa-lock"></i>
+                                Confirmar Pagamento
+                            </button>
+
+                            <div class="acao-info">
+                                <div class="acao-info-item">
+                                    <i class="fas fa-shield-alt"></i>
+                                    <span>Validação em até 24 horas</span>
+                                </div>
+                                <div class="acao-info-item">
+                                    <i class="fas fa-clock"></i>
+                                    <span>Renovação automática ativa</span>
+                                </div>
+                                <div class="acao-info-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Cancelamento a qualquer momento</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ===== FATURA PENDENTE ===== -->
+                    <?php if (!empty($faturas_pendentes)): ?>
+                    <div class="card animate-fade-up" style="animation-delay: 0.45s;">
+                        <div class="card-header">
+                            <h3>
+                                <i class="fas fa-file-invoice" style="color: #FFD93D;"></i>
+                                Fatura Pendente
+                            </h3>
+                        </div>
+                        <div class="fatura-pendente-detalhe">
+                            <?php foreach ($faturas_pendentes as $fatura): ?>
+                                <div class="fatura-pendente-item">
+                                    <div class="fatura-pendente-header">
+                                        <span class="fatura-pendente-numero"><?php echo $fatura['numero']; ?></span>
+                                        <span class="badge-status status-pendente">
+                                            <i class="fas fa-clock"></i> Pendente
+                                        </span>
+                                    </div>
+                                    <div class="fatura-pendente-info">
+                                        <div class="fatura-info-row">
+                                            <span class="fatura-info-label">Período</span>
+                                            <span class="fatura-info-value"><?php echo $fatura['periodo']; ?></span>
+                                        </div>
+                                        <div class="fatura-info-row">
+                                            <span class="fatura-info-label">Vencimento</span>
+                                            <span class="fatura-info-value"><?php echo formatDate($fatura['vencimento']); ?></span>
+                                        </div>
+                                        <div class="fatura-info-row">
+                                            <span class="fatura-info-label">Dias restantes</span>
+                                            <span class="fatura-info-value" style="color: #FFD93D;">
+                                                <?php echo $fatura['dias_restantes']; ?> dias
+                                            </span>
+                                        </div>
+                                        <div class="fatura-info-row fatura-info-total">
+                                            <span class="fatura-info-label">Valor</span>
+                                            <span class="fatura-info-value" style="color: #00FFA3;">
+                                                Kz <?php echo formatMoney($fatura['valor']); ?>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                    <?php endif; ?>
+
+                    <!-- ===== HISTÓRICO RECENTE ===== -->
+                    <div class="card animate-fade-up" style="animation-delay: 0.5s;">
+                        <div class="card-header">
+                            <h3>
+                                <i class="fas fa-history" style="color: #6C2BD9;"></i>
+                                Histórico Recente
+                            </h3>
+                        </div>
+                        <div class="historico-list">
+                            <?php foreach ($historico_pagamentos as $pagamento): ?>
+                                <div class="historico-item">
+                                    <div class="historico-icon">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                    <div class="historico-info">
+                                        <span class="historico-periodo"><?php echo $pagamento['periodo']; ?></span>
+                                        <span class="historico-data">
+                                            <?php echo formatDateTime($pagamento['data_pagamento']); ?>
+                                        </span>
+                                        <span class="historico-metodo">
+                                            <i class="fas fa-credit-card"></i> <?php echo $pagamento['metodo']; ?>
+                                        </span>
+                                    </div>
+                                    <div class="historico-valor">
+                                        Kz <?php echo formatMoney($pagamento['valor']); ?>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                        <div class="historico-footer">
+                            <a href="faturas.php" class="btn btn-sm btn-outline" style="width: 100%; justify-content: center;">
+                                <i class="fas fa-list"></i> Ver Todo o Histórico
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- ===== INFO SEGURANÇA ===== -->
+                    <div class="card card-info animate-fade-up" style="animation-delay: 0.55s;">
+                        <div class="info-seguranca">
+                            <i class="fas fa-shield-alt"></i>
+                            <h4>Pagamento Seguro</h4>
+                            <p>Após o envio do comprovativo, a nossa equipa valida o pagamento em até 24 horas úteis.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
     </div>
 
     <!-- ========================================== -->
-    <!-- MODAL DE PAGAMENTO                         -->
+    <!-- MODAL DE CONFIRMAÇÃO FINAL                 -->
     <!-- ========================================== -->
-    <div class="modal" id="modalPagamento">
-        <div class="modal-overlay" onclick="fecharModal('modalPagamento')"></div>
+    <div class="modal" id="modalConfirmacaoPagamento">
+        <div class="modal-overlay" onclick="fecharModal('modalConfirmacaoPagamento')"></div>
         <div class="modal-content modal-content-pagamento">
-            <div class="modal-header modal-header-primary">
-                <h3 class="modal-title modal-title-primary">
-                    <i class="fas fa-credit-card"></i>
-                    Pagar Assinatura
+            <div class="modal-header modal-header-success">
+                <h3 class="modal-title modal-title-success">
+                    <i class="fas fa-check-circle"></i>
+                    Confirmar Envio
                 </h3>
-                <button class="modal-close" onclick="fecharModal('modalPagamento')">&times;</button>
+                <button class="modal-close" onclick="fecharModal('modalConfirmacaoPagamento')">&times;</button>
             </div>
             <div class="modal-body">
-                <!-- Resumo -->
-                <div class="pagamento-resumo">
-                    <div class="resumo-item">
-                        <span class="resumo-label">Plano</span>
-                        <span class="resumo-value"><?php echo $assinatura['plano']; ?></span>
+                <div class="pagamento-confirmacao">
+                    <div class="pagamento-confirmacao-icon">
+                        <i class="fas fa-shield-alt"></i>
                     </div>
-                    <div class="resumo-item">
-                        <span class="resumo-label">Período</span>
-                        <span class="resumo-value"><?php echo $assinatura['periodo']; ?></span>
+                    <h4>Confirme os dados do pagamento</h4>
+                    
+                    <div class="pagamento-confirmacao-resumo">
+                        <div class="confirmacao-item">
+                            <span class="confirmacao-label">Plano</span>
+                            <span class="confirmacao-value"><?php echo $assinatura['plano']; ?></span>
+                        </div>
+                        <div class="confirmacao-item">
+                            <span class="confirmacao-label">Método</span>
+                            <span class="confirmacao-value" id="confirmacaoMetodo">-</span>
+                        </div>
+                        <div class="confirmacao-item">
+                            <span class="confirmacao-label">Comprovativo</span>
+                            <span class="confirmacao-value" id="confirmacaoComprovativo" style="color: #00FFA3;">
+                                <i class="fas fa-check-circle"></i> Anexado
+                            </span>
+                        </div>
+                        <div class="confirmacao-item confirmacao-total">
+                            <span class="confirmacao-label">Total a Pagar</span>
+                            <span class="confirmacao-value">Kz <?php echo formatMoney($assinatura['valor']); ?></span>
+                        </div>
                     </div>
-                    <div class="resumo-item resumo-item-total">
-                        <span class="resumo-label">Valor Total</span>
-                        <span class="resumo-value valor-total">Kz <?php echo formatMoney($assinatura['valor_mensal']); ?></span>
-                    </div>
-                </div>
 
-                <!-- Método de Pagamento -->
-                <div class="form-group">
-                    <label class="form-label">Método de Pagamento</label>
-                    <div class="metodos-rapidos">
-                        <?php foreach ($metodos_pagamento as $metodo): ?>
-                            <label class="metodo-rapido">
-                                <input type="radio" name="metodo_pagamento" value="<?php echo $metodo['id']; ?>" <?php echo $metodo['recomendado'] ? 'checked' : ''; ?>>
-                                <div class="metodo-rapido-content">
-                                    <div class="metodo-rapido-icon" style="background: <?php echo $metodo['color']; ?>20; color: <?php echo $metodo['color']; ?>;">
-                                        <i class="fas <?php echo $metodo['icon']; ?>"></i>
-                                    </div>
-                                    <span class="metodo-rapido-nome"><?php echo $metodo['nome']; ?></span>
-                                </div>
-                            </label>
-                        <?php endforeach; ?>
-                    </div>
-                </div>
-
-                <!-- Comprovativo -->
-                <div class="form-group">
-                    <label class="form-label">Comprovativo de Pagamento</label>
-                    <div class="comprovativo-upload" onclick="document.getElementById('comprovativoInput').click()">
-                        <i class="fas fa-cloud-upload-alt"></i>
-                        <span>Clique para anexar o comprovativo</span>
-                        <small>PDF, JPG ou PNG até 5MB</small>
-                        <input type="file" id="comprovativoInput" accept=".pdf,.jpg,.jpeg,.png" style="display: none;" onchange="previewComprovativo(event)">
-                    </div>
-                    <div class="comprovativo-preview" id="comprovativoPreview" style="display: none;">
-                        <i class="fas fa-file-pdf" style="color: #FF6B6B;"></i>
-                        <span id="comprovativoNome">-</span>
-                        <button class="btn-remove" onclick="removerComprovativo()">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Observações (opcional)</label>
-                    <textarea class="form-control" id="observacoesPagamento" rows="2" 
-                              placeholder="Notas sobre o pagamento..." maxlength="500"></textarea>
+                    <p class="pagamento-confirmacao-aviso">
+                        <i class="fas fa-info-circle"></i>
+                        Ao confirmar, o comprovativo será enviado para validação. Receberá uma notificação quando o pagamento for aprovado.
+                    </p>
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-outline" onclick="fecharModal('modalPagamento')">
+                <button class="btn btn-outline" onclick="fecharModal('modalConfirmacaoPagamento')">
                     <i class="fas fa-times"></i> Cancelar
                 </button>
-                <button class="btn btn-primary" onclick="confirmarPagamento()">
-                    <i class="fas fa-check"></i> Confirmar Pagamento
+                <button class="btn btn-success" id="btnConfirmarPagamento" onclick="executarPagamento()">
+                    <i class="fas fa-paper-plane"></i> Enviar Comprovativo
                 </button>
             </div>
         </div>
     </div>
 
     <!-- ========================================== -->
-    <!-- MODAL DE MUDANÇA DE PLANO                  -->
+    <!-- MODAL DE PROCESSAMENTO                     -->
     <!-- ========================================== -->
-    <div class="modal" id="modalMudarPlano">
-        <div class="modal-overlay" onclick="fecharModal('modalMudarPlano')"></div>
-        <div class="modal-content" style="max-width: 500px;">
-            <div class="modal-header modal-header-primary">
-                <h3 class="modal-title modal-title-primary">
-                    <i class="fas fa-arrow-up"></i>
-                    Mudar de Plano
-                </h3>
-                <button class="modal-close" onclick="fecharModal('modalMudarPlano')">&times;</button>
+    <div class="modal" id="modalProcessando">
+        <div class="modal-overlay"></div>
+        <div class="modal-content modal-content-processando">
+            <div class="processando-conteudo">
+                <div class="processando-spinner">
+                    <div class="spinner-ring"></div>
+                    <i class="fas fa-cloud-upload-alt"></i>
+                </div>
+                <h3>A enviar comprovativo...</h3>
+                <p id="processandoTexto">A validar o ficheiro. Por favor, aguarde.</p>
+                <div class="processando-progresso">
+                    <div class="processando-progresso-fill" id="processandoProgresso"></div>
+                </div>
+                <span class="processando-percent" id="processandoPercent">0%</span>
             </div>
-            <div class="modal-body">
-                <div class="mudanca-plano-info">
-                    <div class="mudanca-plano-item">
-                        <span class="mudanca-plano-label">Plano Atual</span>
-                        <span class="mudanca-plano-value" id="planoAtualNome"><?php echo $assinatura['plano']; ?></span>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- MODAL DE SUCESSO                           -->
+    <!-- ========================================== -->
+    <div class="modal" id="modalSucesso">
+        <div class="modal-overlay"></div>
+        <div class="modal-content modal-content-sucesso">
+            <div class="sucesso-conteudo">
+                <div class="sucesso-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h2>Comprovativo Enviado!</h2>
+                <p>O seu pagamento está em análise. Receberá uma notificação quando for aprovado.</p>
+                
+                <div class="sucesso-info">
+                    <div class="sucesso-info-item">
+                        <span class="sucesso-info-label">Referência</span>
+                        <span class="sucesso-info-value" id="sucessoReferencia">-</span>
                     </div>
-                    <div class="mudanca-plano-seta">
-                        <i class="fas fa-arrow-right"></i>
+                    <div class="sucesso-info-item">
+                        <span class="sucesso-info-label">Valor</span>
+                        <span class="sucesso-info-value" id="sucessoValor">-</span>
                     </div>
-                    <div class="mudanca-plano-item">
-                        <span class="mudanca-plano-label">Novo Plano</span>
-                        <span class="mudanca-plano-value novo" id="planoNovoNome">-</span>
+                    <div class="sucesso-info-item">
+                        <span class="sucesso-info-label">Método</span>
+                        <span class="sucesso-info-value" id="sucessoMetodo">-</span>
+                    </div>
+                    <div class="sucesso-info-item">
+                        <span class="sucesso-info-label">Estado</span>
+                        <span class="sucesso-info-value" style="color: #FFD93D;">
+                            <i class="fas fa-clock"></i> Em Análise
+                        </span>
                     </div>
                 </div>
 
-                <div class="mudanca-plano-valor">
-                    <span>Novo valor mensal:</span>
-                    <strong id="planoNovoValor">Kz 0</strong>
+                <div class="sucesso-acoes">
+                    <a href="faturas.php" class="btn btn-outline">
+                        <i class="fas fa-file-invoice"></i> Ver Fatura
+                    </a>
+                    <a href="index.php" class="btn btn-primary">
+                        <i class="fas fa-check"></i> Concluir
+                    </a>
                 </div>
-
-                <div class="mudanca-plano-aviso">
-                    <i class="fas fa-info-circle"></i>
-                    <span>A mudança será aplicada no próximo ciclo de faturação.</span>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-outline" onclick="fecharModal('modalMudarPlano')">Cancelar</button>
-                <button class="btn btn-primary" id="btnConfirmarMudanca">
-                    <i class="fas fa-check"></i> Confirmar Mudança
-                </button>
             </div>
         </div>
     </div>
@@ -814,52 +878,6 @@ if (!function_exists('getStatusClass')) {
                     sidebar.classList.remove('open');
                     overlay.classList.remove('active');
                 });
-            }
-        });
-
-        // ============================================
-        // TOGGLE SIDEBAR MOBILE
-        // ============================================
-        function toggleSidebarMobile(event) {
-            if (event) {
-                event.preventDefault();
-                event.stopPropagation();
-            }
-
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('sidebarOverlay');
-
-            if (sidebar) {
-                sidebar.classList.toggle('open');
-                if (overlay) overlay.classList.toggle('active');
-
-                const menuBtn = document.getElementById('bottomMenuToggle');
-                if (menuBtn) {
-                    const icon = menuBtn.querySelector('i');
-                    if (sidebar.classList.contains('open')) {
-                        icon.className = 'fas fa-times';
-                    } else {
-                        icon.className = 'fas fa-bars';
-                    }
-                }
-            }
-        }
-
-        document.addEventListener('click', function(e) {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('sidebarOverlay');
-            const menuBtn = document.getElementById('bottomMenuToggle');
-
-            if (window.innerWidth <= 768 && sidebar && sidebar.classList.contains('open')) {
-                if (!sidebar.contains(e.target) && !menuBtn?.contains(e.target)) {
-                    sidebar.classList.remove('open');
-                    if (overlay) overlay.classList.remove('active');
-
-                    if (menuBtn) {
-                        const icon = menuBtn.querySelector('i');
-                        if (icon) icon.className = 'fas fa-bars';
-                    }
-                }
             }
         });
 
@@ -968,120 +986,276 @@ if (!function_exists('getStatusClass')) {
         var mostrarToast = window.mostrarToast;
 
         // ============================================
-        // PAGAR AGORA
+        // ESTADO
         // ============================================
-        function pagarAgora() {
-            document.getElementById('modalPagamento').classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function abrirModalRenovacao() {
-            document.getElementById('modalPagamento').classList.add('active');
-            document.body.style.overflow = 'hidden';
-            mostrarToast('Renovação antecipada iniciada', 'info');
-        }
+        let metodoSelecionado = null;
+        let comprovativoAnexado = null;
+        const valorAssinatura = <?php echo $assinatura['valor']; ?>;
 
         // ============================================
-        // COMPROVATIVO
+        // SELECIONAR MÉTODO DE PAGAMENTO
+        // ============================================
+        function selecionarMetodo(metodoId) {
+            metodoSelecionado = metodoId;
+
+            // Atualizar cards
+            document.querySelectorAll('.metodo-card').forEach(card => {
+                card.classList.toggle('selected', card.dataset.metodo === metodoId);
+            });
+
+            // Esconder todos os blocos de método
+            document.querySelectorAll('.metodo-especifico').forEach(el => {
+                if (el.id !== 'dadosComprovativo') {
+                    el.style.display = 'none';
+                }
+            });
+
+            // Mostrar o bloco específico + comprovativo
+            const mapa = {
+                'multicaixa': 'dadosMulticaixa',
+                'transferencia': 'dadosTransferencia'
+            };
+
+            if (mapa[metodoId]) {
+                const bloco = document.getElementById(mapa[metodoId]);
+                if (bloco) bloco.style.display = 'block';
+            }
+
+            // Mostrar área de comprovativo (sempre que um método é selecionado)
+            document.getElementById('dadosComprovativo').style.display = 'block';
+
+            // Atualizar resumo
+            const metodoNome = document.querySelector(`.metodo-card[data-metodo="${metodoId}"] .metodo-nome`).textContent;
+            document.getElementById('resumoMetodo').textContent = metodoNome;
+
+            // Atualizar checklist
+            actualizarChecklist();
+
+            // Scroll suave para o comprovativo
+            setTimeout(() => {
+                const comprovativoSection = document.getElementById('dadosComprovativo');
+                if (comprovativoSection) {
+                    comprovativoSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 200);
+        }
+
+        // ============================================
+        // PREVIEW COMPROVATIVO
         // ============================================
         function previewComprovativo(event) {
             const file = event.target.files[0];
             if (!file) return;
 
-            if (file.size > 5 * 1024 * 1024) {
-                mostrarToast('O ficheiro deve ter no máximo 5MB', 'error');
+            // Validações
+            const extensoesPermitidas = ['.pdf', '.jpg', '.jpeg', '.png'];
+            const extensao = '.' + file.name.split('.').pop().toLowerCase();
+
+            if (!extensoesPermitidas.includes(extensao)) {
+                mostrarToast('Formato não suportado. Use PDF, JPG ou PNG.', 'error');
+                event.target.value = '';
                 return;
             }
 
-            const preview = document.getElementById('comprovativoPreview');
-            const nome = document.getElementById('comprovativoNome');
-            const icon = preview.querySelector('i');
-
-            const ext = file.name.split('.').pop().toLowerCase();
-            if (ext === 'pdf') {
-                icon.className = 'fas fa-file-pdf';
-                icon.style.color = '#FF6B6B';
-            } else {
-                icon.className = 'fas fa-file-image';
-                icon.style.color = '#FF9F43';
+            if (file.size > 5 * 1024 * 1024) {
+                mostrarToast('O ficheiro excede 5MB.', 'error');
+                event.target.value = '';
+                return;
             }
 
+            comprovativoAnexado = file;
+
+            // Mostrar preview
+            const preview = document.getElementById('comprovativoPreview');
+            const nome = document.getElementById('comprovativoNome');
+            const tamanho = document.getElementById('comprovativoTamanho');
+            const icon = document.getElementById('comprovativoFileIcon');
+
             nome.textContent = file.name;
-            preview.style.display = 'flex';
-            mostrarToast('Comprovativo carregado!', 'success');
+            tamanho.textContent = formatFileSize(file.size);
+
+            // Ícone por tipo
+            let iconHTML = '<i class="fas fa-file"></i>';
+            if (extensao === '.pdf') {
+                iconHTML = '<i class="fas fa-file-pdf"></i>';
+                icon.style.background = 'rgba(255, 107, 107, 0.15)';
+                icon.style.color = '#FF6B6B';
+            } else if (extensao === '.jpg' || extensao === '.jpeg' || extensao === '.png') {
+                iconHTML = '<i class="fas fa-file-image"></i>';
+                icon.style.background = 'rgba(0, 210, 255, 0.15)';
+                icon.style.color = '#00D2FF';
+            }
+            icon.innerHTML = iconHTML;
+
+            preview.style.display = 'block';
+            document.getElementById('uploadArea').style.display = 'none';
+
+            // Atualizar resumo
+            document.getElementById('resumoComprovativo').innerHTML = '<i class="fas fa-check-circle"></i> Anexado';
+            document.getElementById('resumoComprovativo').style.color = '#00FFA3';
+
+            // Atualizar checklist
+            actualizarChecklist();
+
+            mostrarToast('Comprovativo anexado com sucesso!', 'success');
         }
 
+        // ============================================
+        // REMOVER COMPROVATIVO
+        // ============================================
         function removerComprovativo() {
-            document.getElementById('comprovativoPreview').style.display = 'none';
+            comprovativoAnexado = null;
             document.getElementById('comprovativoInput').value = '';
+            document.getElementById('comprovativoPreview').style.display = 'none';
+            document.getElementById('uploadArea').style.display = 'flex';
+
+            document.getElementById('resumoComprovativo').innerHTML = '<i class="fas fa-times-circle"></i> Não anexado';
+            document.getElementById('resumoComprovativo').style.color = '#FF6B6B';
+
+            actualizarChecklist();
+            mostrarToast('Comprovativo removido', 'info');
+        }
+
+        // ============================================
+        // FORMATAR TAMANHO DO FICHEIRO
+        // ============================================
+        function formatFileSize(bytes) {
+            if (bytes < 1024) return bytes + ' B';
+            if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+            return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+        }
+
+        // ============================================
+        // ATUALIZAR CHECKLIST
+        // ============================================
+        function actualizarChecklist() {
+            const checkMetodo = document.getElementById('checkMetodo');
+            const checkComprovativo = document.getElementById('checkComprovativo');
+            const btnPagar = document.getElementById('btnPagar');
+
+            // Método
+            if (metodoSelecionado) {
+                checkMetodo.classList.add('check-ok');
+                checkMetodo.querySelector('i').className = 'fas fa-check-circle';
+            } else {
+                checkMetodo.classList.remove('check-ok');
+                checkMetodo.querySelector('i').className = 'fas fa-circle';
+            }
+
+            // Comprovativo
+            if (comprovativoAnexado) {
+                checkComprovativo.classList.add('check-ok');
+                checkComprovativo.querySelector('i').className = 'fas fa-check-circle';
+            } else {
+                checkComprovativo.classList.remove('check-ok');
+                checkComprovativo.querySelector('i').className = 'fas fa-circle';
+            }
+
+            // Botão
+            btnPagar.disabled = !(metodoSelecionado && comprovativoAnexado);
         }
 
         // ============================================
         // CONFIRMAR PAGAMENTO
         // ============================================
         function confirmarPagamento() {
-            const metodo = document.querySelector('input[name="metodo_pagamento"]:checked');
-            const comprovativo = document.getElementById('comprovativoInput').files[0];
-
-            if (!metodo) {
-                mostrarToast('Selecione um método de pagamento!', 'error');
+            if (!metodoSelecionado) {
+                mostrarToast('Selecione um método de pagamento!', 'warning');
                 return;
             }
 
-            if (!comprovativo) {
-                mostrarToast('Anexe o comprovativo de pagamento!', 'error');
+            if (!comprovativoAnexado) {
+                mostrarToast('Anexe o comprovativo de pagamento!', 'warning');
                 return;
             }
 
-            mostrarToast('A processar o pagamento...', 'info');
+            // Preparar modal
+            const metodoNome = document.querySelector(`.metodo-card[data-metodo="${metodoSelecionado}"] .metodo-nome`).textContent;
+            document.getElementById('confirmacaoMetodo').textContent = metodoNome;
 
-            setTimeout(() => {
-                fecharModal('modalPagamento');
-                mostrarToast('Pagamento registado com sucesso! Aguardando aprovação.', 'success');
-                setTimeout(() => location.reload(), 1500);
-            }, 1500);
-        }
-
-        // ============================================
-        // MUDAR DE PLANO
-        // ============================================
-        function mudarPlano(id, nome, valor) {
-            document.getElementById('planoNovoNome').textContent = nome;
-            document.getElementById('planoNovoValor').textContent = 'Kz ' + valor.toLocaleString('pt-AO').replace(/,/g, '.');
-            
-            document.getElementById('btnConfirmarMudanca').onclick = function() {
-                mostrarToast('A processar mudança para o plano ' + nome + '...', 'info');
-                setTimeout(() => {
-                    fecharModal('modalMudarPlano');
-                    mostrarToast('Plano alterado para ' + nome + '!', 'success');
-                }, 1200);
-            };
-
-            document.getElementById('modalMudarPlano').classList.add('active');
+            // Abrir modal
+            document.getElementById('modalConfirmacaoPagamento').classList.add('active');
             document.body.style.overflow = 'hidden';
         }
 
         // ============================================
-        // TOGGLE RENOVAÇÃO AUTOMÁTICA
+        // EXECUTAR PAGAMENTO
         // ============================================
-        function toggleRenovacaoAutomatica() {
-            mostrarToast('Renovação automática alterada!', 'info');
-            setTimeout(() => location.reload(), 800);
+        function executarPagamento() {
+            fecharModal('modalConfirmacaoPagamento');
+
+            const modalProcessando = document.getElementById('modalProcessando');
+            modalProcessando.classList.add('active');
+
+            let progresso = 0;
+            const progressoFill = document.getElementById('processandoProgresso');
+            const progressoPercent = document.getElementById('processandoPercent');
+            const processandoTexto = document.getElementById('processandoTexto');
+
+            const etapas = [
+                { perc: 25, texto: 'A validar o ficheiro...' },
+                { perc: 50, texto: 'A carregar o comprovativo...' },
+                { perc: 75, texto: 'A registar o pagamento...' },
+                { perc: 100, texto: 'Comprovativo enviado!' }
+            ];
+
+            const interval = setInterval(() => {
+                progresso += 2;
+                if (progresso > 100) progresso = 100;
+
+                progressoFill.style.width = progresso + '%';
+                progressoPercent.textContent = progresso + '%';
+
+                for (let i = etapas.length - 1; i >= 0; i--) {
+                    if (progresso >= etapas[i].perc) {
+                        processandoTexto.textContent = etapas[i].texto;
+                        break;
+                    }
+                }
+
+                if (progresso >= 100) {
+                    clearInterval(interval);
+
+                    setTimeout(() => {
+                        modalProcessando.classList.remove('active');
+
+                        // Preparar modal de sucesso
+                        const metodoNome = document.querySelector(`.metodo-card[data-metodo="${metodoSelecionado}"] .metodo-nome`).textContent;
+
+                        document.getElementById('sucessoReferencia').textContent = 'PAG-' + Date.now();
+                        document.getElementById('sucessoValor').textContent = 'Kz ' + formatMoney(valorAssinatura);
+                        document.getElementById('sucessoMetodo').textContent = metodoNome;
+
+                        document.getElementById('modalSucesso').classList.add('active');
+                    }, 800);
+                }
+            }, 60);
         }
 
         // ============================================
-        // AÇÕES DAS FATURAS
+        // FORMATAR DINHEIRO
         // ============================================
-        function verFatura(id) {
-            mostrarToast('A abrir fatura #' + id, 'info');
-        }
-
-        function baixarFatura(id) {
-            mostrarToast('A baixar PDF da fatura #' + id, 'info');
+        function formatMoney(value) {
+            return Math.round(value).toLocaleString('pt-AO').replace(/,/g, '.');
         }
 
         // ============================================
-        // FECHAR MODAIS
+        // COPIAR CÓDIGO
+        // ============================================
+        function copiarCodigo(elementId) {
+            const el = document.getElementById(elementId);
+            if (!el) return;
+
+            const texto = el.textContent || el.value;
+            navigator.clipboard.writeText(texto).then(() => {
+                mostrarToast('Copiado para a área de transferência!', 'success');
+            }).catch(() => {
+                mostrarToast('Erro ao copiar. Copie manualmente.', 'error');
+            });
+        }
+
+        // ============================================
+        // FECHAR MODAL
         // ============================================
         function fecharModal(id) {
             const modal = document.getElementById(id);
@@ -1093,10 +1267,7 @@ if (!function_exists('getStatusClass')) {
 
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
-                document.querySelectorAll('.modal.active').forEach(m => {
-                    m.classList.remove('active');
-                });
-                document.body.style.overflow = '';
+                fecharModal('modalConfirmacaoPagamento');
             }
         });
     </script>
@@ -1208,7 +1379,7 @@ if (!function_exists('getStatusClass')) {
 
         .header-left {
             flex: 1;
-            min-width: 250px;
+            min-width: 0;
             display: flex;
             flex-direction: column;
             gap: 6px;
@@ -1227,32 +1398,6 @@ if (!function_exists('getStatusClass')) {
         }
 
         .header-left h1 .icon { color: #FFD93D; font-size: 0.85em; }
-
-        .badge-status {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 4px 12px;
-            border-radius: var(--radius-full);
-            font-size: 11px;
-            font-weight: 700;
-            white-space: nowrap;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .badge-status .status-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #00FFA3;
-            animation: pulse 2s ease-in-out infinite;
-        }
-
-        .badge-status.status-ativo { background: rgba(0, 255, 163, 0.12); color: #00FFA3; }
-        .badge-status.status-pago { background: rgba(0, 255, 163, 0.12); color: #00FFA3; }
-        .badge-status.status-pendente { background: rgba(255, 217, 61, 0.12); color: #FFD93D; }
-        .badge-status.status-falhou { background: rgba(255, 107, 107, 0.12); color: #FF6B6B; }
 
         .header-left .breadcrumb {
             font-size: var(--text-sm);
@@ -1300,163 +1445,48 @@ if (!function_exists('getStatusClass')) {
         [data-theme="light"] .btn-theme .theme-icon.moon { opacity: 1; transform: rotate(0deg); }
 
         /* ========================================== */
-        /* ASSINATURA ATUAL                           */
+        /* AVISO PENDENTE                             */
         /* ========================================== */
-        .assinatura-atual {
+        .aviso-pendente {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            padding: var(--space-lg);
+            background: linear-gradient(135deg, rgba(255, 217, 61, 0.12) 0%, rgba(255, 217, 61, 0.04) 100%);
+            border: 2px solid rgba(255, 217, 61, 0.3);
+            border-radius: var(--radius-lg);
             margin-bottom: var(--space-lg);
         }
 
-        .assinatura-card {
-            background: var(--bg-card);
-            border-radius: var(--radius-lg);
-            border: 1px solid var(--border-color);
-            overflow: hidden;
-            position: relative;
-        }
-
-        .assinatura-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: var(--space-lg);
-            background: linear-gradient(135deg, var(--plano-color, #FFD93D)15 0%, transparent 100%);
-            border-bottom: 1px solid var(--border-color);
-            gap: var(--space-md);
-            flex-wrap: wrap;
-        }
-
-        .assinatura-plano-badge {
-            display: flex;
-            align-items: center;
-            gap: var(--space-md);
-        }
-
-        .plano-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: var(--radius-md);
+        .aviso-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: rgba(255, 217, 61, 0.2);
+            color: #FFD93D;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 26px;
+            font-size: 24px;
             flex-shrink: 0;
+            animation: pulse 2s ease-in-out infinite;
         }
 
-        .plano-info {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-
-        .plano-categoria {
-            font-size: var(--text-xs);
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-weight: 600;
-        }
-
-        .plano-nome {
+        .aviso-conteudo h3 {
             font-family: var(--font-title);
-            font-size: var(--text-h3);
-            font-weight: 700;
-            color: var(--text-primary);
-            margin: 0;
-        }
-
-        .assinatura-body {
-            padding: var(--space-lg);
-        }
-
-        .assinatura-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: var(--space-md);
-            margin-bottom: var(--space-lg);
-        }
-
-        .assinatura-info-item {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            padding: var(--space-md);
-            background: var(--bg-input);
-            border-radius: var(--radius-md);
-            border: 1px solid var(--border-color);
-        }
-
-        .info-label {
-            font-size: var(--text-xs);
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .info-value {
-            font-family: var(--font-display);
             font-size: var(--text-h4);
-            font-weight: 700;
-            color: var(--text-primary);
-            word-break: break-word;
+            color: #FFD93D;
+            margin: 0 0 4px 0;
         }
 
-        .assinatura-alerta {
-            display: flex;
-            gap: var(--space-md);
-            padding: var(--space-md) var(--space-lg);
-            background: rgba(0, 210, 255, 0.06);
-            border: 1px solid rgba(0, 210, 255, 0.2);
-            border-radius: var(--radius-md);
-            margin-bottom: var(--space-lg);
-        }
-
-        .assinatura-alerta i {
-            font-size: 22px;
-            color: #00D2FF;
-            flex-shrink: 0;
-            margin-top: 2px;
-        }
-
-        .assinatura-alerta div {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .assinatura-alerta strong {
-            font-size: var(--text-sm);
-            color: var(--text-primary);
-        }
-
-        .assinatura-alerta span {
+        .aviso-conteudo p {
             font-size: var(--text-sm);
             color: var(--text-secondary);
+            margin: 0;
             line-height: 1.5;
         }
 
-        .assinatura-alerta span strong {
-            color: #00D2FF;
-        }
-
-        .assinatura-acoes-rapidas {
-            display: flex;
-            gap: var(--space-sm);
-            flex-wrap: wrap;
-        }
-
-        .assinatura-acoes-rapidas .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 10px 18px;
-            font-size: var(--text-sm);
-            font-weight: 500;
-            border-radius: var(--radius-md);
-        }
+        .aviso-conteudo p strong { color: #FFD93D; }
 
         /* ========================================== */
         /* STATS CARDS                                */
@@ -1494,9 +1524,9 @@ if (!function_exists('getStatusClass')) {
             font-size: 18px;
         }
 
+        .stat-card .icon.yellow { background: rgba(255, 217, 61, 0.15); color: #FFD93D; }
         .stat-card .icon.green { background: rgba(0, 255, 163, 0.15); color: #00FFA3; }
         .stat-card .icon.blue { background: rgba(0, 210, 255, 0.15); color: #00D2FF; }
-        .stat-card .icon.yellow { background: rgba(255, 217, 61, 0.15); color: #FFD93D; }
         .stat-card .icon.aurora { background: rgba(108, 43, 217, 0.15); color: #6C2BD9; }
 
         .stat-card .value {
@@ -1527,24 +1557,52 @@ if (!function_exists('getStatusClass')) {
         .stat-card .trend.neutral { background: rgba(107, 122, 143, 0.12); color: #6B7A8F; }
 
         /* ========================================== */
-        /* SEÇÕES COM HEADER                          */
+        /* PAGAMENTO GRID                             */
         /* ========================================== */
-        .planos-section,
-        .metodos-section,
-        .historico-section {
-            margin-bottom: var(--space-lg);
+        .pagamento-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 380px);
+            gap: var(--space-lg);
+            align-items: start;
         }
 
-        .section-header-inline {
+        .pagamento-coluna-principal,
+        .pagamento-coluna-lateral {
+            min-width: 0;
+            max-width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-lg);
+        }
+
+        /* ========================================== */
+        /* CARDS                                      */
+        /* ========================================== */
+        .card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            transition: var(--transition-smooth);
+            overflow: hidden;
+            max-width: 100%;
+        }
+
+        .card:hover {
+            background: var(--bg-card-hover);
+            box-shadow: var(--glass-shadow);
+        }
+
+        .card-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: var(--space-md);
+            padding: var(--space-lg);
+            border-bottom: 1px solid var(--border-color);
             flex-wrap: wrap;
             gap: var(--space-sm);
         }
 
-        .section-header-inline h3 {
+        .card-header h3 {
             font-family: var(--font-title);
             font-size: var(--text-h4);
             color: var(--text-primary);
@@ -1555,108 +1613,59 @@ if (!function_exists('getStatusClass')) {
             flex-wrap: wrap;
         }
 
-        .section-subtitle {
-            font-size: var(--text-sm);
-            color: var(--text-muted);
-        }
-
-        .badge-count {
+        .badge-required {
             display: inline-flex;
             align-items: center;
-            justify-content: center;
-            min-width: 24px;
-            height: 24px;
-            padding: 0 8px;
-            background: var(--bg-input);
-            color: var(--text-muted);
-            border-radius: var(--radius-full);
-            font-size: 10px;
-            font-weight: 700;
-            font-family: var(--font-display);
-        }
-
-        /* ========================================== */
-        /* PLANOS                                     */
-        /* ========================================== */
-        .planos-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: var(--space-md);
-        }
-
-        .plano-card {
-            background: var(--bg-card);
-            border: 2px solid var(--border-color);
-            border-radius: var(--radius-lg);
-            padding: var(--space-lg);
-            position: relative;
-            transition: var(--transition-smooth);
-            display: flex;
-            flex-direction: column;
-            gap: var(--space-md);
-        }
-
-        .plano-card:hover {
-            border-color: var(--plano-color);
-            transform: translateY(-4px);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
-        }
-
-        .plano-card.plano-atual {
-            border-color: var(--plano-color);
-            background: linear-gradient(135deg, var(--plano-color)08 0%, transparent 100%);
-        }
-
-        .plano-card.plano-recomendado {
-            border-color: var(--plano-color);
-        }
-
-        .plano-badge {
-            position: absolute;
-            top: -12px;
-            right: var(--space-md);
-            padding: 4px 12px;
+            gap: 4px;
+            padding: 3px 10px;
+            background: rgba(255, 107, 107, 0.15);
+            color: #FF6B6B;
             border-radius: var(--radius-full);
             font-size: 10px;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
         }
 
-        .plano-badge-atual {
-            background: #00FFA3;
-            color: #0A1628;
-        }
-
-        .plano-badge-recomendado {
-            background: var(--plano-color);
-            color: #0A1628;
+        /* ========================================== */
+        /* PLANO DETALHE                              */
+        /* ========================================== */
+        .plano-detalhe {
+            padding: var(--space-lg);
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-lg);
         }
 
         .plano-header {
             display: flex;
-            flex-direction: column;
             align-items: center;
-            text-align: center;
-            gap: var(--space-sm);
-            padding-bottom: var(--space-md);
+            gap: var(--space-md);
+            padding-bottom: var(--space-lg);
             border-bottom: 1px solid var(--border-color);
+            flex-wrap: wrap;
         }
 
-        .plano-icon-large {
+        .plano-icon {
             width: 64px;
             height: 64px;
-            border-radius: 50%;
+            border-radius: var(--radius-lg);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 28px;
+            flex-shrink: 0;
         }
 
-        .plano-header .plano-nome {
+        .plano-info {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .plano-nome {
             font-family: var(--font-title);
             font-size: var(--text-h3);
             font-weight: 700;
@@ -1664,125 +1673,160 @@ if (!function_exists('getStatusClass')) {
             margin: 0;
         }
 
-        .plano-descricao {
-            font-size: var(--text-sm);
-            color: var(--text-muted);
-            margin: 0;
-            line-height: 1.4;
+        .plano-status {
+            font-size: var(--text-xs);
+            color: #00FFA3;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-weight: 600;
         }
 
-        .plano-preco {
+        .plano-valor {
             display: flex;
             flex-direction: column;
-            gap: 4px;
-            padding: var(--space-md) 0;
-            text-align: center;
+            align-items: flex-end;
+            gap: 2px;
         }
 
-        .preco-mensal {
-            display: flex;
-            align-items: baseline;
-            justify-content: center;
-            gap: 4px;
-        }
-
-        .preco-valor {
+        .plano-valor-numero {
             font-family: var(--font-display);
             font-size: var(--text-h2);
             font-weight: 700;
-            color: var(--plano-color);
+            color: #FFD93D;
         }
 
-        .preco-periodo {
-            font-size: var(--text-sm);
+        .plano-valor-periodo {
+            font-size: var(--text-xs);
             color: var(--text-muted);
         }
 
-        .preco-anual {
+        .plano-features h5 {
+            font-size: var(--text-sm);
+            color: var(--text-secondary);
+            margin: 0 0 var(--space-sm) 0;
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .plano-features h5 i { color: #00FFA3; }
+
+        .features-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--space-sm);
+        }
+
+        .features-list li {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            font-size: var(--text-sm);
+            color: var(--text-secondary);
+            padding: var(--space-sm) var(--space-md);
+            background: var(--bg-input);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+        }
+
+        .features-list li i { color: #00FFA3; font-size: 12px; flex-shrink: 0; }
+
+        .plano-datas {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-md);
+        }
+
+        .plano-data-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            padding: var(--space-md);
+            background: var(--bg-input);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+        }
+
+        .plano-data-label {
             font-size: var(--text-xs);
             color: var(--text-muted);
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 4px;
-        }
-
-        .preco-desconto {
-            color: #00FFA3;
-            font-weight: 600;
-        }
-
-        .plano-recursos {
-            flex: 1;
-        }
-
-        .recursos-titulo {
-            font-size: var(--text-xs);
-            color: var(--text-muted);
+            gap: 6px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             font-weight: 600;
-            display: block;
-            margin-bottom: var(--space-sm);
         }
 
-        .plano-recursos ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
+        .plano-data-label i { color: #00D2FF; }
 
-        .plano-recursos ul li {
-            display: flex;
-            align-items: flex-start;
-            gap: var(--space-sm);
+        .plano-data-value {
             font-size: var(--text-sm);
-            color: var(--text-secondary);
-            line-height: 1.4;
-        }
-
-        .plano-recursos ul li i {
-            font-size: 14px;
-            flex-shrink: 0;
-            margin-top: 2px;
-        }
-
-        .plano-acoes {
-            padding-top: var(--space-md);
-            border-top: 1px solid var(--border-color);
+            color: var(--text-primary);
+            font-weight: 600;
         }
 
         /* ========================================== */
         /* MÉTODOS DE PAGAMENTO                       */
         /* ========================================== */
+        .metodos-container { padding: var(--space-lg); }
+
         .metodos-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: var(--space-md);
+            grid-template-columns: 1fr;
+            gap: var(--space-sm);
         }
 
         .metodo-card {
             display: flex;
-            flex-direction: column;
-            gap: var(--space-sm);
+            align-items: center;
+            gap: var(--space-md);
             padding: var(--space-md);
-            background: var(--bg-card);
+            background: var(--bg-input);
             border: 2px solid var(--border-color);
             border-radius: var(--radius-md);
             cursor: pointer;
             transition: var(--transition-smooth);
             position: relative;
-            text-align: center;
-            align-items: center;
         }
 
         .metodo-card:hover {
-            border-color: #00D2FF;
-            transform: translateY(-2px);
-            box-shadow: var(--glass-shadow);
+            border-color: var(--metodo-color);
+            background: var(--bg-card-hover);
+            transform: translateX(4px);
+        }
+
+        .metodo-card.selected {
+            border-color: var(--metodo-color);
+            background: linear-gradient(135deg, var(--metodo-color)10 0%, transparent 100%);
+            box-shadow: 0 0 0 3px var(--metodo-color)20;
+        }
+
+        .metodo-radio {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: var(--transition-smooth);
+        }
+
+        .metodo-card.selected .metodo-radio { border-color: var(--metodo-color); }
+
+        .metodo-card.selected .radio-mark {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--metodo-color);
         }
 
         .metodo-icon {
@@ -1797,146 +1841,194 @@ if (!function_exists('getStatusClass')) {
         }
 
         .metodo-info {
+            flex: 1;
+            min-width: 0;
             display: flex;
             flex-direction: column;
             gap: 2px;
-            align-items: center;
-            text-align: center;
         }
 
         .metodo-nome {
             font-size: var(--text-sm);
-            font-weight: 600;
+            font-weight: 700;
             color: var(--text-primary);
         }
 
         .metodo-descricao {
             font-size: var(--text-xs);
             color: var(--text-muted);
-            line-height: 1.3;
         }
 
-        .metodo-taxa {
+        .metodo-meta {
+            display: flex;
+            gap: var(--space-md);
+            margin-top: 4px;
+            flex-wrap: wrap;
+        }
+
+        .metodo-tempo, .metodo-taxa {
             font-size: 10px;
             color: var(--text-muted);
             display: inline-flex;
             align-items: center;
             gap: 4px;
-            padding: 2px 8px;
-            background: var(--bg-input);
-            border-radius: var(--radius-full);
-            margin-top: 4px;
-        }
-
-        .metodo-badge {
-            position: absolute;
-            top: -8px;
-            right: var(--space-sm);
-            padding: 2px 8px;
-            background: #00FFA3;
-            color: #0A1628;
-            border-radius: var(--radius-full);
-            font-size: 9px;
-            font-weight: 700;
-            text-transform: uppercase;
-        }
-
-        /* ========================================== */
-        /* HISTÓRICO TABLE                            */
-        /* ========================================== */
-        .historico-table-container {
-            background: var(--bg-card);
-            border-radius: var(--radius-lg);
-            border: 1px solid var(--border-color);
-            overflow-x: auto;
-            padding: var(--space-sm);
-        }
-
-        .historico-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: var(--text-sm);
-            min-width: 800px;
-        }
-
-        .historico-table thead {
-            background: var(--bg-input);
-        }
-
-        .historico-table thead th {
-            color: var(--text-muted);
             font-weight: 600;
+        }
+
+        .metodo-check {
+            width: 24px;
+            height: 24px;
+            color: var(--metodo-color);
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: scale(0);
+            transition: var(--transition-bounce);
+            flex-shrink: 0;
+        }
+
+        .metodo-card.selected .metodo-check {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* ========================================== */
+        /* MÉTODO ESPECÍFICO                          */
+        /* ========================================== */
+        .metodo-dados {
+            padding: var(--space-lg);
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-lg);
+        }
+
+        .metodo-dados-info {
+            display: flex;
+            gap: var(--space-md);
+            padding: var(--space-md);
+            background: rgba(0, 210, 255, 0.05);
+            border: 1px solid rgba(0, 210, 255, 0.2);
+            border-radius: var(--radius-md);
+        }
+
+        .metodo-dados-info > i {
+            font-size: 20px;
+            color: #00D2FF;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .metodo-dados-info > div {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .metodo-dados-info strong {
+            display: block;
+            font-size: var(--text-sm);
+            color: var(--text-primary);
+            margin-bottom: var(--space-sm);
+        }
+
+        .metodo-dados-info ol {
+            padding-left: var(--space-lg);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .metodo-dados-info ol li {
+            font-size: var(--text-sm);
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .dados-grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-md);
+        }
+
+        .dados-item {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .dados-label {
             font-size: var(--text-xs);
+            color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            padding: 12px 14px;
-            text-align: left;
-            border-bottom: 2px solid var(--border-color);
-            white-space: nowrap;
-        }
-
-        .historico-table tbody tr {
-            border-bottom: 1px solid var(--border-color);
-            transition: var(--transition-smooth);
-        }
-
-        .historico-table tbody tr:hover {
-            background: var(--bg-input);
-        }
-
-        .historico-table tbody td {
-            padding: 14px;
-            vertical-align: middle;
-            color: var(--text-primary);
-        }
-
-        .historico-ref {
-            font-family: var(--font-display);
             font-weight: 600;
+        }
+
+        .codigo-box {
             display: flex;
             align-items: center;
-            gap: 6px;
-            color: #6C2BD9;
-        }
-
-        .historico-data {
-            color: var(--text-secondary);
-            white-space: nowrap;
-        }
-
-        .metodo-tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            padding: 2px 10px;
+            gap: var(--space-sm);
+            padding: var(--space-md);
             background: var(--bg-input);
-            border-radius: var(--radius-full);
-            font-size: var(--text-xs);
-            color: var(--text-secondary);
-            border: 1px solid var(--border-color);
-            white-space: nowrap;
+            border: 2px dashed #00D2FF;
+            border-radius: var(--radius-md);
         }
 
-        .metodo-tag i { color: #00D2FF; }
-
-        .historico-valor {
+        .codigo-box span {
+            flex: 1;
             font-family: var(--font-display);
+            font-size: var(--text-h4);
             font-weight: 700;
-            color: #00FFA3;
-            white-space: nowrap;
+            color: #00D2FF;
+            letter-spacing: 1px;
+            text-align: center;
+            word-break: break-all;
         }
 
-        .historico-acoes {
+        .dados-bancarios-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--space-sm);
+        }
+
+        .dados-bancarios-item {
             display: flex;
-            gap: 4px;
+            justify-content: space-between;
+            align-items: center;
+            gap: var(--space-sm);
+            padding: var(--space-md);
+            background: var(--bg-input);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+            flex-wrap: wrap;
         }
 
-        .btn-action {
+        .dados-value-wrapper {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            flex: 1;
+            justify-content: flex-end;
+        }
+
+        .dados-value {
+            font-family: var(--font-display);
+            font-size: var(--text-sm);
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: 0.5px;
+            word-break: break-all;
+            text-align: right;
+        }
+
+        .btn-copy {
             width: 32px;
             height: 32px;
             border-radius: var(--radius-sm);
+            background: transparent;
             border: 1px solid var(--border-color);
-            background: var(--bg-card);
             color: var(--text-secondary);
             cursor: pointer;
             display: flex;
@@ -1944,12 +2036,589 @@ if (!function_exists('getStatusClass')) {
             justify-content: center;
             font-size: 12px;
             transition: var(--transition-smooth);
+            flex-shrink: 0;
         }
 
-        .btn-action:hover {
+        .btn-copy:hover {
             border-color: #00D2FF;
             color: #00D2FF;
             background: rgba(0, 210, 255, 0.05);
+        }
+
+        .metodo-valor-destaque {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: var(--space-sm);
+            padding: var(--space-md) var(--space-lg);
+            background: linear-gradient(135deg, rgba(0, 255, 163, 0.08) 0%, rgba(0, 210, 255, 0.08) 100%);
+            border: 2px solid rgba(0, 255, 163, 0.25);
+            border-radius: var(--radius-md);
+            flex-wrap: wrap;
+        }
+
+        .metodo-valor-label {
+            font-size: var(--text-sm);
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .metodo-valor-numero {
+            font-family: var(--font-display);
+            font-size: var(--text-h3);
+            font-weight: 700;
+            color: #00FFA3;
+        }
+
+        /* ========================================== */
+        /* COMPROVATIVO UPLOAD                        */
+        /* ========================================== */
+        .comprovativo-info {
+            display: flex;
+            gap: var(--space-md);
+            padding: var(--space-md);
+            background: rgba(0, 255, 163, 0.05);
+            border: 1px solid rgba(0, 255, 163, 0.2);
+            border-radius: var(--radius-md);
+        }
+
+        .comprovativo-info > i {
+            font-size: 20px;
+            color: #00FFA3;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .comprovativo-info > div {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .comprovativo-info strong {
+            display: block;
+            font-size: var(--text-sm);
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .comprovativo-info p {
+            font-size: var(--text-xs);
+            color: var(--text-secondary);
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .upload-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-md);
+            padding: var(--space-2xl) var(--space-lg);
+            background: var(--bg-input);
+            border: 2px dashed var(--border-color);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            text-align: center;
+        }
+
+        .upload-area:hover {
+            border-color: #00FFA3;
+            background: rgba(0, 255, 163, 0.02);
+        }
+
+        .upload-icon {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: rgba(0, 255, 163, 0.1);
+            color: #00FFA3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            transition: var(--transition-smooth);
+        }
+
+        .upload-area:hover .upload-icon {
+            transform: scale(1.1);
+            background: rgba(0, 255, 163, 0.15);
+        }
+
+        .upload-content {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .upload-title {
+            font-size: var(--text-body);
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .upload-subtitle {
+            font-size: var(--text-xs);
+            color: var(--text-muted);
+        }
+
+        .comprovativo-preview {
+            padding: var(--space-md);
+            background: rgba(0, 255, 163, 0.05);
+            border: 1px solid rgba(0, 255, 163, 0.2);
+            border-radius: var(--radius-md);
+        }
+
+        .comprovativo-preview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-md);
+            gap: var(--space-sm);
+        }
+
+        .comprovativo-preview-titulo {
+            font-size: var(--text-sm);
+            font-weight: 700;
+            color: #00FFA3;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-remover-comprovativo {
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-sm);
+            background: rgba(255, 107, 107, 0.1);
+            border: 1px solid rgba(255, 107, 107, 0.3);
+            color: #FF6B6B;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            transition: var(--transition-smooth);
+        }
+
+        .btn-remover-comprovativo:hover {
+            background: rgba(255, 107, 107, 0.2);
+            transform: scale(1.05);
+        }
+
+        .comprovativo-preview-content {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            padding: var(--space-md);
+            background: var(--bg-card);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+        }
+
+        .comprovativo-file-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            background: rgba(0, 210, 255, 0.15);
+            color: #00D2FF;
+            flex-shrink: 0;
+        }
+
+        .comprovativo-file-info {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .comprovativo-file-nome {
+            font-size: var(--text-sm);
+            font-weight: 600;
+            color: var(--text-primary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .comprovativo-file-tamanho {
+            font-size: var(--text-xs);
+            color: var(--text-muted);
+        }
+
+        .comprovativo-file-check {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(0, 255, 163, 0.15);
+            color: #00FFA3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .comprovativo-nota {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--space-sm);
+            padding: var(--space-md);
+            background: rgba(0, 210, 255, 0.05);
+            border-radius: var(--radius-md);
+            font-size: var(--text-xs);
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .comprovativo-nota i {
+            color: #00D2FF;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        /* ========================================== */
+        /* RESUMO PAGAMENTO                           */
+        /* ========================================== */
+        .resumo-pagamento {
+            padding: var(--space-lg);
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+        }
+
+        .resumo-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--space-sm) 0;
+            gap: var(--space-sm);
+        }
+
+        .resumo-label {
+            font-size: var(--text-sm);
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .resumo-label i { color: #6C2BD9; }
+
+        .resumo-value {
+            font-family: var(--font-display);
+            font-size: var(--text-sm);
+            font-weight: 700;
+            color: var(--text-primary);
+            text-align: right;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .resumo-divider {
+            height: 1px;
+            background: var(--border-color);
+            margin: var(--space-sm) 0;
+        }
+
+        .resumo-total { padding: var(--space-md) 0 0 0; }
+
+        .resumo-total .resumo-label {
+            font-size: var(--text-body);
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .resumo-total .resumo-value {
+            font-size: var(--text-h3);
+            color: #00FFA3;
+        }
+
+        /* ========================================== */
+        /* AÇÃO PAGAMENTO                             */
+        /* ========================================== */
+        .acao-pagamento {
+            padding: var(--space-lg);
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-md);
+        }
+
+        .acao-valor {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: var(--space-md);
+            background: linear-gradient(135deg, rgba(0, 255, 163, 0.06) 0%, rgba(0, 210, 255, 0.06) 100%);
+            border: 1px solid rgba(0, 255, 163, 0.2);
+            border-radius: var(--radius-md);
+        }
+
+        .acao-valor-label {
+            font-size: var(--text-xs);
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .acao-valor-numero {
+            font-family: var(--font-display);
+            font-size: var(--text-h2);
+            font-weight: 700;
+            color: #00FFA3;
+        }
+
+        .acao-checklist {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+            padding: var(--space-md);
+            background: var(--bg-input);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            font-size: var(--text-xs);
+            color: var(--text-muted);
+            transition: var(--transition-smooth);
+        }
+
+        .checklist-item i {
+            font-size: 10px;
+            color: var(--text-muted);
+            transition: var(--transition-smooth);
+        }
+
+        .checklist-item.check-ok {
+            color: #00FFA3;
+            font-weight: 600;
+        }
+
+        .checklist-item.check-ok i {
+            font-size: 14px;
+            color: #00FFA3;
+        }
+
+        .btn-block {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .btn-lg {
+            padding: 16px 24px;
+            font-size: var(--text-body);
+            font-weight: 700;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        .acao-info {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+            padding-top: var(--space-md);
+            border-top: 1px solid var(--border-color);
+        }
+
+        .acao-info-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            font-size: var(--text-xs);
+            color: var(--text-muted);
+        }
+
+        .acao-info-item i {
+            color: #00FFA3;
+            font-size: 12px;
+        }
+
+        /* ========================================== */
+        /* FATURA PENDENTE                            */
+        /* ========================================== */
+        .fatura-pendente-detalhe { padding: var(--space-lg); }
+
+        .fatura-pendente-item { display: flex; flex-direction: column; gap: var(--space-sm); }
+
+        .fatura-pendente-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: var(--space-sm);
+            padding-bottom: var(--space-sm);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .fatura-pendente-numero {
+            font-family: var(--font-display);
+            font-size: var(--text-sm);
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .badge-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 10px;
+            border-radius: var(--radius-full);
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-status.status-pendente {
+            background: rgba(255, 217, 61, 0.12);
+            color: #FFD93D;
+        }
+
+        .fatura-pendente-info { display: flex; flex-direction: column; gap: var(--space-sm); }
+
+        .fatura-info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: var(--space-sm);
+            font-size: var(--text-sm);
+        }
+
+        .fatura-info-label { color: var(--text-muted); }
+
+        .fatura-info-value {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .fatura-info-total {
+            padding-top: var(--space-sm);
+            border-top: 1px solid var(--border-color);
+            margin-top: var(--space-sm);
+        }
+
+        .fatura-info-total .fatura-info-value {
+            font-family: var(--font-display);
+            font-size: var(--text-h4);
+        }
+
+        /* ========================================== */
+        /* HISTÓRICO                                  */
+        /* ========================================== */
+        .historico-list {
+            padding: var(--space-md) var(--space-lg);
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+        }
+
+        .historico-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            padding: var(--space-md);
+            background: var(--bg-input);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            transition: var(--transition-smooth);
+        }
+
+        .historico-item:hover { border-color: #00FFA3; }
+
+        .historico-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(0, 255, 163, 0.15);
+            color: #00FFA3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .historico-info {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .historico-periodo {
+            font-size: var(--text-sm);
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .historico-data { font-size: 10px; color: var(--text-muted); }
+
+        .historico-metodo {
+            font-size: 10px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .historico-valor {
+            font-family: var(--font-display);
+            font-size: var(--text-sm);
+            font-weight: 700;
+            color: #00FFA3;
+            white-space: nowrap;
+        }
+
+        .historico-footer { padding: 0 var(--space-lg) var(--space-lg) var(--space-lg); }
+
+        /* ========================================== */
+        /* INFO SEGURANÇA                             */
+        /* ========================================== */
+        .card-info {
+            background: linear-gradient(135deg, rgba(0, 210, 255, 0.05) 0%, rgba(108, 43, 217, 0.05) 100%);
+            border-color: rgba(0, 210, 255, 0.2);
+        }
+
+        .info-seguranca { padding: var(--space-lg); text-align: center; }
+
+        .info-seguranca i {
+            font-size: 40px;
+            color: #00D2FF;
+            margin-bottom: var(--space-sm);
+            display: block;
+        }
+
+        .info-seguranca h4 {
+            font-family: var(--font-title);
+            font-size: var(--text-h4);
+            color: var(--text-primary);
+            margin: 0 0 var(--space-sm) 0;
+        }
+
+        .info-seguranca p {
+            font-size: var(--text-sm);
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin: 0;
         }
 
         /* ========================================== */
@@ -1975,8 +2644,8 @@ if (!function_exists('getStatusClass')) {
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(4px);
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(6px);
             cursor: pointer;
         }
 
@@ -1989,13 +2658,22 @@ if (!function_exists('getStatusClass')) {
             overflow-y: auto;
             animation: slideUp 0.3s ease;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-            border: 1px solid var(--border-color);
             z-index: 10;
         }
 
         .modal-content-pagamento {
-            max-width: 600px;
-            border: 2px solid rgba(0, 210, 255, 0.3);
+            max-width: 520px;
+            border: 2px solid rgba(0, 255, 163, 0.3);
+        }
+
+        .modal-content-processando {
+            max-width: 420px;
+            border: 1px solid var(--border-color);
+        }
+
+        .modal-content-sucesso {
+            max-width: 480px;
+            border: 2px solid rgba(0, 255, 163, 0.4);
         }
 
         .modal-header {
@@ -2006,23 +2684,21 @@ if (!function_exists('getStatusClass')) {
             border-bottom: 1px solid var(--border-color);
         }
 
-        .modal-header-primary {
-            background: linear-gradient(135deg, rgba(0, 210, 255, 0.12) 0%, rgba(108, 43, 217, 0.08) 100%);
-            border-bottom-color: rgba(0, 210, 255, 0.2);
+        .modal-header-success {
+            background: linear-gradient(135deg, rgba(0, 255, 163, 0.15) 0%, rgba(0, 255, 163, 0.05) 100%);
+            border-bottom-color: rgba(0, 255, 163, 0.3);
         }
 
         .modal-title {
             font-family: var(--font-title);
             font-weight: 700;
             font-size: var(--text-h4);
-            color: var(--text-primary);
+            color: #00FFA3;
             display: flex;
             align-items: center;
             gap: var(--space-sm);
             margin: 0;
         }
-
-        .modal-title i { color: #00D2FF; }
 
         .modal-close {
             background: none;
@@ -2049,322 +2725,249 @@ if (!function_exists('getStatusClass')) {
 
         .modal-footer .btn { min-width: 140px; justify-content: center; }
 
-        /* ========================================== */
-        /* PAGAMENTO RESUMO                           */
-        /* ========================================== */
-        .pagamento-resumo {
-            display: flex;
-            flex-direction: column;
-            gap: var(--space-sm);
-            padding: var(--space-md);
-            background: var(--bg-input);
-            border-radius: var(--radius-md);
-            margin-bottom: var(--space-lg);
-            border: 1px solid var(--border-color);
-        }
-
-        .resumo-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 4px 0;
-        }
-
-        .resumo-item:not(:last-child) {
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .resumo-item-total {
-            padding-top: var(--space-md);
-            margin-top: var(--space-sm);
-            border-top: 2px solid var(--border-color);
-        }
-
-        .resumo-label {
-            font-size: var(--text-sm);
-            color: var(--text-muted);
-        }
-
-        .resumo-value {
-            font-size: var(--text-sm);
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        .valor-total {
-            font-family: var(--font-display);
-            font-size: var(--text-h3);
-            color: #00FFA3;
-        }
-
-        /* ========================================== */
-        /* MÉTODOS RÁPIDOS                            */
-        /* ========================================== */
-        .metodos-rapidos {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: var(--space-sm);
-        }
-
-        .metodo-rapido {
-            cursor: pointer;
-        }
-
-        .metodo-rapido input[type="radio"] {
-            display: none;
-        }
-
-        .metodo-rapido-content {
-            display: flex;
-            align-items: center;
-            gap: var(--space-sm);
-            padding: var(--space-md);
-            background: var(--bg-input);
-            border: 2px solid var(--border-color);
-            border-radius: var(--radius-md);
-            transition: var(--transition-smooth);
-        }
-
-        .metodo-rapido input[type="radio"]:checked + .metodo-rapido-content {
-            border-color: #00D2FF;
-            background: rgba(0, 210, 255, 0.05);
-            box-shadow: 0 0 0 3px rgba(0, 210, 255, 0.1);
-        }
-
-        .metodo-rapido-content:hover {
-            border-color: #00D2FF;
-        }
-
-        .metodo-rapido-icon {
-            width: 38px;
-            height: 38px;
-            border-radius: var(--radius-sm);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-            flex-shrink: 0;
-        }
-
-        .metodo-rapido-nome {
-            font-size: var(--text-sm);
-            font-weight: 500;
-            color: var(--text-primary);
-        }
-
-        /* ========================================== */
-        /* COMPROVATIVO UPLOAD                        */
-        /* ========================================== */
-        .comprovativo-upload {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: var(--space-sm);
-            padding: var(--space-lg);
-            background: var(--bg-input);
-            border: 2px dashed var(--border-color);
-            border-radius: var(--radius-md);
-            cursor: pointer;
-            transition: var(--transition-smooth);
-            text-align: center;
-        }
-
-        .comprovativo-upload:hover {
-            border-color: #00D2FF;
-            background: rgba(0, 210, 255, 0.02);
-        }
-
-        .comprovativo-upload i {
-            font-size: 32px;
-            color: #00D2FF;
-        }
-
-        .comprovativo-upload span {
-            font-size: var(--text-sm);
-            color: var(--text-primary);
-            font-weight: 500;
-        }
-
-        .comprovativo-upload small {
-            font-size: var(--text-xs);
-            color: var(--text-muted);
-        }
-
-        .comprovativo-preview {
-            display: flex;
-            align-items: center;
-            gap: var(--space-md);
-            padding: var(--space-md);
-            background: rgba(0, 255, 163, 0.05);
-            border: 1px solid rgba(0, 255, 163, 0.2);
-            border-radius: var(--radius-md);
-            margin-top: var(--space-sm);
-        }
-
-        .comprovativo-preview i { font-size: 24px; }
-
-        .comprovativo-preview span {
-            flex: 1;
-            font-size: var(--text-sm);
-            color: var(--text-primary);
-            word-break: break-word;
-        }
-
-        .comprovativo-preview .btn-remove {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            background: rgba(255, 107, 107, 0.15);
-            color: #FF6B6B;
+        .btn-success {
+            background: linear-gradient(135deg, #00FFA3 0%, #00D2FF 100%);
+            color: #0A1628;
             border: none;
-            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 255, 163, 0.4);
+        }
+
+        /* ========================================== */
+        /* CONFIRMAÇÃO PAGAMENTO                      */
+        /* ========================================== */
+        .pagamento-confirmacao { text-align: center; }
+
+        .pagamento-confirmacao-icon {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: rgba(0, 255, 163, 0.15);
+            color: #00FFA3;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 12px;
-            transition: var(--transition-smooth);
+            font-size: 32px;
+            margin: 0 auto var(--space-lg);
         }
 
-        .comprovativo-preview .btn-remove:hover {
-            background: #FF6B6B;
-            color: #FFFFFF;
-            transform: scale(1.1);
+        .pagamento-confirmacao h4 {
+            font-family: var(--font-title);
+            font-size: var(--text-h4);
+            color: var(--text-primary);
+            margin: 0 0 var(--space-lg) 0;
         }
 
-        /* ========================================== */
-        /* MUDANÇA DE PLANO                           */
-        /* ========================================== */
-        .mudanca-plano-info {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: var(--space-md);
-            padding: var(--space-lg);
-            background: var(--bg-input);
-            border-radius: var(--radius-md);
-            margin-bottom: var(--space-md);
-            flex-wrap: wrap;
-        }
-
-        .mudanca-plano-item {
+        .pagamento-confirmacao-resumo {
             display: flex;
             flex-direction: column;
+            gap: var(--space-sm);
+            padding: var(--space-md);
+            background: var(--bg-input);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            margin-bottom: var(--space-lg);
+        }
+
+        .confirmacao-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: var(--space-sm);
+            padding: var(--space-sm) 0;
+            font-size: var(--text-sm);
+        }
+
+        .confirmacao-label { color: var(--text-muted); }
+
+        .confirmacao-value {
+            font-weight: 700;
+            color: var(--text-primary);
+            display: inline-flex;
+            align-items: center;
             gap: 4px;
-            text-align: center;
-            flex: 1;
-            min-width: 120px;
         }
 
-        .mudanca-plano-label {
-            font-size: var(--text-xs);
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-weight: 600;
+        .confirmacao-total {
+            padding-top: var(--space-sm);
+            border-top: 1px solid var(--border-color);
+            margin-top: var(--space-sm);
         }
 
-        .mudanca-plano-value {
-            font-family: var(--font-display);
-            font-size: var(--text-h4);
+        .confirmacao-total .confirmacao-label {
+            font-size: var(--text-body);
             font-weight: 700;
             color: var(--text-primary);
         }
 
-        .mudanca-plano-value.novo {
+        .confirmacao-total .confirmacao-value {
+            font-family: var(--font-display);
+            font-size: var(--text-h4);
             color: #00FFA3;
         }
 
-        .mudanca-plano-seta {
-            font-size: 24px;
-            color: #00D2FF;
-            flex-shrink: 0;
+        .pagamento-confirmacao-aviso {
+            font-size: var(--text-xs);
+            color: var(--text-muted);
+            margin: 0;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            gap: 6px;
+            line-height: 1.5;
         }
 
-        .mudanca-plano-valor {
+        .pagamento-confirmacao-aviso i { color: #00D2FF; flex-shrink: 0; margin-top: 2px; }
+
+        /* ========================================== */
+        /* PROCESSAMENTO                              */
+        /* ========================================== */
+        .processando-conteudo { padding: var(--space-2xl); text-align: center; }
+
+        .processando-spinner {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto var(--space-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .spinner-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 4px solid transparent;
+            border-top-color: #00FFA3;
+            border-right-color: #00FFA3;
+            animation: spin 1.5s linear infinite;
+        }
+
+        .processando-spinner i {
+            font-size: 32px;
+            color: #00FFA3;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        .processando-conteudo h3 {
+            font-family: var(--font-title);
+            font-size: var(--text-h4);
+            color: var(--text-primary);
+            margin: 0 0 var(--space-sm) 0;
+        }
+
+        .processando-conteudo p {
+            font-size: var(--text-sm);
+            color: var(--text-muted);
+            margin: 0 0 var(--space-lg) 0;
+            min-height: 20px;
+        }
+
+        .processando-progresso {
+            height: 8px;
+            background: var(--bg-input);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: var(--space-sm);
+        }
+
+        .processando-progresso-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00FFA3 0%, #00D2FF 100%);
+            border-radius: 4px;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .processando-percent {
+            font-family: var(--font-display);
+            font-size: var(--text-h4);
+            font-weight: 700;
+            color: #00FFA3;
+        }
+
+        /* ========================================== */
+        /* SUCESSO                                    */
+        /* ========================================== */
+        .sucesso-conteudo { padding: var(--space-2xl); text-align: center; }
+
+        .sucesso-icon {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: rgba(0, 255, 163, 0.15);
+            color: #00FFA3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 44px;
+            margin: 0 auto var(--space-lg);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .sucesso-conteudo h2 {
+            font-family: var(--font-title);
+            font-size: var(--text-h2);
+            color: #00FFA3;
+            margin: 0 0 var(--space-sm) 0;
+        }
+
+        .sucesso-conteudo p {
+            font-size: var(--text-sm);
+            color: var(--text-secondary);
+            margin: 0 0 var(--space-lg) 0;
+        }
+
+        .sucesso-info {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+            padding: var(--space-md);
+            background: var(--bg-input);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            margin-bottom: var(--space-lg);
+            text-align: left;
+        }
+
+        .sucesso-info-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: var(--space-md);
-            background: rgba(0, 255, 163, 0.05);
-            border-radius: var(--radius-md);
-            border: 1px solid rgba(0, 255, 163, 0.2);
-            margin-bottom: var(--space-md);
-        }
-
-        .mudanca-plano-valor span {
+            gap: var(--space-sm);
+            padding: var(--space-sm) 0;
             font-size: var(--text-sm);
-            color: var(--text-secondary);
         }
 
-        .mudanca-plano-valor strong {
+        .sucesso-info-label { color: var(--text-muted); }
+
+        .sucesso-info-value {
             font-family: var(--font-display);
-            font-size: var(--text-h3);
-            color: #00FFA3;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
         }
 
-        .mudanca-plano-aviso {
+        .sucesso-acoes {
             display: flex;
             gap: var(--space-sm);
-            padding: var(--space-md);
-            background: rgba(0, 210, 255, 0.06);
-            border: 1px solid rgba(0, 210, 255, 0.2);
-            border-radius: var(--radius-md);
-            font-size: var(--text-xs);
-            color: var(--text-secondary);
+            justify-content: center;
+            flex-wrap: wrap;
         }
 
-        .mudanca-plano-aviso i {
-            color: #00D2FF;
-            font-size: 14px;
-            flex-shrink: 0;
-            margin-top: 2px;
-        }
-
-        /* ========================================== */
-        /* FORM GROUP                                 */
-        /* ========================================== */
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            margin-bottom: var(--space-md);
-        }
-
-        .form-label {
-            font-size: var(--text-sm);
-            font-weight: 500;
-            color: var(--text-secondary);
-        }
-
-        .form-control {
-            width: 100%;
-            background: var(--bg-input);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-sm);
-            padding: 10px 14px;
-            font-size: var(--text-sm);
-            color: var(--text-primary);
-            font-family: var(--font-body);
-            transition: var(--transition-smooth);
-            resize: vertical;
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: #00D2FF;
-            box-shadow: 0 0 0 3px rgba(0, 210, 255, 0.1);
-        }
-
-        .form-control::placeholder { color: var(--text-muted); }
+        .sucesso-acoes .btn { flex: 1; justify-content: center; min-width: 140px; }
 
         /* ========================================== */
         /* ANIMAÇÕES                                  */
         /* ========================================== */
-        @keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.6; transform: scale(0.9); }
-        }
-
         @keyframes fadeUp {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -2373,6 +2976,15 @@ if (!function_exists('getStatusClass')) {
         @keyframes slideUp {
             from { opacity: 0; transform: translateY(20px) scale(0.95); }
             to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
 
         .animate-fade-up {
@@ -2384,15 +2996,17 @@ if (!function_exists('getStatusClass')) {
         /* RESPONSIVIDADE                             */
         /* ========================================== */
         @media (max-width: 1200px) {
-            .planos-grid { grid-template-columns: 1fr 1fr; }
-            .metodos-grid { grid-template-columns: 1fr 1fr; }
-            .assinatura-grid { grid-template-columns: 1fr 1fr; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .pagamento-grid { grid-template-columns: 1fr; }
         }
 
         @media (max-width: 992px) {
             .page-header { flex-direction: column; align-items: stretch; }
             .header-right { justify-content: flex-end; width: 100%; }
-            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .plano-header { flex-direction: column; align-items: flex-start; }
+            .plano-valor { align-items: flex-start; }
+            .features-list { grid-template-columns: 1fr; }
+            .dados-grid-2 { grid-template-columns: 1fr; }
         }
 
         @media (max-width: 768px) {
@@ -2400,31 +3014,30 @@ if (!function_exists('getStatusClass')) {
             .stat-card { padding: var(--space-md); }
             .stat-card .value { font-size: var(--text-h3); }
             
-            .planos-grid { grid-template-columns: 1fr; }
-            .metodos-grid { grid-template-columns: 1fr; }
-            .assinatura-grid { grid-template-columns: 1fr; }
-            
-            .assinatura-acoes-rapidas { flex-direction: column; }
-            .assinatura-acoes-rapidas .btn { width: 100%; justify-content: center; }
-            
             .page-header { padding: var(--space-md); }
-            .header-left h1 { font-size: var(--text-h2); }
-            
-            .metodos-rapidos { grid-template-columns: 1fr; }
-            
-            .mudanca-plano-info { flex-direction: column; }
-            .mudanca-plano-seta { transform: rotate(90deg); }
-            
-            .modal-content { width: 95%; }
+            .header-left h1 { font-size: var(--text-h3); }
+
+            .aviso-pendente { flex-direction: column; text-align: center; }
+            .aviso-icon { width: 48px; height: 48px; font-size: 20px; }
+
+            .plano-datas { grid-template-columns: 1fr; }
+
             .modal-footer { flex-direction: column-reverse; }
             .modal-footer .btn { width: 100%; }
+
+            .sucesso-acoes { flex-direction: column; }
+            .sucesso-acoes .btn { width: 100%; }
         }
 
         @media (max-width: 480px) {
             .stats-grid { grid-template-columns: 1fr; }
-            .plano-header .plano-nome { font-size: var(--text-h4); }
-            .preco-valor { font-size: var(--text-h3); }
-            .assinatura-header { flex-direction: column; align-items: flex-start; }
+            .plano-header { text-align: center; align-items: center; }
+            .plano-valor { align-items: center; }
+            .metodo-card { flex-wrap: wrap; }
+            .metodo-icon { width: 40px; height: 40px; font-size: 18px; }
+            .dados-bancarios-item { flex-direction: column; align-items: flex-start; }
+            .dados-value-wrapper { width: 100%; justify-content: space-between; }
+            .modal-content { width: 95%; }
         }
     </style>
 
