@@ -1,6 +1,6 @@
 <?php
 // painel/admin/financeiro/transacao-excluir.php - Excluir Transação
-include "../../../includes/notificacoes-financeiro-count.php";
+include "../../../includes/admin/notificacoes-financeiro-count.php";;
 
 // ===== DEFINIÇÃO DA PÁGINA ATUAL =====
 $titulo_pagina = 'Excluir Transação';

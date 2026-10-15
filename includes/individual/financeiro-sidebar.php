@@ -108,14 +108,14 @@ $sidebar_menu = [
                 'icon' => 'fa-crown',
                 'label' => 'Pagar Assinatura',
                 'link' => 'pagar-assinatura.php',
-                'pages' => ['pagar-assinatura'],
+                'pages' => ['assinatura'],
                 'badge' => 'Pro',
                 'badge_class' => 'badge-warning'
             ],
             [
                 'icon' => 'fa-history',
                 'label' => 'Histórico de Pagamentos',
-                'link' => 'historico-assinatura.php',
+                'link' => 'assinatura-historico.php',
                 'pages' => ['historico-assinatura']
             ],
             [

@@ -1,6 +1,6 @@
 <?php
 // painel/admin/financeiro/transacao-editar.php - Editar Transação
-include "../../../includes/notificacoes-financeiro-count.php";
+include "../../../includes/admin/notificacoes-financeiro-count.php";;
 
 // ===== DEFINIÇÃO DA PÁGINA ATUAL =====
 $titulo_pagina = 'Editar Transação';
@@ -360,7 +360,7 @@ $total_transacoes = count($transacoes);
                     <i class="fas fa-sun theme-icon sun"></i>
                     <i class="fas fa-moon theme-icon moon"></i>
                 </button>
-                    <?php include "../../../includes/notificacoes-finaceiro.php" ?>
+                    <?php include "../../../includes/admin/notificacoes-finaceiro.php" ?>
 
 
                 <div class="header-actions">

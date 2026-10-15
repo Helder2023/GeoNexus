@@ -1,6 +1,6 @@
 <?php
 // painel/admin/financeiro/transacao-detalhe.php - Detalhe da Transação
-include "../../../includes/notificacoes-financeiro-count.php";
+include "../../../includes/admin/notificacoes-financeiro-count.php";;
 
 // ===== DEFINIÇÃO DA PÁGINA ATUAL =====
 $titulo_pagina = 'Detalhe da Transação';
@@ -301,7 +301,7 @@ function getTipoIcon($tipo) {
 ?>
 <!DOCTYPE html>
 <html lang="pt">
-<?php include "../../../includes/admin-financeiro-head.php" ?>
+<?php include "../../../includes/admin/admin-financeiro-head.php" ?>
 
 <body>
 <div class="app-container">
@@ -342,7 +342,7 @@ function getTipoIcon($tipo) {
                     <i class="fas fa-sun theme-icon sun"></i>
                     <i class="fas fa-moon theme-icon moon"></i>
                 </button>
-                    <?php include "../../../includes/notificacoes-finaceiro.php" ?>
+                    <?php include "../../../includes/admin/notificacoes-finaceiro.php" ?>
 
 
                 <div class="header-actions">

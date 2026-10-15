@@ -1,6 +1,6 @@
 <?php
 // painel/admin/financeiro/perfil.php - Perfil do Administrador Financeiro
-include "../../../includes/notificacoes-financeiro-count.php";
+include "../../../includes/admin/notificacoes-financeiro-count.php";;
 
 // ============================================
 // DEFINIÇÃO DA PÁGINA
@@ -181,7 +181,7 @@ $perfil_menu = [
 ?>
 <!DOCTYPE html>
 <html lang="pt">
-<?php include "../../../includes/admin-financeiro-head.php" ?>
+<?php include "../../../includes/admin/admin-financeiro-head.php" ?>
 
 <body>
 <div class="app-container">

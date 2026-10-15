@@ -1,6 +1,6 @@
 <?php
 // painel/admin/financeiro/assinatura-detalhe.php - Detalhe da Assinatura
-include "../../../includes/notificacoes-financeiro-count.php";
+include "../../../includes/admin/notificacoes-financeiro-count.php";;
 
 // ===== DEFINIÇÃO DA PÁGINA ATUAL =====
 $titulo_pagina = 'Detalhe da Assinatura';
@@ -212,7 +212,7 @@ $pagina_atual_sidebar = $pagina_atual;
 ?>
 <!DOCTYPE html>
 <html lang="pt">
-<?php include "../../../includes/admin-financeiro-head.php" ?>
+<?php include "../../../includes/admin/admin-financeiro-head.php" ?>
 
 <body>
     <div class="app-container">
@@ -222,8 +222,7 @@ $pagina_atual_sidebar = $pagina_atual;
         <!-- ========================================== -->
         <!-- SIDEBAR FINANCEIRO                         -->
         <!-- ========================================== -->
-        <?php include "../../../includes/admin-financeiro-sidebar.php"; ?>
-
+        <?php include "../../../includes/admin/admin-financeiro-sidebar.php" ?>
         <!-- ========================================== -->
         <!-- MAIN CONTENT                              -->
         <!-- ========================================== -->
@@ -255,7 +254,7 @@ $pagina_atual_sidebar = $pagina_atual;
                         <i class="fas fa-moon theme-icon moon"></i>
                     </button>
 
-                                       <?php include "../../../includes/notificacoes-finaceiro.php" ?>
+                                       <?php include "../../../includes/admin/notificacoes-finaceiro.php" ?>
 
 
                     <div class="header-actions">
